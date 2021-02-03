@@ -31,16 +31,18 @@ def main():
     observer.schedule(reload(), ".", recursive=True)
     observer.start()
 
-
     scheduler = BlockingScheduler()
-    scheduler.add_job(worker, 'interval', seconds=1,id='worker')
+    scheduler.add_job(worker, 'interval', seconds=1, id='worker')
     scheduler.start()
+
 
 def worker():
     map_test.main()
 
+
 def reload():
-    print ("KJKJH")
+    print("KJKJH")
+
 
 if __name__ == "__main__":
     main()

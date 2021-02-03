@@ -26,8 +26,10 @@ import logging as log
 import yaml
 import networkx as nx
 
+
 class Ship:
     """Ship functions"""
+
     def __init__(self):
         self.ships = []
         self.ship_data = {}
@@ -38,26 +40,25 @@ class Ship:
         for s in self.ships:
             text += "\n\t\t%s" % (s)
             for k in self.ship_data[s].keys():
-                text += "\n\t\t\t%s: %s" % (k,self.ship_data[s][k])
+                text += "\n\t\t\t%s: %s" % (k, self.ship_data[s][k])
         return(text)
 
     def delete(self, name):
         if name in self.ships:
             self.ships.remove(name)
-            log.debug("Ship %s deleted" % name )
+            log.debug("Ship %s deleted" % name)
         else:
             log.error("Ship no found %s" % name)
 
     def add(self, name):
         if not name in self.ships:
-            log.debug("Ship %s added" % name )
+            log.debug("Ship %s added" % name)
             self.ships.append(name)
 
-
-            self.ship_data[name]={}
-            self.ship_data[name]['location']=None
-            self.ship_data[name]['route']=()
-            self.ship_data[name]['speed']=0
+            self.ship_data[name] = {}
+            self.ship_data[name]['location'] = None
+            self.ship_data[name]['route'] = ()
+            self.ship_data[name]['speed'] = 0
         else:
             log.error("Can't add ship with existing name (%s)" % name)
 
@@ -113,29 +114,32 @@ class SpaceMap:
 
     def add_solar_system(self, id, name, neighbors):
         if not id in self.solar_systems:
-            log.debug("%s %s %s" % (id,name,neighbors))
+            log.debug("%s %s %s" % (id, name, neighbors))
             self.map.add_node(id, name=name)
             self.solar_systems.append(id)
             if neighbors != [None]:
                 for n in neighbors:
                     self.map.add_edge(id, n)
         else:
-            log.error("Can't add solar system with existing name %s %s %s" % (id,name,neighbors))
+            log.error("Can't add solar system with existing name %s %s %s" %
+                      (id, name, neighbors))
+
 
 def main():
 
-    log.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s %(lineno)d %(message)s', filename='./log/main.log', level=log.DEBUG)
+    log.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s %(lineno)d %(message)s',
+                    filename='./log/main.log', level=log.DEBUG)
 
     log.info("===========================================")
     log.info("START")
 
     map = SpaceMap()
 
-    map.add_solar_system("test","Jee","")
+    map.add_solar_system("test", "Jee", "")
     map.read_space_map()
-    #map.write_networkx_map()
-    #map.read_networkx_map()
-    #print(map)
+    # map.write_networkx_map()
+    # map.read_networkx_map()
+    # print(map)
 
     ships = Ship()
     ships.map = map
@@ -145,7 +149,7 @@ def main():
     ships.add("Mega4")
     ships.delete("Mega4")
 
-    #print(ships)
+    # print(ships)
 
     log.info("DONE")
 
