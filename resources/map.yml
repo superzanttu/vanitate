@@ -1,0 +1,133 @@
+---
+# Space map for Vanity
+#
+# Copyright (C) 2021 Kai Käpölä
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+version: 1
+
+planet types:
+  rock: &planet_rock
+    material: rock
+    info: It just a rock.
+  water: &planet_water
+    material: water
+    info: Nice place to swim.
+  lava: &planet_lava
+    material: lava
+    info: Too hot place to stay.
+
+solar systems:
+  red:
+    sun: Red sun
+    planets:
+      Red planet 1:
+        *planet_rock
+      Red planet 2:
+        *planet_lava
+      Red planet 3:
+        *planet_water
+    neighbors:
+      - blue
+      - white
+      - black
+
+  blue:
+    sun: Blue sun
+    planets:
+      Blue planet 1:
+        *planet_lava
+      Blue planet 2:
+        *planet_water
+      Blue planet 3:
+        *planet_rock
+      Blue planet 4:
+        *planet_lava
+    neighbors:
+      - white
+      - red
+      - black
+
+  white:
+    sun: White sun
+    planets:
+      White planet 1:
+        *planet_water
+      White planet 2:
+        *planet_water
+      White planet 3:
+        *planet_water
+      White planet 4:
+        *planet_water
+      White planet 5:
+        *planet_lava
+    neighbors:
+      - blue
+      - red
+
+  black:
+    sun: Black sun
+    planets:
+      Black planet 1:
+        *planet_lava
+      Black planet 2:
+        *planet_lava
+    neighbors:
+      - blue
+      - red
+      - green
+
+  green:
+    sun: Green sun
+    planets:
+      Green planet 1:
+        *planet_rock
+      Green planet 2:
+        *planet_water
+      Green planet 3:
+        *planet_water
+      Green planet 4:
+        *planet_rock
+    neighbors:
+      - black
+      - yellow
+
+  yellow:
+    sun: Yellow sun
+    planets:
+      Yellow planet 1:
+        *planet_water
+      Yellow planet 2:
+        *planet_water
+      Yellow planet 3:
+        *planet_rock
+      Yellow planet 4:
+        *planet_lava
+    neighbors:
+      - green
+      - pink
+
+  pink:
+    sun: Pink sun
+    planets:
+      Pink planet 1:
+        *planet_water
+      Pink planet 2:
+        *planet_rock
+      Pink planet 3:
+        *planet_water
+    neighbors:
+      - yellow
+      - green
