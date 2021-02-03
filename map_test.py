@@ -131,6 +131,7 @@ def main():
 
     print(ships)
 
+    log.debug("Done.")
 
 
 if __name__ == "__main__":
