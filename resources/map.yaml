@@ -30,8 +30,30 @@ planet types:
     info: Too hot place to stay.
 
 solar systems:
+  cyan:
+    name: Cyan system
+    planets:
+      Cyan planet 1:
+        *planet_rock
+      Cyan planet 2:
+        *planet_lava
+      Cyan planet 3:
+        *planet_water
+    neighbors:
+      - yellow
+
+  purple:
+      name: Purple system
+      planets:
+        Purple planet 1:
+          *planet_rock
+        Purple planet 2:
+          *planet_water
+      neighbors:
+        - white
+
   red:
-    sun: Red sun
+    name: Red system
     planets:
       Red planet 1:
         *planet_rock
@@ -45,7 +67,7 @@ solar systems:
       - black
 
   blue:
-    sun: Blue sun
+    name: Blue system
     planets:
       Blue planet 1:
         *planet_lava
@@ -61,7 +83,7 @@ solar systems:
       - black
 
   white:
-    sun: White sun
+    name: White system
     planets:
       White planet 1:
         *planet_water
@@ -78,7 +100,7 @@ solar systems:
       - red
 
   black:
-    sun: Black sun
+    name: Black system
     planets:
       Black planet 1:
         *planet_lava
@@ -90,7 +112,7 @@ solar systems:
       - green
 
   green:
-    sun: Green sun
+    name: Green system
     planets:
       Green planet 1:
         *planet_rock
@@ -105,7 +127,7 @@ solar systems:
       - yellow
 
   yellow:
-    sun: Yellow sun
+    name: Yellow system
     planets:
       Yellow planet 1:
         *planet_water
@@ -120,7 +142,7 @@ solar systems:
       - pink
 
   pink:
-    sun: Pink sun
+    name: Pink system
     planets:
       Pink planet 1:
         *planet_water
