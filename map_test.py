@@ -16,15 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-import yaml
-import networkx as nx
+# Standard libraries
+import importlib.util
+import sys
 import sys
 import logging as log
+
+# External libraries
+import yaml
+import networkx as nx
+
 
 
 class Ship:
     """Ship functions"""
     ships = []
+    ship_data = {}
 
     def __init__(self):
         pass
@@ -33,6 +40,11 @@ class Ship:
         if not name in self.ships:
             self.ships.append(name)
             print("Ship", name, "added")
+
+            self.ship_data['location']=None
+            self.ship_data['route']=()
+            self.ship_data['speed']=0
+
         else:
             print("EXIT: Duplicate ship name", name)
             sys.exit
@@ -48,6 +60,9 @@ class Ship:
             self.ships.remove(name)
             print("Ship", name, "deleted")
 
+    def set_location(self, name):
+        if name in slelf.ships:
+            pass
 
 class SpaceMap:
     """Space map functions"""
@@ -82,7 +97,7 @@ class SpaceMap:
     def read_space_map(self):
         with open("./resources/map.yaml", 'r') as stream:
             try:
-                yaml_data = yaml.load(stream)
+                yaml_data = yaml.load(stream, Loader=yaml.FullLoader)
             except yaml.YAMLError as exc:
                 print(exc)
 
@@ -118,8 +133,8 @@ def main():
 
     map.add_solar_system("test","Jee","")
     map.read_space_map()
-    map.write_networkx_map()
-    map.read_networkx_map()
+    #map.write_networkx_map()
+    #map.read_networkx_map()
     print(map)
 
     ships = Ship()
