@@ -26,8 +26,6 @@ import logging as log
 import yaml
 import networkx as nx
 
-
-
 class Ship:
     """Ship functions"""
     ships = []
