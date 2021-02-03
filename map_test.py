@@ -42,7 +42,6 @@ class Ship:
         return(text)
 
     def delete(self, name):
-        print (self.ships)
         if name in self.ships:
             self.ships.remove(name)
             log.debug("Ship %s deleted" % name )
@@ -136,7 +135,7 @@ def main():
     map.read_space_map()
     #map.write_networkx_map()
     #map.read_networkx_map()
-    print(map)
+    #print(map)
 
     ships = Ship()
     ships.map = map
@@ -146,7 +145,7 @@ def main():
     ships.add("Mega4")
     ships.delete("Mega4")
 
-    print(ships)
+    #print(ships)
 
     log.info("DONE")
 

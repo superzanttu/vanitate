@@ -16,19 +16,31 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+import sys
+import time
 import map_test
+from watchdog.observers import Observer
+from watchdog.events import LoggingEventHandler
+
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
 def main():
+
+    observer = Observer()
+    observer.schedule(reload(), ".", recursive=True)
+    observer.start()
+
+
     scheduler = BlockingScheduler()
     scheduler.add_job(worker, 'interval', seconds=1,id='worker')
     scheduler.start()
 
-def worker ():
-    print("Doing stuff...")
-    # do your stuff
+def worker():
     map_test.main()
+
+def reload():
+    print ("KJKJH")
 
 if __name__ == "__main__":
     main()
