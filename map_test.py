@@ -28,39 +28,44 @@ import networkx as nx
 
 class Ship:
     """Ship functions"""
-    ships = []
-    ship_data = {}
-
     def __init__(self):
-        pass
-
-    def add(self, name):
-        if not name in self.ships:
-            self.ships.append(name)
-            print("Ship", name, "added")
-
-            self.ship_data['location']=None
-            self.ship_data['route']=()
-            self.ship_data['speed']=0
-
-        else:
-            print("EXIT: Duplicate ship name", name)
-            sys.exit
+        self.ships = []
+        self.ship_data = {}
+        self.map = None
 
     def __str__(self):
         text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
         for s in self.ships:
             text += "\n\t\t%s" % (s)
+            for k in self.ship_data[s].keys():
+                text += "\n\t\t\t%s: %s" % (k,self.ship_data[s][k])
         return(text)
 
     def delete(self, name):
-        if not name in self.ships:
+        print (self.ships)
+        if name in self.ships:
             self.ships.remove(name)
-            print("Ship", name, "deleted")
+            log.debug("Ship %s deleted" % name )
+        else:
+            log.error("Ship no found %s" % name)
+
+    def add(self, name):
+        if not name in self.ships:
+            log.debug("Ship %s added" % name )
+            self.ships.append(name)
+
+
+            self.ship_data[name]={}
+            self.ship_data[name]['location']=None
+            self.ship_data[name]['route']=()
+            self.ship_data[name]['speed']=0
+        else:
+            log.error("Can't add ship with existing name (%s)" % name)
 
     def set_location(self, name):
-        if name in slelf.ships:
+        if name in self.ships:
             pass
+
 
 class SpaceMap:
     """Space map functions"""
@@ -68,6 +73,7 @@ class SpaceMap:
     def __init__(self):
         self.planet_types = []
         self.map = nx.Graph()
+        self.solar_systems = []
 
     def __str__(self):
         text = "MAP INFO\n"
@@ -93,6 +99,7 @@ class SpaceMap:
         return(text)
 
     def read_space_map(self):
+        log.debug("Reading space map")
         with open("./resources/map.yaml", 'r') as stream:
             try:
                 yaml_data = yaml.load(stream, Loader=yaml.FullLoader)
@@ -106,26 +113,22 @@ class SpaceMap:
             self.add_solar_system(ss_id, ss_name, ss_neighbors)
 
     def add_solar_system(self, id, name, neighbors):
-        self.map.add_node(id, name=name)
-
-        if neighbors != [None]:
-            for n in neighbors:
-                self.map.add_edge(id, n)
-
-    def write_networkx_map(self):
-        print("WRITING NX MAP")
-        nx.write_yaml(self.map, "./resources/nx_map.yaml")
-
-    def read_networkx_map(self):
-        print("READING NX MAP")
-        self.map = nx.read_yaml("./resources/nx_map.yaml")
-
+        if not id in self.solar_systems:
+            log.debug("%s %s %s" % (id,name,neighbors))
+            self.map.add_node(id, name=name)
+            self.solar_systems.append(id)
+            if neighbors != [None]:
+                for n in neighbors:
+                    self.map.add_edge(id, n)
+        else:
+            log.error("Can't add solar system with existing name %s %s %s" % (id,name,neighbors))
 
 def main():
 
-    log.basicConfig(format='%(asctime)s:FILE %(filename)s:FUNCTION %(funcName)s:ROW %(lineno)d:%(levelname)s:%(message)s', filename='./log/main.log', level=log.DEBUG)
+    log.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s %(lineno)d %(message)s', filename='./log/main.log', level=log.DEBUG)
 
-    log.debug("START")
+    log.info("===========================================")
+    log.info("START")
 
     map = SpaceMap()
 
@@ -136,13 +139,16 @@ def main():
     print(map)
 
     ships = Ship()
+    ships.map = map
     ships.add("Mega1")
     ships.add("Mega2")
     ships.add("Mega3")
+    ships.add("Mega4")
+    ships.delete("Mega4")
 
     print(ships)
 
-    log.debug("DONE")
+    log.info("DONE")
 
 
 if __name__ == "__main__":
