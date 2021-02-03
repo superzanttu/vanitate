@@ -2,5 +2,8 @@
 
 Experimental space simulation.
 
+# Requirements
 
-Published under GNU General Public License v3.0
+## Python 3 modules
+  - [PyYAML](https://pypi.org/project/PyYAML/)
+  - [NetworkX](https://networkx.org)
