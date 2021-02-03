@@ -60,16 +60,20 @@ class SpaceMap:
 
 
   def write_networkx_map(self):
-    pass
+    print("WRITING NX MAP")
+    nx.write_yaml(self.map, "./resources/nx_map.yaml")
 
   def read_networkx_map(self):
-    pass
+    print("READING NX MAP")
+    self.map = nx.read_yaml("./resources/nx_map.yaml")
 
 
 def main():
   map = SpaceMap()
   map.read_space_map()
-
+  map.write_networkx_map()
+  map.read_networkx_map()
+  print ("MAP INFO:",nx.info(map.map))
 
 
 if __name__ == "__main__":
