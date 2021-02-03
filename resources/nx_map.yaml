@@ -23,6 +23,7 @@ _adj:
     black: *id004
     blue: *id005
     white: &id008 {}
+  test: {}
   white:
     blue: *id006
     purple: *id007
@@ -31,7 +32,7 @@ _adj:
     cyan: *id009
     green: *id010
     pink: *id011
-_node: &id013
+_node:
   black:
     name: Black system
   blue:
@@ -46,6 +47,8 @@ _node: &id013
     name: Purple system
   red:
     name: Red system
+  test:
+    name: Jee
   white:
     name: White system
   yellow:
@@ -57,5 +60,3 @@ graph: {}
 graph_attr_dict_factory: *id012
 node_attr_dict_factory: *id012
 node_dict_factory: *id012
-nodes: !!python/object:networkx.classes.reportviews.NodeView
-  _nodes: *id013
