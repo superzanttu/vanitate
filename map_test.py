@@ -111,10 +111,8 @@ class SpaceMap:
 def main():
 
     log.basicConfig(format='%(asctime)s:FILE %(filename)s:FUNCTION %(funcName)s:ROW %(lineno)d:%(levelname)s:%(message)s', filename='./log/main.log', level=log.DEBUG)
-    log.debug('This message should go to the log file')
-    log.info('So should this')
-    log.warning('And this, too')
-    log.error('And non-ASCII stuff, too, like Øresund and Malmö')
+
+    log.debug("START")
 
     map = SpaceMap()
 
@@ -131,7 +129,7 @@ def main():
 
     print(ships)
 
-    log.debug("Done.")
+    log.debug("DONE")
 
 
 if __name__ == "__main__":
