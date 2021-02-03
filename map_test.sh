@@ -2,7 +2,7 @@
 
 import yaml
 
-with open("./resources/map.yml", 'r') as stream:
+with open("./resources/map.yaml", 'r') as stream:
     try:
         print(yaml.safe_load(stream))
     except yaml.YAMLError as exc:
