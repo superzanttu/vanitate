@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Maps test for Vanity
+# Maps test for Vanitate
 #
 # Copyright (C) 2021 Kai Käpölä
 #
