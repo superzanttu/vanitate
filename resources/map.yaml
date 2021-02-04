@@ -32,25 +32,21 @@ format: 1
 
 universum:
   rg1:
-    name: Red galaxy
     galaxy: red-galaxy
     x_uu: 200000
     y_uu: 0
 
   bg2:
-    name: Blue galaxy
     galaxy: blue-galaxy
     x_uu: -200000
     y_uu: 0
 
-  g3:
-    name: Green galaxy
+  gg3:
     galaxy: green-galaxy
     x_uu: 0
     y_uu: 0
 
   g4:
-    name: Black galaxy
     galaxy: black-galaxy
     x_uu: 0
     y_uu: -200000
@@ -60,36 +56,135 @@ galaxy:
     name: Red galaxy
       stars:
         rgs1:
-          name: Red star 1
+          system: red-system-1
           x_gu: 500000000
-          x_gu: 0
+          y_gu: 0
         rgs2:
-          name: Red star 2
+          system: red-system-2
           x_gu: 500000000
-          x_gu: 500000000
+          y_gu: 500000000
         rgs3:
-          name: Red star 3
+          system: red-system-3
           x_gu: 0
-          x_gu: 500000000
+          y_gu: 500000000
         rgs4:
-          name: Red star 4
+          system: red-system-4
           x_gu: 5000000000
-          x_gu: 800000000
+          y_gu: 800000000
         rgs5:
-          name: Red star 5
+          system: red-system-5
           x_gu: -300000000
-          x_gu: -500000000
+          y_gu: -500000000
 
-
-
-   blue-galaxy:
+  blue-galaxy:
      name: Blue galaxy
+     stars:
+       bgs1:
+         system: blue-system-1
+         x_gu: 500000000
+         y_gu: 0
+       bgs2:
+         system: blue-system-2
+         x_gu: 500000000
+         y_gu: 500000000
+       bgs3:
+         system: blue-system-3
+         x_gu: 0
+         y_gu: 500000000
+       bgs4:
+         system: blue-system-4
+         x_gu: 5000000000
+         y_gu: 800000000
+       bgs5:
+         system: blue-system-5
+         x_gu: -300000000
+         y_gu: -500000000
+
    green-galaxy:
      name: Green galaxy
+     stars:
+       ggs1:
+         system: green-system-1
+         x_gu: 500000000
+         y_gu: 0
+       ggs2:
+         system: green-system-2
+         x_gu: 500000000
+         y_gu: 500000000
+       ggs3:
+         system: green-system-3
+         x_gu: 0
+         y_gu: 500000000
+       ggs4:
+         system: green-system-4
+         x_gu: 5000000000
+         y_gu: 800000000
+       ggs5:
+         system: green-system-5
+         x_gu: -300000000
+         y_gu: -500000000
+
    black-galaxy:
      name: Black galaxy
+     stars:
+       bgs1:
+         system: black-system-1
+         x_gu: 500000000
+         y_gu: 0
+       bgs2:
+         system: black-system-2
+         x_gu: 500000000
+         y_gu: 500000000
+       bgs3:
+         system: black-system-3
+         x_gu: 0
+         y_gu: 500000000
+       bgs4:
+         system: black-system-4
+         x_gu: 5000000000
+         y_gu: 800000000
+       bgs5:
+         system: black-system-5
+         x_gu: -300000000
+         y_gu: -500000000
 
+system:
+  red-system-1:
+    name: Red system
+    star: red-star-1
+    planets:
+      rsp1:
+        planet: red-planet-1
+        x_su: 0
+        y_su: 0
+      rsp3:
+        planet: red-planet-3
+        x_su: 0
+        y_su: 0
+      rsp3:
+        planet: red-planet-1
+        x_su: 0
+        y_su: 0
 
+  red-system-2:
+  red-system-3:
+  red-system-4:
+  red-system-5:
+  blue-system-1:
+  blue-system-2:
+  blue-system-3:
+  blue-system-4:
+  blue-system-5:
+  green-system-1:
+  green-system-2:
+  green-system-3:
+  green-system-4:
+  green-system-5:
+  black-system-1:
+  black-system-2:
+  black-system-3:
+  black-system-4:
+  black-system-5:
 
 
 
