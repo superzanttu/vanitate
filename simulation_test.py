@@ -17,14 +17,15 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 # Standard libraries
-import importlib.util
-import sys
 import sys
 import logging as log
+import time
 
 # External libraries
 import yaml
 import networkx as nx
+from apscheduler.schedulers.blocking import BlockingScheduler
+
 
 
 class Ship:
@@ -149,9 +150,18 @@ def main():
     ships.add("Mega4")
     ships.delete("Mega4")
 
-    # print(ships)
+    scheduler = BlockingScheduler()
+    scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
+    scheduler.start()
+
+
 
     log.info("DONE")
+
+
+def simulate():
+    pass
+
 
 
 if __name__ == "__main__":

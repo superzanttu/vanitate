@@ -37,7 +37,7 @@ def main():
 
 
 def worker():
-    map_test.main()
+    simulation_test.main()
 
 
 def reload():

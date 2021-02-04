@@ -1,5 +1,4 @@
-python3 map_test.py
+python3 simulation_test.py
 echo ===============================
 git status -sb
 echo ===============================
-
