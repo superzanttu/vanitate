@@ -71,8 +71,9 @@ class SpaceMap:
     """Space map functions"""
 
     def __init__(self):
+        self.map = {}
         self.planet_types = []
-        self.map = nx.Graph()
+        self.map_nx = nx.Graph()
         self.objects = []
 
     def __str__(self):
@@ -105,17 +106,64 @@ class SpaceMap:
                 yaml_data = yaml.load(stream, Loader=yaml.FullLoader)
             except yaml.YAMLError as exc:
                 print(exc)
+                exit(1)
 
-        for ss in yaml_data['solar systems'].keys():
-            ss_id = ss
-            ss_name = yaml_data['solar systems'][ss]['name']
-            ss_neighbors = yaml_data['solar systems'][ss]['neighbors']
-            self.add_solar_system(ss_id, ss_name, ss_neighbors)
+        for g in yaml_data['universum']['galaxies']:
+            print(g)
+            g_id = g['id']
+            g_type = "galaxy"
+            g_name = g['name']
+            g_x_uu = g['x_uu']
+            g_y_uu = g['y_uu']
+            g_x_gu = 0
+            g_y_gu = 0
+            g_x_su=0
+            g_y_su=0
+            self.add_object(g_id,g_type,g_name,g_x_uu, g_y_uu, g_x_gu, g_y_gu, g_x_su, g_y_su) # Add galaxy
+            for s in yaml_data['galaxy'][g_id]['systems']:
+                print("  ",s)
+                s_id = s['id']
+                s_type = "System"
+                s_name = s['name']
+                s_x_uu = g['x_uu']
+                s_y_uu = g['y_uu']
+                s_x_gu = s['x_gu']
+                s_y_gu = s['x_gu']
+                s_x_su=0
+                s_y_su=0
+                self.add_object(s_id,s_type,s_name,s_x_uu, s_y_uu, s_x_gu, s_y_gu, s_x_su, s_y_su) # Add system
+
+                r_id = yaml_data['system'][s_id]['star']
+                r_type = "Star"
+                r_name = yaml_data['star'][r_id]['name']
+                r_x_uu = s_x_uu
+                r_y_uu = s_x_uu
+                r_x_gu = s_x_uu
+                r_y_gu = s_x_uu
+                r_x_su=0
+                r_y_su=0
+                self.add_object(r_id,r_type,r_name,r_x_uu, r_y_uu, r_x_gu, r_y_gu, r_x_su, r_y_su) # Add star of system
+
+                for p in yaml_data['system'][s_id]['planets']:
+                    print ("    ",p)
+                    p_id = p['id']
+                    p_type = "Planet"
+                    p_name = s['name']
+                    p_x_uu = g['x_uu']
+                    p_y_uu = g['y_uu']
+                    p_x_gu = s['x_gu']
+                    p_y_gu = s['x_gu']
+                    p_x_su = p['x_su']
+                    p_y_su=p['y_su']
+                    self.add_object(p_id,p_type,p_name,p_x_uu, p_y_uu, p_x_gu, p_y_gu, p_x_su, p_y_su) # Add planet
+
+
 
     def add_object(self, id, type, name, x_uu, y_uu, x_gu, y_gu, x_su, y_su):
         if not id in self.objects:
-            log.debug("ID:%s Name:%s Type:%s x_uu:% y_uu:%s x_gu:%s y_gu:%s x_su:%s y_su:%s" % (id, name, type, x_uu, y_uu, x_gu, y_gu, x_su, y_su))
+            log.debug("ID:%s Name:%s Type:%s x_uu:%s y_uu:%s x_gu:%s y_gu:%s x_su:%s y_su:%s" % (id, name, type, x_uu, y_uu, x_gu, y_gu, x_su, y_su))
             self.objects.append(id)
+            self.map[id]={}
             self.map[id]['name'] = name
             self.map[id]['type'] = type
             self.map[id]['x_uu'] = x_uu
@@ -138,7 +186,6 @@ def main():
 
     map = SpaceMap()
 
-    map.add_solar_system("test", "Jee", "")
     map.read_space_map()
     # map.write_networkx_map()
     # map.read_networkx_map()
@@ -152,9 +199,9 @@ def main():
     ships.add("Mega4")
     ships.delete("Mega4")
 
-    scheduler = BlockingScheduler()
-    scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
-    scheduler.start()
+    #scheduler = BlockingScheduler()
+    #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
+    #scheduler.start()
 
     log.info("DONE")
 

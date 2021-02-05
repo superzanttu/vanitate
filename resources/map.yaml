@@ -35,464 +35,522 @@ universum:
   galaxies:
     -
       id: red-galaxy
+      name: Red galaxy
       x_uu: 200000
       y_uu: 0
 
     -
       id: blue-galaxy
+      name: Blue galaxy
       x_uu: -200000
       y_uu: 0
 
     -
       id: green-galaxy
+      name: Green galaxy
       x_uu: 0
       y_uu: 0
 
     -
       id: black-galaxy
+      name: Black galaxy
       x_uu: 0
       y_uu: -200000
 
 galaxy:
   red-galaxy:
-    name: Red galaxy
     systems:
       -
         id: red-system-1
+        name: Red system 1
         x_gu: 500000000
         y_gu: 0
       -
         id: red-system-2
+        name: Red system 2
         x_gu: 500000000
         y_gu: 500000000
       -
         id: red-system-3
+        name: Red system 3
         x_gu: 0
         y_gu: 500000000
       -
         id: red-system-4
+        name: Red system 4
         x_gu: 5000000000
         y_gu: 800000000
       -
         id: red-system-5
+        name: Red system 5
         x_gu: -300000000
         y_gu: -500000000
 
   blue-galaxy:
-    name: Blue galaxy
     systems:
       -
         id: blue-system-1
+        name: Blue system 1
         x_gu: 500000000
         y_gu: 0
       -
         id: blue-system-2
+        name: Blue system 2
         x_gu: 500000000
         y_gu: 500000000
       -
         id: blue-system-3
+        name: Blue system 3
         x_gu: 0
         y_gu: 500000000
       -
         id: blue-system-4
+        name: Blue system 4
         x_gu: 5000000000
         y_gu: 800000000
       -
         id: blue-system-5
+        name: Blue system 5
         x_gu: -300000000
         y_gu: -500000000
 
   green-galaxy:
-    name: Green galaxy
     systems:
       -
         id: green-system-1
+        name: Green system 1
         x_gu: 500000000
         y_gu: 0
       -
         id: green-system-2
+        name: Green system 2
         x_gu: 500000000
         y_gu: 500000000
       -
         id: green-system-3
+        name: Green system 3
         x_gu: 0
         y_gu: 500000000
       -
         id: green-system-4
+        name: Green system 4
         x_gu: 5000000000
         y_gu: 800000000
       -
         id: green-system-5
+        name: Green system 5
         x_gu: -300000000
         y_gu: -500000000
 
   black-galaxy:
-    name: Black galaxy
     systems:
       -
         id: black-system-1
+        name: Black system 1
         x_gu: 500000000
         y_gu: 0
       -
         id: black-system-2
+        name: Black system 2
         x_gu: 500000000
         y_gu: 500000000
       -
-        id: green-system-3
+        id: black-system-3
+        name: Black system 3
         x_gu: 0
         y_gu: 500000000
       -
         id: black-system-4
+        name: Black system 4
         x_gu: 5000000000
         y_gu: 800000000
       -
         id: black-system-5
+        name: Black system 5
         x_gu: -300000000
         y_gu: -500000000
 
 system:
   red-system-1:
-    name: Red system 1
     star: red-star-1
     planets:
       -
         id: red-planet-1-1
+        name: Red planet 1 1
         x_su: 5000000000000
         y_su: 0
       -
         id: red-planet-1-2
+        name: Red planet 1 2
         x_su: -5000000000000
         y_su: 0
       -
         id: red-planet-1-3
+        name: Red planet 1 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   red-system-2:
-    name: Red system 2
     star: red-star-2
     planets:
       -
         id: red-planet-2-1
+        name: Red planet 2 1
         x_su: 5000000000000
         y_su: 0
       -
         id: red-planet-2-2
+        name: Red planet 2 2
         x_su: -5000000000000
         y_su: 0
       -
         id: red-planet-2-3
+        name: Red planet 2 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   red-system-3:
-    name: Red system 3
     star: red-star-3
     planets:
       -
         id: red-planet-3-1
+        name: Red planet 3 1
         x_su: 5000000000000
         y_su: 0
       -
         id: red-planet-3-2
+        name: Red planet 3 2
         x_su: -5000000000000
         y_su: 0
       -
         id: red-planet-3-3
+        name: Red planet 3 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   red-system-4:
-    name: Red system 4
     star: red-star-4
     planets:
       -
         id: red-planet-4-1
+        name: Red planet 4 1
         x_su: 5000000000000
         y_su: 0
       -
         id: red-planet-4-2
+        name: Red planet 4 2
         x_su: -5000000000000
         y_su: 0
       -
         id: red-planet-4-3
+        name: Red planet 4 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   red-system-5:
-    name: Red system 5
     star: red-star-5
     planets:
       -
         id: red-planet-5-1
+        name: Red planet 5 1
         x_su: 5000000000000
         y_su: 0
       -
         id: red-planet-5-2
+        name: Red planet 5 2
         x_su: -5000000000000
         y_su: 0
       -
         id: red-planet-5-3
+        name: Red planet 5 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   blue-system-1:
-    name: Blue system 1
     star: blue-star-1
     planets:
       -
         id: blue-planet-1-1
+        name: Blue planet 1 1
         x_su: 5000000000000
         y_su: 0
       -
         id: blue-planet-1-2
+        name: Blue planet 1 2
         x_su: -5000000000000
         y_su: 0
       -
         id: blue-planet-1-3
+        name: Blue planet 1 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   blue-system-2:
-    name: Blue system 2
     star: blue-star-2
     planets:
       -
         id: blue-planet-2-1
+        name: Blue planet 2 1
         x_su: 5000000000000
         y_su: 0
       -
         id: blue-planet-2-2
+        name: Blue planet 2 2
         x_su: -5000000000000
         y_su: 0
       -
         id: blue-planet-2-3
+        name: Blue planet 2 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   blue-system-3:
-    name: Blue system 3
     star: blue-star-3
     planets:
       -
         id: blue-planet-3-1
+        name: Blue planet 3 1
         x_su: 5000000000000
         y_su: 0
       -
         id: blue-planet-3-2
+        name: Blue planet 3 2
         x_su: -5000000000000
         y_su: 0
       -
         id: blue-planet-3-3
+        name: Blue planet 3 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   blue-system-4:
-    name: Blue system 4
     star:  blue-star-4
     planets:
       -
         id: blue-planet-4-1
+        name: Blue planet 4 1
         x_su: 5000000000000
         y_su: 0
       -
         id: blue-planet-4-2
+        name: Blue planet 4 2
         x_su: -5000000000000
         y_su: 0
       -
         id: blue-planet-4-3
+        name: Blue planet 4 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   blue-system-5:
-    name: Blue system 5
     star: blue-star-5
     planets:
       -
         id: blue-planet-5-1
+        name: Blue planet 5 1
         x_su: 5000000000000
         y_su: 0
       -
         id: blue-planet-5-2
+        name: Blue planet 5 2
         x_su: -5000000000000
         y_su: 0
       -
         id: blue-planet-5-3
+        name: Blue planet 5 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   green-system-1:
-    name: Green system 1
     star: green-star-1
     planets:
       -
         id: green-planet-1-1
+        name: Green planet 1 1
         x_su: 5000000000000
         y_su: 0
       -
         id: green-planet-1-2
+        name: Green planet 1 2
         x_su: -5000000000000
         y_su: 0
       -
         id: green-planet-1-3
+        name: Green planet 1 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   green-system-2:
-    name: Green system 2
     star: green-star-2
     planets:
       -
         id: green-planet-2-1
+        name: Green planet 2 1
         x_su: 5000000000000
         y_su: 0
       -
         id: green-planet-2-2
+        name: Green planet 2 2
         x_su: -5000000000000
         y_su: 0
       -
         id: green-planet-2-3
+        name: Green planet 2 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   green-system-3:
-    name: Green system 3
     star: green-star-3
     planets:
       -
         id: green-planet-3-1
+        name: Green planet 3 1
         x_su: 5000000000000
         y_su: 0
       -
         id: green-planet-3-2
+        name: Green planet 3 2
         x_su: -5000000000000
         y_su: 0
       -
         id: green-planet-3-3
+        name: Green planet 3 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   green-system-4:
-    name: Green system 4
     star:  green-star-4
     planets:
       -
         id: green-planet-4-1
+        name: Green planet 4 1
         x_su: 5000000000000
         y_su: 0
       -
         id: green-planet-4-2
+        name: Green planet 4 2
         x_su: -5000000000000
         y_su: 0
       -
         id: green-planet-4-3
+        name: Green planet 4 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   green-system-5:
-    name: Green system 5
     star: green-star-5
     planets:
       -
         id: green-planet-5-1
+        name: Green planet 5 1
         x_su: 5000000000000
         y_su: 0
       -
         id: green-planet-5-2
+        name: Green planet 4 2
         x_su: -5000000000000
         y_su: 0
       -
         id: green-planet-5-3
+        name: Green planet 5 3
         x_su: 2000000000000
         y_su: -1000000000000
 
 
   black-system-1:
-    name: Black-system 1
     star: black-star-1
     planets:
       -
         id: black-planet-1-1
+        name: Black planet 1 1
         x_su: 5000000000000
         y_su: 0
       -
         id: black-planet-1-2
+        name: Black planet 1 2
         x_su: -5000000000000
         y_su: 0
       -
         id: black-planet-1-3
+        name: Black planet 1 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   black-system-2:
-    name: Black system 2
     star: black-star-2
     planets:
       -
         id: black-planet-2-1
+        name: Black planet 2 1
         x_su: 5000000000000
         y_su: 0
       -
         id: black-planet-2-2
+        name: Black planet 2 2
         x_su: -5000000000000
         y_su: 0
       -
         id: black-planet-2-3
+        name: Black planet 2 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   black-system-3:
-    name: Black system 3
     star: black-star-3
     planets:
       -
         id: black-planet-3-1
+        name: Black planet 3 1
         x_su: 5000000000000
         y_su: 0
       -
         id: black-planet-3-2
+        name: Black planet 3 2
         x_su: -5000000000000
         y_su: 0
       -
         id: black-planet-3-3
+        name: Black planet 3 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   black-system-4:
-    name: Black system 4
     star:  black-star-4
     planets:
       -
         id: black-planet-4-1
+        name: Black planet 4 1
         x_su: 5000000000000
         y_su: 0
       -
         id: black-planet-4-2
+        name: Black planet 4 2
         x_su: -5000000000000
         y_su: 0
       -
         id: black-planet-4-3
+        name: Black planet 4 3
         x_su: 2000000000000
         y_su: -1000000000000
 
   black-system-5:
-    name: Black system 5
     star: black-star-5
     planets:
       -
         id: black-planet-5-1
+        name: Black planet 5 1
         x_su: 5000000000000
         y_su: 0
       -
         id: black-planet-5-2
+        name: Black planet 5 2
         x_su: -5000000000000
         y_su: 0
       -
         id: black-planet-5-3
+        name: Black planet 5 3
         x_su: 2000000000000
         y_su: -1000000000000
-
-
 
 star:
   red-star-1:
@@ -728,14 +786,3 @@ planet:
   black-planet-3-5:
     name: Green planet 3 5
     type: *planet_type_water
-
-planet type:
-  rock: &planet_type_rock
-    material: rock
-    info: It just a rock.
-  water: &planet_type_water
-    material: water
-    info: Nice place to swim.
-  lava: &planet_type_lava
-    material: lava
-    info: Too hot place to stay.
