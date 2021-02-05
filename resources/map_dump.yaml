@@ -1,0 +1,936 @@
+black-galaxy:
+  name: Black galaxy
+  type: galaxy
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: -200000
+black-planet-1-1:
+  name: Black system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: -200000
+black-planet-1-2:
+  name: Black system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: -200000
+black-planet-1-3:
+  name: Black system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: -200000
+black-planet-2-1:
+  name: Black system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: -200000
+black-planet-2-2:
+  name: Black system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: -200000
+black-planet-2-3:
+  name: Black system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: -200000
+black-planet-3-1:
+  name: Black system 3
+  type: Planet
+  x_gu: 0
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: -200000
+black-planet-3-2:
+  name: Black system 3
+  type: Planet
+  x_gu: 0
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: -200000
+black-planet-3-3:
+  name: Black system 3
+  type: Planet
+  x_gu: 0
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 0
+  y_su: -1000000000000
+  y_uu: -200000
+black-planet-4-1:
+  name: Black system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: -200000
+black-planet-4-2:
+  name: Black system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: -200000
+black-planet-4-3:
+  name: Black system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: -1000000000000
+  y_uu: -200000
+black-planet-5-1:
+  name: Black system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: -300000000
+  y_su: 0
+  y_uu: -200000
+black-planet-5-2:
+  name: Black system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: -300000000
+  y_su: 0
+  y_uu: -200000
+black-planet-5-3:
+  name: Black system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: -300000000
+  y_su: -1000000000000
+  y_uu: -200000
+black-star-1:
+  name: Black star 1
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+black-star-2:
+  name: Black star 2
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+black-star-3:
+  name: Black star 3
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+black-star-4:
+  name: Black star 4
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+black-star-5:
+  name: Black star 5
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+black-system-1:
+  name: Black system 1
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: -200000
+black-system-2:
+  name: Black system 2
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: -200000
+black-system-3:
+  name: Black system 3
+  type: System
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: -200000
+black-system-4:
+  name: Black system 4
+  type: System
+  x_gu: 5000000000
+  x_su: 0
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: -200000
+black-system-5:
+  name: Black system 5
+  type: System
+  x_gu: -300000000
+  x_su: 0
+  x_uu: 0
+  y_gu: -300000000
+  y_su: 0
+  y_uu: -200000
+blue-galaxy:
+  name: Blue galaxy
+  type: galaxy
+  x_gu: 0
+  x_su: 0
+  x_uu: -200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+blue-planet-1-1:
+  name: Blue system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+blue-planet-1-2:
+  name: Blue system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+blue-planet-1-3:
+  name: Blue system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: 0
+blue-planet-2-1:
+  name: Blue system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+blue-planet-2-2:
+  name: Blue system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+blue-planet-2-3:
+  name: Blue system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: 0
+blue-planet-3-1:
+  name: Blue system 3
+  type: Planet
+  x_gu: 0
+  x_su: 5000000000000
+  x_uu: -200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+blue-planet-3-2:
+  name: Blue system 3
+  type: Planet
+  x_gu: 0
+  x_su: -5000000000000
+  x_uu: -200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+blue-planet-3-3:
+  name: Blue system 3
+  type: Planet
+  x_gu: 0
+  x_su: 2000000000000
+  x_uu: -200000
+  y_gu: 0
+  y_su: -1000000000000
+  y_uu: 0
+blue-planet-4-1:
+  name: Blue system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 5000000000000
+  x_uu: -200000
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+blue-planet-4-2:
+  name: Blue system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: -5000000000000
+  x_uu: -200000
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+blue-planet-4-3:
+  name: Blue system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 2000000000000
+  x_uu: -200000
+  y_gu: 5000000000
+  y_su: -1000000000000
+  y_uu: 0
+blue-planet-5-1:
+  name: Blue system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 5000000000000
+  x_uu: -200000
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+blue-planet-5-2:
+  name: Blue system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: -5000000000000
+  x_uu: -200000
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+blue-planet-5-3:
+  name: Blue system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 2000000000000
+  x_uu: -200000
+  y_gu: -300000000
+  y_su: -1000000000000
+  y_uu: 0
+blue-star-1:
+  name: Blue star 1
+  type: Star
+  x_gu: -200000
+  x_su: 0
+  x_uu: -200000
+  y_gu: -200000
+  y_su: 0
+  y_uu: -200000
+blue-star-2:
+  name: Blue star 2
+  type: Star
+  x_gu: -200000
+  x_su: 0
+  x_uu: -200000
+  y_gu: -200000
+  y_su: 0
+  y_uu: -200000
+blue-star-3:
+  name: Blue star 3
+  type: Star
+  x_gu: -200000
+  x_su: 0
+  x_uu: -200000
+  y_gu: -200000
+  y_su: 0
+  y_uu: -200000
+blue-star-4:
+  name: Blue star 4
+  type: Star
+  x_gu: -200000
+  x_su: 0
+  x_uu: -200000
+  y_gu: -200000
+  y_su: 0
+  y_uu: -200000
+blue-star-5:
+  name: Blue star 5
+  type: Star
+  x_gu: -200000
+  x_su: 0
+  x_uu: -200000
+  y_gu: -200000
+  y_su: 0
+  y_uu: -200000
+blue-system-1:
+  name: Blue system 1
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+blue-system-2:
+  name: Blue system 2
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: -200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+blue-system-3:
+  name: Blue system 3
+  type: System
+  x_gu: 0
+  x_su: 0
+  x_uu: -200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+blue-system-4:
+  name: Blue system 4
+  type: System
+  x_gu: 5000000000
+  x_su: 0
+  x_uu: -200000
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+blue-system-5:
+  name: Blue system 5
+  type: System
+  x_gu: -300000000
+  x_su: 0
+  x_uu: -200000
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+green-galaxy:
+  name: Green galaxy
+  type: galaxy
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-planet-1-1:
+  name: Green system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+green-planet-1-2:
+  name: Green system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+green-planet-1-3:
+  name: Green system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: 0
+green-planet-2-1:
+  name: Green system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+green-planet-2-2:
+  name: Green system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+green-planet-2-3:
+  name: Green system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: 0
+green-planet-3-1:
+  name: Green system 3
+  type: Planet
+  x_gu: 0
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-planet-3-2:
+  name: Green system 3
+  type: Planet
+  x_gu: 0
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-planet-3-3:
+  name: Green system 3
+  type: Planet
+  x_gu: 0
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 0
+  y_su: -1000000000000
+  y_uu: 0
+green-planet-4-1:
+  name: Green system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+green-planet-4-2:
+  name: Green system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+green-planet-4-3:
+  name: Green system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: -1000000000000
+  y_uu: 0
+green-planet-5-1:
+  name: Green system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 5000000000000
+  x_uu: 0
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+green-planet-5-2:
+  name: Green system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: -5000000000000
+  x_uu: 0
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+green-planet-5-3:
+  name: Green system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 2000000000000
+  x_uu: 0
+  y_gu: -300000000
+  y_su: -1000000000000
+  y_uu: 0
+green-star-1:
+  name: Green star 1
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-star-2:
+  name: Green star 2
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-star-3:
+  name: Green star 3
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-star-4:
+  name: Green star 4
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-star-5:
+  name: Green star 5
+  type: Star
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-system-1:
+  name: Green system 1
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+green-system-2:
+  name: Green system 2
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: 0
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+green-system-3:
+  name: Green system 3
+  type: System
+  x_gu: 0
+  x_su: 0
+  x_uu: 0
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+green-system-4:
+  name: Green system 4
+  type: System
+  x_gu: 5000000000
+  x_su: 0
+  x_uu: 0
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+green-system-5:
+  name: Green system 5
+  type: System
+  x_gu: -300000000
+  x_su: 0
+  x_uu: 0
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+red-galaxy:
+  name: Red galaxy
+  type: galaxy
+  x_gu: 0
+  x_su: 0
+  x_uu: 200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+red-planet-1-1:
+  name: Red system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+red-planet-1-2:
+  name: Red system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+red-planet-1-3:
+  name: Red system 1
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: 0
+red-planet-2-1:
+  name: Red system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 5000000000000
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+red-planet-2-2:
+  name: Red system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: -5000000000000
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+red-planet-2-3:
+  name: Red system 2
+  type: Planet
+  x_gu: 500000000
+  x_su: 2000000000000
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: -1000000000000
+  y_uu: 0
+red-planet-3-1:
+  name: Red system 3
+  type: Planet
+  x_gu: 0
+  x_su: 5000000000000
+  x_uu: 200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+red-planet-3-2:
+  name: Red system 3
+  type: Planet
+  x_gu: 0
+  x_su: -5000000000000
+  x_uu: 200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+red-planet-3-3:
+  name: Red system 3
+  type: Planet
+  x_gu: 0
+  x_su: 2000000000000
+  x_uu: 200000
+  y_gu: 0
+  y_su: -1000000000000
+  y_uu: 0
+red-planet-4-1:
+  name: Red system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 5000000000000
+  x_uu: 200000
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+red-planet-4-2:
+  name: Red system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: -5000000000000
+  x_uu: 200000
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+red-planet-4-3:
+  name: Red system 4
+  type: Planet
+  x_gu: 5000000000
+  x_su: 2000000000000
+  x_uu: 200000
+  y_gu: 5000000000
+  y_su: -1000000000000
+  y_uu: 0
+red-planet-5-1:
+  name: Red system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 5000000000000
+  x_uu: 200000
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+red-planet-5-2:
+  name: Red system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: -5000000000000
+  x_uu: 200000
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
+red-planet-5-3:
+  name: Red system 5
+  type: Planet
+  x_gu: -300000000
+  x_su: 2000000000000
+  x_uu: 200000
+  y_gu: -300000000
+  y_su: -1000000000000
+  y_uu: 0
+red-star-1:
+  name: Red star 1
+  type: Star
+  x_gu: 200000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 200000
+  y_su: 0
+  y_uu: 200000
+red-star-2:
+  name: Red star 2
+  type: Star
+  x_gu: 200000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 200000
+  y_su: 0
+  y_uu: 200000
+red-star-3:
+  name: Red star 3
+  type: Star
+  x_gu: 200000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 200000
+  y_su: 0
+  y_uu: 200000
+red-star-4:
+  name: Red star 4
+  type: Star
+  x_gu: 200000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 200000
+  y_su: 0
+  y_uu: 200000
+red-star-5:
+  name: Red star 5
+  type: Star
+  x_gu: 200000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 200000
+  y_su: 0
+  y_uu: 200000
+red-system-1:
+  name: Red system 1
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+red-system-2:
+  name: Red system 2
+  type: System
+  x_gu: 500000000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 500000000
+  y_su: 0
+  y_uu: 0
+red-system-3:
+  name: Red system 3
+  type: System
+  x_gu: 0
+  x_su: 0
+  x_uu: 200000
+  y_gu: 0
+  y_su: 0
+  y_uu: 0
+red-system-4:
+  name: Red system 4
+  type: System
+  x_gu: 5000000000
+  x_su: 0
+  x_uu: 200000
+  y_gu: 5000000000
+  y_su: 0
+  y_uu: 0
+red-system-5:
+  name: Red system 5
+  type: System
+  x_gu: -300000000
+  x_su: 0
+  x_uu: 200000
+  y_gu: -300000000
+  y_su: 0
+  y_uu: 0
