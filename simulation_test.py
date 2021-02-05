@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# Time-stamp: <2021-02-05 14:10:23>
+
 # Standard libraries
 import sys
 import logging as log
@@ -56,15 +58,64 @@ class Ship:
             self.ships.append(id)
 
             self.ship_data[id] = {}
-            self.ship_data[id]['location'] = None
-            self.ship_data[id]['route'] = ()
-            self.ship_data[id]['speed'] = 0
+            sc = self.ship_data[id]['location'] = {}
+            sc['x_uu'] = 0
+            sc['y_uu'] = 0
+            sc['x_gu'] = 0
+            sc['y_gu'] = 0
+            sc['x_su'] = 0
+            sc['y_su'] = 0
+
+            sc = self.ship_data[id]['target'] = {}
+            sc['x_uu'] = 0
+            sc['y_uu'] = 0
+            sc['x_gu'] = 0
+            sc['y_gu'] = 0
+            sc['x_su'] = 0
+            sc['y_su'] = 0
+
+            ss= self.ship_data[id]['speed'] = {}
+            ss['x_ms'] = 0
+            ss['y_ms'] = 0
+            sa = self.ship_data[id]['acceleration'] = {}
+            sa['x_ms2'] = 0
+            sa['y_ms2'] = 0
+
         else:
             log.error("Can't add ship with existing name (%s)" % id)
 
-    def set_location(self, id):
+    def set_location(self, id,coordinates):
+
         if id in self.ships:
-            pass
+            log.debug("%s %s" % (id,coordinates))
+            sc = self.ship_data[id]['location']
+            sc['x_uu'] = coordinates['x_uu']
+            sc['y_uu'] = coordinates['y_uu']
+            sc['x_gu'] = coordinates['x_gu']
+            sc['y_gu'] = coordinates['y_gu']
+            sc['x_su'] = coordinates['x_su']
+            sc['y_su'] = coordinates['y_su']
+        else:
+            log.error("Can't find ship %s" % id)
+
+
+    def set_target(self, id,coordinates):
+        if id in self.ships:
+            log.debug("%s %s" % (id,coordinates))
+            sc = self.ship_data[id]['target']
+            sc['x_uu'] = coordinates['x_uu']
+            sc['y_uu'] = coordinates['y_uu']
+            sc['x_gu'] = coordinates['x_gu']
+            sc['y_gu'] = coordinates['y_gu']
+            sc['x_su'] = coordinates['x_su']
+            sc['y_su'] = coordinates['y_su']
+            self.set_heading_to(id,coordinates)
+        else:
+            log.error("Can't find ship %s" % id)
+
+    def set_heading_to(self,id, coordinates):
+        log.debug("%s" % coordinates)
+        raise Exception('FIXME')
 
 
 class SpaceMap:
@@ -99,7 +150,6 @@ class SpaceMap:
 
         return(text)
 
-
     def write_space_map(self):
         log.debug("Writing space map")
         with open('./resources/map_dump.yaml', 'w') as file:
@@ -123,11 +173,12 @@ class SpaceMap:
             g_y_uu = g['y_uu']
             g_x_gu = 0
             g_y_gu = 0
-            g_x_su=0
-            g_y_su=0
-            self.add_object(g_id,g_type,g_name,g_x_uu, g_y_uu, g_x_gu, g_y_gu, g_x_su, g_y_su) # Add galaxy
+            g_x_su = 0
+            g_y_su = 0
+            self.add_object(g_id, g_type, g_name, g_x_uu, g_y_uu,
+                            g_x_gu, g_y_gu, g_x_su, g_y_su)  # Add galaxy
             for s in yaml_data['galaxy'][g_id]['systems']:
-                print("  ",s)
+                print("  ", s)
                 s_id = s['id']
                 s_type = "System"
                 s_name = s['name']
@@ -135,9 +186,10 @@ class SpaceMap:
                 s_y_uu = g['y_uu']
                 s_x_gu = s['x_gu']
                 s_y_gu = s['x_gu']
-                s_x_su=0
-                s_y_su=0
-                self.add_object(s_id,s_type,s_name,s_x_uu, s_y_uu, s_x_gu, s_y_gu, s_x_su, s_y_su) # Add system
+                s_x_su = 0
+                s_y_su = 0
+                self.add_object(s_id, s_type, s_name, s_x_uu, s_y_uu,
+                                s_x_gu, s_y_gu, s_x_su, s_y_su)  # Add system
 
                 r_id = yaml_data['system'][s_id]['star']
                 r_type = "Star"
@@ -146,12 +198,13 @@ class SpaceMap:
                 r_y_uu = s_x_uu
                 r_x_gu = s_x_uu
                 r_y_gu = s_x_uu
-                r_x_su=0
-                r_y_su=0
-                self.add_object(r_id,r_type,r_name,r_x_uu, r_y_uu, r_x_gu, r_y_gu, r_x_su, r_y_su) # Add star of system
+                r_x_su = 0
+                r_y_su = 0
+                self.add_object(r_id, r_type, r_name, r_x_uu, r_y_uu, r_x_gu,
+                                r_y_gu, r_x_su, r_y_su)  # Add star of system
 
                 for p in yaml_data['system'][s_id]['planets']:
-                    print ("    ",p)
+                    print("    ", p)
                     p_id = p['id']
                     p_type = "Planet"
                     p_name = s['name']
@@ -160,41 +213,38 @@ class SpaceMap:
                     p_x_gu = s['x_gu']
                     p_y_gu = s['x_gu']
                     p_x_su = p['x_su']
-                    p_y_su=p['y_su']
-                    self.add_object(p_id,p_type,p_name,p_x_uu, p_y_uu, p_x_gu, p_y_gu, p_x_su, p_y_su) # Add planet
-
-
+                    p_y_su = p['y_su']
+                    self.add_object(p_id, p_type, p_name, p_x_uu, p_y_uu,
+                                    p_x_gu, p_y_gu, p_x_su, p_y_su)  # Add planet
 
     def add_object(self, id, type, name, x_uu, y_uu, x_gu, y_gu, x_su, y_su):
         if not id in self.objects:
-            log.debug("ID:%s Name:%s Type:%s x_uu:%s y_uu:%s x_gu:%s y_gu:%s x_su:%s y_su:%s" % (id, name, type, x_uu, y_uu, x_gu, y_gu, x_su, y_su))
+            log.debug("ID:%s Name:%s Type:%s x_uu:%s y_uu:%s x_gu:%s y_gu:%s x_su:%s y_su:%s" %
+                      (id, name, type, x_uu, y_uu, x_gu, y_gu, x_su, y_su))
             self.objects.append(id)
-            self.map[id]={}
-            self.map[id]['name'] = name
-            self.map[id]['type'] = type
-            self.map[id]['coordinates']={}
-            self.map[id]['coordinates']['x_uu'] = x_uu
-            self.map[id]['coordinates']['y_uu'] = y_uu
-            self.map[id]['coordinates']['x_gu'] = x_gu
-            self.map[id]['coordinates']['y_gu'] = y_gu
-            self.map[id]['coordinates']['x_su'] = x_su
-            self.map[id]['coordinates']['y_su'] = y_su
+            od = self.map[id] = {}
+            od['name'] = name
+            od['type'] = type
+            ol = od['location'] = {}
+            ol['x_uu'] = x_uu
+            ol['y_uu'] = y_uu
+            ol['x_gu'] = x_gu
+            ol['y_gu'] = y_gu
+            ol['x_su'] = x_su
+            ol['y_su'] = y_su
         else:
             log.error("Can't add object with existing name ID:%s Name:%s Type:%s" % (id, name, type))
 
-    def get_coordinates(self,id):
+    def get_coordinates(self, id):
         if id in self.objects:
-            return(self.map[id]['coordinates'])
+            return(self.map[id]['location'])
         else:
             log.error("Object not found (%s)" % (id))
 
 
-
-
 def main():
 
-    log.basicConfig(format='%(asctime)s %(levelname)s %(filename)s %(funcName)s %(lineno)d %(message)s',
-                    filename='./log/main.log', level=log.DEBUG)
+    log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',filename='./log/main.log', level=log.DEBUG)
 
     log.info("===========================================")
     log.info("START")
@@ -209,20 +259,26 @@ def main():
 
     ships = Ship()
     ships.map = map
-    ships.add("Mega1")
-    ships.add("Mega2")
-    ships.add("Mega3")
-    ships.add("Mega4")
-    ships.delete("Mega4")
+    ships.add("Ship 1")
+    ships.add("Ship 2")
+    ships.add("Ship 3")
+    ships.add("Ship 4")
+    ships.delete("Ship 4")
 
     #scheduler = BlockingScheduler()
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
-    #scheduler.start()
+    # scheduler.start()
 
-    c=map.get_coordinates('black-planet-5-3')
-    print(c)
+    c = map.get_coordinates('black-planet-5-3')
+    ships.set_location("Ship 1",c)
+
+    c = map.get_coordinates('black-planet-5-1')
+    ships.set_target("Ship 1",c)
+
+    #c = map.get_coordinates('black-planet-5-3')
 
     log.info("DONE")
+
 
 def simulate():
     pass

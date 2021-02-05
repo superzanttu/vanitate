@@ -16,6 +16,8 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+# Time-stamp: <2021-02-05 13:50:54>
+
 import sys
 import time
 import map_test

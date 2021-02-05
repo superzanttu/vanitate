@@ -1,4 +1,5 @@
 #!/bin/bash
+# Time-stamp: <2021-02-05 13:50:31>
 
 commitmsg="Quick and dirty push!"
 
