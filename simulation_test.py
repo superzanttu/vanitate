@@ -99,6 +99,12 @@ class SpaceMap:
 
         return(text)
 
+
+    def write_space_map(self):
+        log.debug("Writing space map")
+        with open('./resources/map_dump.yaml', 'w') as file:
+            data = yaml.dump(self.map, file)
+
     def read_space_map(self):
         log.debug("Reading space map")
         with open("./resources/map.yaml", 'r') as stream:
@@ -187,6 +193,7 @@ def main():
     map = SpaceMap()
 
     map.read_space_map()
+    map.write_space_map()
     # map.write_networkx_map()
     # map.read_networkx_map()
     # print(map)
