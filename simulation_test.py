@@ -27,7 +27,6 @@ import networkx as nx
 from apscheduler.schedulers.blocking import BlockingScheduler
 
 
-
 class Ship:
     """Ship functions"""
 
@@ -74,7 +73,7 @@ class SpaceMap:
     def __init__(self):
         self.planet_types = []
         self.map = nx.Graph()
-        self.solar_systems = []
+        self.objects = []
 
     def __str__(self):
         text = "MAP INFO\n"
@@ -113,17 +112,20 @@ class SpaceMap:
             ss_neighbors = yaml_data['solar systems'][ss]['neighbors']
             self.add_solar_system(ss_id, ss_name, ss_neighbors)
 
-    def add_solar_system(self, id, name, neighbors):
-        if not id in self.solar_systems:
-            log.debug("%s %s %s" % (id, name, neighbors))
-            self.map.add_node(id, name=name)
-            self.solar_systems.append(id)
-            if neighbors != [None]:
-                for n in neighbors:
-                    self.map.add_edge(id, n)
+    def add_object(self, id, type, name, x_uu, y_uu, x_gu, y_gu, x_su, y_su):
+        if not id in self.objects:
+            log.debug("ID:%s Name:%s Type:%s x_uu:% y_uu:%s x_gu:%s y_gu:%s x_su:%s y_su:%s" % (id, name, type, x_uu, y_uu, x_gu, y_gu, x_su, y_su))
+            self.objects.append(id)
+            self.map[id]['name'] = name
+            self.map[id]['type'] = type
+            self.map[id]['x_uu'] = x_uu
+            self.map[id]['y_uu'] = y_uu
+            self.map[id]['x_gu'] = x_gu
+            self.map[id]['y_gu'] = y_gu
+            self.map[id]['x_su'] = x_su
+            self.map[id]['y_su'] = y_su
         else:
-            log.error("Can't add solar system with existing name %s %s %s" %
-                      (id, name, neighbors))
+            log.error("Can't add object with existing name ID:%s Name:%s Type:%s" % (id, name, type))
 
 
 def main():
@@ -154,14 +156,11 @@ def main():
     scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
     scheduler.start()
 
-
-
     log.info("DONE")
 
 
 def simulate():
     pass
-
 
 
 if __name__ == "__main__":
