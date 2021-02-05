@@ -43,27 +43,27 @@ class Ship:
                 text += "\n\t\t\t%s: %s" % (k, self.ship_data[s][k])
         return(text)
 
-    def delete(self, name):
-        if name in self.ships:
-            self.ships.remove(name)
-            log.debug("Ship %s deleted" % name)
+    def delete(self, id):
+        if id in self.ships:
+            self.ships.remove(id)
+            log.debug("Ship %s deleted" % id)
         else:
-            log.error("Ship no found %s" % name)
+            log.error("Ship not found %s" % id)
 
-    def add(self, name):
-        if not name in self.ships:
-            log.debug("Ship %s added" % name)
-            self.ships.append(name)
+    def add(self, id):
+        if not id in self.ships:
+            log.debug("Ship %s added" % id)
+            self.ships.append(id)
 
-            self.ship_data[name] = {}
-            self.ship_data[name]['location'] = None
-            self.ship_data[name]['route'] = ()
-            self.ship_data[name]['speed'] = 0
+            self.ship_data[id] = {}
+            self.ship_data[id]['location'] = None
+            self.ship_data[id]['route'] = ()
+            self.ship_data[id]['speed'] = 0
         else:
-            log.error("Can't add ship with existing name (%s)" % name)
+            log.error("Can't add ship with existing name (%s)" % id)
 
-    def set_location(self, name):
-        if name in self.ships:
+    def set_location(self, id):
+        if id in self.ships:
             pass
 
 
@@ -172,14 +172,23 @@ class SpaceMap:
             self.map[id]={}
             self.map[id]['name'] = name
             self.map[id]['type'] = type
-            self.map[id]['x_uu'] = x_uu
-            self.map[id]['y_uu'] = y_uu
-            self.map[id]['x_gu'] = x_gu
-            self.map[id]['y_gu'] = y_gu
-            self.map[id]['x_su'] = x_su
-            self.map[id]['y_su'] = y_su
+            self.map[id]['coordinates']={}
+            self.map[id]['coordinates']['x_uu'] = x_uu
+            self.map[id]['coordinates']['y_uu'] = y_uu
+            self.map[id]['coordinates']['x_gu'] = x_gu
+            self.map[id]['coordinates']['y_gu'] = y_gu
+            self.map[id]['coordinates']['x_su'] = x_su
+            self.map[id]['coordinates']['y_su'] = y_su
         else:
             log.error("Can't add object with existing name ID:%s Name:%s Type:%s" % (id, name, type))
+
+    def get_coordinates(self,id):
+        if id in self.objects:
+            return(self.map[id]['coordinates'])
+        else:
+            log.error("Object not found (%s)" % (id))
+
+
 
 
 def main():
@@ -210,8 +219,10 @@ def main():
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
     #scheduler.start()
 
-    log.info("DONE")
+    c=map.get_coordinates('black-planet-5-3')
+    print(c)
 
+    log.info("DONE")
 
 def simulate():
     pass
