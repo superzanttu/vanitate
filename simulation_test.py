@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-05 14:16:55>
+# Time-stamp: <2021-02-05 14:24:47>
 
 # Standard libraries
 import sys
@@ -58,21 +58,21 @@ class Ship:
             self.ships.append(id)
 
             self.ship_data[id] = {}
-            sc = self.ship_data[id]['location'] = {}
-            sc['x_uu'] = 0
-            sc['y_uu'] = 0
-            sc['x_gu'] = 0
-            sc['y_gu'] = 0
-            sc['x_su'] = 0
-            sc['y_su'] = 0
+            sl = self.ship_data[id]['location'] = {}
+            sl['x_uu'] = 0
+            sl['y_uu'] = 0
+            sl['x_gu'] = 0
+            sl['y_gu'] = 0
+            sl['x_su'] = 0
+            sl['y_su'] = 0
 
-            sc = self.ship_data[id]['target'] = {}
-            sc['x_uu'] = 0
-            sc['y_uu'] = 0
-            sc['x_gu'] = 0
-            sc['y_gu'] = 0
-            sc['x_su'] = 0
-            sc['y_su'] = 0
+            st = self.ship_data[id]['target'] = {}
+            st['x_uu'] = 0
+            st['y_uu'] = 0
+            st['x_gu'] = 0
+            st['y_gu'] = 0
+            st['x_su'] = 0
+            st['y_su'] = 0
 
             ss= self.ship_data[id]['speed'] = {}
             ss['x_ms'] = 0
@@ -115,7 +115,18 @@ class Ship:
 
     def set_heading_to(self,id, coordinates):
         log.debug("%s" % coordinates)
-        raise Exception('FIXME')
+
+        # Current location
+        sl = self.ship_data[id]['location']
+        cx_uu=sl['x_uu']
+        cy_uu=sl['y_uu']
+        cx_gu=sl['x_gu']
+        cy_hu=sl['y_gu']
+        cx_su=sl['x_su']
+        cy_su=sl['y_su']
+
+        double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
+        FIXME
 
 
 class SpaceMap:
