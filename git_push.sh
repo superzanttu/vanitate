@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-05 13:50:31>
+# Time-stamp: <2021-02-05 14:17:22>
 
 commitmsg="Quick and dirty push!"
 
@@ -10,3 +10,7 @@ fi
 git add .
 git commit -m "$commitmsg"
 git push
+
+echo ===============================
+git status -sb
+echo ===============================
