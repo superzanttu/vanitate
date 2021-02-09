@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 12:51:17>
+# Time-stamp: <2021-02-09 12:51:55>
 
 # Standard libraries
 import sys
@@ -47,7 +47,7 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame test
 # Constants
-NUM_STARS = 40
+NUM_STARS = 4000
 SCREEN_SIZE = [640, 480]
 WHITE = 255, 255, 255
 BLACK = 20, 20, 40
