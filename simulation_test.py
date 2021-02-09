@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 01:10:24>
+# Time-stamp: <2021-02-09 12:51:17>
 
 # Standard libraries
 import sys
@@ -24,12 +24,13 @@ import logging as log
 import time
 import pprint
 import math
+import csv
 
 # External libraries
 import yaml
 import networkx as nx
 from apscheduler.schedulers.blocking import BlockingScheduler
-
+import pygame
 
 # Name generator START
 import sys
@@ -41,57 +42,21 @@ from collections import defaultdict
 
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
-
-
-
 # Name generator END
 
 
-def main_ship():
+# Pygame test
+# Constants
+NUM_STARS = 40
+SCREEN_SIZE = [640, 480]
+WHITE = 255, 255, 255
+BLACK = 20, 20, 40
+LIGHTGRAY = 180, 180, 180
+DARKGRAY = 120, 120, 120
+LEFT = 0
+RIGHT = 1
+############
 
-    log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
-                    filename='./log/main.log', level=log.DEBUG)
-
-    log.info("===========================================")
-    log.info("START")
-
-    map = SpaceMap()
-
-    map.read_space_map()
-    map.write_space_map()
-    # map.write_networkx_map()
-    # map.read_networkx_map()
-    # print(map)
-
-    ships = Ship()
-    ships.map = map
-    ships.add("Ship 1")
-    ships.add("Ship 2")
-    ships.add("Ship 3")
-    ships.add("Ship 4")
-    ships.delete("Ship 4")
-
-    #scheduler = BlockingScheduler()
-    #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
-    # scheduler.start()
-
-    c = map.get_coordinates('black-planet-5-3')
-    ships.set_location("Ship 1", c)
-
-    c = map.get_coordinates('black-planet-5-1')
-    ships.set_target("Ship 1", c)
-
-    #c = map.get_coordinates('black-planet-5-3')
-
-    log.info("DONE")
-
-
-def main_namegen():
-    markov = MarkovChainNamer()
-
-    for i in range(1):
-        print(markov.gen_name("", 4, 13))
-        print(markov.gen_name("finnish", 4, 13))
 
 
 class MarkovChainNamer():
@@ -152,7 +117,7 @@ class MarkovChainNamer():
                 sys.exit(-1)
 
     def load_all_name_data(self):
-        #print("load_all_name_data")
+        # print("load_all_name_data")
         for fn in os.listdir(os.path.join(HOME_FOLDER, NAME_DATA_FOLDER)):
             if fn.endswith(".txt"):
                 listname, ext = os.path.splitext(fn)
@@ -192,103 +157,7 @@ class MarkovChainNamer():
         return name
 
 
-class Ship:
-    """Ship functions"""
 
-    def __init__(self):
-        self.ships = []
-        self.ship_data = {}
-        self.map = None
-
-    def __str__(self):
-        text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
-        for s in self.ships:
-            text += "\n\t\t%s" % (s)
-            for k in self.ship_data[s].keys():
-                text += "\n\t\t\t%s: %s" % (k, self.ship_data[s][k])
-        return(text)
-
-    def delete(self, id):
-        if id in self.ships:
-            self.ships.remove(id)
-            log.debug("Ship %s deleted" % id)
-        else:
-            log.error("Ship not found %s" % id)
-
-    def add(self, id):
-        if not id in self.ships:
-            log.debug("Ship %s added" % id)
-            self.ships.append(id)
-
-            self.ship_data[id] = {}
-            sl = self.ship_data[id]['location'] = {}
-            #sl['x_uu'] = 0
-            #sl['y_uu'] = 0
-            #sl['x_gu'] = 0
-            #sl['y_gu'] = 0
-            sl['x_su'] = 0
-            sl['y_su'] = 0
-
-            st = self.ship_data[id]['target'] = {}
-            #st['x_uu'] = 0
-            #st['y_uu'] = 0
-            #st['x_gu'] = 0
-            #st['y_gu'] = 0
-            st['x_su'] = 0
-            st['y_su'] = 0
-
-            ss = self.ship_data[id]['speed'] = {}
-            ss['x_ms'] = 0
-            ss['y_ms'] = 0
-            sa = self.ship_data[id]['acceleration'] = {}
-            sa['x_ms2'] = 0
-            sa['y_ms2'] = 0
-
-        else:
-            log.error("Can't add ship with existing name (%s)" % id)
-
-    def set_location(self, id, coordinates):
-
-        if id in self.ships:
-            log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['location']
-            #sc['x_uu'] = coordinates['x_uu']
-            #sc['y_uu'] = coordinates['y_uu']
-            #sc['x_gu'] = coordinates['x_gu']
-            #sc['y_gu'] = coordinates['y_gu']
-            sc['x_su'] = coordinates['x_su']
-            sc['y_su'] = coordinates['y_su']
-        else:
-            log.error("Can't find ship %s" % id)
-
-    def set_target(self, id, coordinates):
-        if id in self.ships:
-            log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['target']
-            #sc['x_uu'] = coordinates['x_uu']
-            #sc['y_uu'] = coordinates['y_uu']
-            #sc['x_gu'] = coordinates['x_gu']
-            #sc['y_gu'] = coordinates['y_gu']
-            sc['x_su'] = coordinates['x_su']
-            sc['y_su'] = coordinates['y_su']
-            self.set_heading_to(id, coordinates)
-        else:
-            log.error("Can't find ship %s" % id)
-
-    def set_heading_to(self, id, coordinates):
-        log.debug("%s" % coordinates)
-
-        # Current location
-        sl = self.ship_data[id]['location']
-        # cx_uu=sl['x_uu']
-        # cy_uu=sl['y_uu']
-        # cx_gu=sl['x_gu']
-        # cy_hu=sl['y_gu']
-        cx_su = sl['x_su']
-        cy_su = sl['y_su']
-
-        # double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
-        FIXME
 
 
 class SpaceMap:
@@ -419,48 +288,335 @@ class SpaceMapGenerator():
 
     markov = MarkovChainNamer()
 
-    X_MAX = 5 * 10 **17
-    Y_MAX = 5 *10**17
+    X_MAX = 5 * 10**17
+    Y_MAX = 5 * 10**17
     STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
-
-
+    # Initialize systems and and center system
     systems = {}
-    systems['Suomi']={'x':0, 'y':0}
+    systems['Suomi'] = {'x': 0, 'y': 0}
+
+    def __init__(self):
+        log.debug("__init__")
 
     def generateStars(self):
 
         name = "Suomi"
 
-        for starcount in range(1000000):
-            starcount+=1
+        sc1r = 10
+        sc2r = 100
 
-            while name in self.systems:
-                name = self.markov.gen_name("finnish", 4, 13)
+        log.info ("Generating %s star names" % (sc1r*sc2r))
 
-            distance_ok = False
-            while not distance_ok:
-                x = random.randrange(self.X_MAX)
-                y = random.randrange(self.Y_MAX)
+        for sc1 in range(sc1r):
 
-                distance_ok = True
-                for s in self.systems:
-                    if math.sqrt(x**2 + y**2) < self.STAR_MINIMUM_DISTANCE:
-                        distance_ok = False
-                        exit
+            log.info("Generated %s of %s star names" %  (sc1*sc2r, sc1r*sc2r))
 
-            self.systems[name]={'x:': x, 'y:': y}
+            for sc2 in range(sc2r):
 
-            print(starcount, "name:",name,"x:",x, "y:",y)
+                starcount = sc1*sc2r+sc1
+
+                while name in self.systems:
+                    name = self.markov.gen_name("finnish", 4, 13)
+
+                distance_ok = False
+
+                while not distance_ok:
+                    x = random.randrange(self.X_MAX)
+                    y = random.randrange(self.Y_MAX)
+
+                    distance_ok = True
+                    for s in self.systems:
+                        sx = self.systems[s]['x']
+                        sy = self.systems[s]['y']
+                        if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
+
+                            distance_ok = False
+                            break
+
+                self.systems[name] = {'x': x, 'y': y}
+
+
+class Ship:
+    """Ship functions"""
+
+    def __init__(self):
+        self.ships = []
+        self.ship_data = {}
+        self.map = None
+
+    def __str__(self):
+        text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
+        for s in self.ships:
+            text += "\n\t\t%s" % (s)
+            for k in self.ship_data[s].keys():
+                text += "\n\t\t\t%s: %s" % (k, self.ship_data[s][k])
+        return(text)
+
+    def delete(self, id):
+        if id in self.ships:
+            self.ships.remove(id)
+            log.debug("Ship %s deleted" % id)
+        else:
+            log.error("Ship not found %s" % id)
+
+    def add(self, id):
+        if not id in self.ships:
+            log.debug("Ship %s added" % id)
+            self.ships.append(id)
+
+            self.ship_data[id] = {}
+            sl = self.ship_data[id]['location'] = {}
+            #sl['x_uu'] = 0
+            #sl['y_uu'] = 0
+            #sl['x_gu'] = 0
+            #sl['y_gu'] = 0
+            sl['x_su'] = 0
+            sl['y_su'] = 0
+
+            st = self.ship_data[id]['target'] = {}
+            #st['x_uu'] = 0
+            #st['y_uu'] = 0
+            #st['x_gu'] = 0
+            #st['y_gu'] = 0
+            st['x_su'] = 0
+            st['y_su'] = 0
+
+            ss = self.ship_data[id]['speed'] = {}
+            ss['x_ms'] = 0
+            ss['y_ms'] = 0
+            sa = self.ship_data[id]['acceleration'] = {}
+            sa['x_ms2'] = 0
+            sa['y_ms2'] = 0
+
+        else:
+            log.error("Can't add ship with existing name (%s)" % id)
+
+    def set_location(self, id, coordinates):
+
+        if id in self.ships:
+            log.debug("%s %s" % (id, coordinates))
+            sc = self.ship_data[id]['location']
+            #sc['x_uu'] = coordinates['x_uu']
+            #sc['y_uu'] = coordinates['y_uu']
+            #sc['x_gu'] = coordinates['x_gu']
+            #sc['y_gu'] = coordinates['y_gu']
+            sc['x_su'] = coordinates['x_su']
+            sc['y_su'] = coordinates['y_su']
+        else:
+            log.error("Can't find ship %s" % id)
+
+    def set_target(self, id, coordinates):
+        if id in self.ships:
+            log.debug("%s %s" % (id, coordinates))
+            sc = self.ship_data[id]['target']
+            #sc['x_uu'] = coordinates['x_uu']
+            #sc['y_uu'] = coordinates['y_uu']
+            #sc['x_gu'] = coordinates['x_gu']
+            #sc['y_gu'] = coordinates['y_gu']
+            sc['x_su'] = coordinates['x_su']
+            sc['y_su'] = coordinates['y_su']
+            self.set_heading_to(id, coordinates)
+        else:
+            log.error("Can't find ship %s" % id)
+
+    def set_heading_to(self, id, coordinates):
+        log.debug("%s" % coordinates)
+
+        # Current location
+        sl = self.ship_data[id]['location']
+        # cx_uu=sl['x_uu']
+        # cy_uu=sl['y_uu']
+        # cx_gu=sl['x_gu']
+        # cy_hu=sl['y_gu']
+        cx_su = sl['x_su']
+        cy_su = sl['y_su']
+
+        # double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
+        FIXME
+
+def initStars(screen):
+    "Create the starfield"
+
+    # The starfield is represented as a dictionary of x and y values.
+    stars = []
+
+    # Create a list of (x,y) coordinates.
+    for loop in range(0, NUM_STARS):
+        star = [random.randrange(0, screen.get_width() - 1),
+                random.randrange(0, screen.get_height() - 1)]
+        stars.append(star);
+
+    return stars
+
+def moveStars(screen, stars, start, end, direction):
+    "Correct for stars hitting the screen's borders"
+
+    for loop in range(start, end):
+        if (direction == LEFT):
+            if (stars[loop][0] != 1):
+                stars[loop][0] = stars[loop][0] - 1
+            else:
+                stars[loop][1] = random.randrange(0, screen.get_height() - 1)
+                stars[loop][0] = screen.get_width() - 1
+        elif (direction == RIGHT):
+            if (stars[loop][0] != screen.get_width() - 1):
+                stars[loop][0] = stars[loop][0] + 1
+            else:
+                stars[loop][1] = random.randrange(0, screen.get_height() - 1)
+                stars[loop][0] = 1
+
+    return stars
+
+
+def draw_map(map):
+
+
+
+    random.seed()
+
+    # Initialize the pygame library.
+    pygame.init()
+    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
+    pygame.display.set_caption("Starfield")
+    pygame.mouse.set_visible(0)
+
+    # Set the background to black.
+    screen.fill(BLACK)
+
+    # Simulation variables.
+    delay = 8
+    inc = 2
+    direction = LEFT
+
+    # Create the starfield.
+    stars = initStars(screen)
+
+    # Place ten white stars
+    for loop in range(0, 10):
+        screen.set_at(stars[loop], WHITE)
+
+    # Main loop
+    while 1:
+
+        # Handle input events.
+        event = pygame.event.poll()
+        if (event.type == pygame.QUIT):
+            break
+        elif (event.type == pygame.KEYDOWN):
+            if (event.key == pygame.K_ESCAPE):
+                break
+            elif (event.key == pygame.K_UP):
+                if (delay >= 2): delay = delay - 1
+            elif (event.key == pygame.K_DOWN):
+                if (delay <= 16): delay = delay + 1
+            elif (event.key == pygame.K_LEFT):
+                direction = LEFT
+            elif (event.key == pygame.K_RIGHT):
+                direction = RIGHT
+
+        # Used to slow down the second and third field.
+        inc = inc + 1
+
+        # Erase the first star field.
+        for loop in range(0, 10):
+            screen.set_at(stars[loop], BLACK)
+
+        # Check if first field's stars hit the screen border.
+        stars = moveStars(screen, stars, 0, 10, direction)
+
+        # Second star field algorythms.
+        if (inc % 2 == 0):
+
+            # Erase the second field.
+            for loop in range(11, 20):
+                screen.set_at(stars[loop], BLACK)
+
+            # Checks to see if the second field's stars hit the screen border.
+            stars = moveStars(screen, stars, 11, 20, direction)
+
+            # Place ten light gray stars.
+            for loop in range(11, 20):
+                screen.set_at(stars[loop], LIGHTGRAY)
+
+        # Third star field algorythms.
+        if (inc % 5 == 0):
+
+            # Erase the third field.
+            for loop in range(21, NUM_STARS):
+                screen.set_at(stars[loop], BLACK)
+
+            # Checks to see if the third field's stars hit the screen border.
+            stars = moveStars(screen, stars, 21, NUM_STARS, direction)
+
+            # Place ten dark gray stars.
+            for loop in range(21, NUM_STARS):
+                screen.set_at(stars[loop], DARKGRAY)
+
+        # Place ten white stars.
+        for loop in range(0, 10):
+            screen.set_at(stars[loop], WHITE)
+
+        # Control the starfield speed.
+        pygame.time.delay(delay)
+
+        # Make sure this variable doesn't get too large.
+        if (inc == 500): inc = 2
+
+        # Update the screen.
+        pygame.display.update()
+
 
 
 def main_map():
     space = SpaceMapGenerator()
     space.generateStars()
 
+    print("Writing CVS file")
+    with open('stars.csv', 'w') as f:
+        for key in space.systems.keys():
+            f.write("%s,%s\n" % (key, space.systems[key]))
+
+def main_namegen():
+    markov = MarkovChainNamer()
+
+    for i in range(1):
+        print(markov.gen_name("", 4, 13))
+        print(markov.gen_name("finnish", 4, 13))
+
+def main_ship():
+
+    log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
+                    filename='./log/main.log', level=log.DEBUG)
+
+    log.info("===========================================")
+    log.info("START")
+
+
+    space = SpaceMapGenerator()
+    space.generateStars()
+
+
+
+    ships = Ship()
+
+    ships.add("Ship 1")
+
+
+    #scheduler = BlockingScheduler()
+    #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
+    # scheduler.start()
+
+    draw_map(space)
+
+    log.info("DONE")
+
+
 
 
 
 
 if __name__ == "__main__":
-    main_map()
+    #main_namegen()
+    #main_map()
+    main_ship()
