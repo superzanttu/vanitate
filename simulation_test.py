@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 12:51:55>
+# Time-stamp: <2021-02-09 13:15:04>
 
 # Standard libraries
 import sys
@@ -47,8 +47,9 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame test
 # Constants
-NUM_STARS = 4000
-SCREEN_SIZE = [640, 480]
+NUM_STARS = 40000
+SCREEN_SIZE = [3360, 2100]
+SCREEN_SIZE = [800, 600]
 WHITE = 255, 255, 255
 BLACK = 20, 20, 40
 LIGHTGRAY = 180, 180, 180
@@ -288,13 +289,24 @@ class SpaceMapGenerator():
 
     markov = MarkovChainNamer()
 
-    X_MAX = 5 * 10**17
-    Y_MAX = 5 * 10**17
+    # Size of the space
+    SPACE_X_MAX = 5 * 10**17
+    SPACE_Y_MAX = 5 * 10**17
     STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
+
+
+
 
     # Initialize systems and and center system
     systems = {}
     systems['Suomi'] = {'x': 0, 'y': 0}
+
+    # Store maximum and minimum coordinates
+    system_x_min = 0
+    system_x_max  = 0
+    system_y_min = 0
+    system_y_max  = 0
+
 
     def __init__(self):
         log.debug("__init__")
@@ -322,8 +334,8 @@ class SpaceMapGenerator():
                 distance_ok = False
 
                 while not distance_ok:
-                    x = random.randrange(self.X_MAX)
-                    y = random.randrange(self.Y_MAX)
+                    x = random.randrange(-self.SPACE_X_MAX,self.SPACE_X_MAX)
+                    y = random.randrange(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
                     distance_ok = True
                     for s in self.systems:
@@ -335,6 +347,18 @@ class SpaceMapGenerator():
                             break
 
                 self.systems[name] = {'x': x, 'y': y}
+
+                if x > self.system_x_max:
+                    self.system_x_max = x
+                elif x < self.system_x_min:
+                    self.system_x_min = x
+
+                if y > self.system_y_max:
+                    self.system_y_max = y
+                elif y < self.system_y_min:
+                    self.system_y_min = y
+
+        log.debug("System x_max: %s x_min: %s y_max: %s y_min: %s" % (self.system_x_max,self.system_x_min,self.system_y_max,self.system_y_min))
 
 
 class Ship:
@@ -477,6 +501,8 @@ def draw_map(map):
 
     # Initialize the pygame library.
     pygame.init()
+
+    print(pygame.display.list_modes())
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
@@ -493,7 +519,7 @@ def draw_map(map):
     stars = initStars(screen)
 
     # Place ten white stars
-    for loop in range(0, 10):
+    for loop in range(0, NUM_STARS // 4):
         screen.set_at(stars[loop], WHITE)
 
     # Main loop
@@ -519,42 +545,42 @@ def draw_map(map):
         inc = inc + 1
 
         # Erase the first star field.
-        for loop in range(0, 10):
+        for loop in range(0, NUM_STARS // 4):
             screen.set_at(stars[loop], BLACK)
 
         # Check if first field's stars hit the screen border.
-        stars = moveStars(screen, stars, 0, 10, direction)
+        stars = moveStars(screen, stars, 0, NUM_STARS // 4, direction)
 
         # Second star field algorythms.
         if (inc % 2 == 0):
 
             # Erase the second field.
-            for loop in range(11, 20):
+            for loop in range(NUM_STARS // 4 +1, NUM_STARS //4 * 2):
                 screen.set_at(stars[loop], BLACK)
 
             # Checks to see if the second field's stars hit the screen border.
-            stars = moveStars(screen, stars, 11, 20, direction)
+            stars = moveStars(screen, stars, NUM_STARS // 4+1, NUM_STARS//4*2, direction)
 
             # Place ten light gray stars.
-            for loop in range(11, 20):
+            for loop in range(NUM_STARS//4+1, NUM_STARS//4*2):
                 screen.set_at(stars[loop], LIGHTGRAY)
 
         # Third star field algorythms.
         if (inc % 5 == 0):
 
             # Erase the third field.
-            for loop in range(21, NUM_STARS):
+            for loop in range(NUM_STARS//4*2+1, NUM_STARS):
                 screen.set_at(stars[loop], BLACK)
 
             # Checks to see if the third field's stars hit the screen border.
-            stars = moveStars(screen, stars, 21, NUM_STARS, direction)
+            stars = moveStars(screen, stars, NUM_STARS//4*2+1, NUM_STARS, direction)
 
             # Place ten dark gray stars.
-            for loop in range(21, NUM_STARS):
+            for loop in range(NUM_STARS//4*2+1, NUM_STARS):
                 screen.set_at(stars[loop], DARKGRAY)
 
         # Place ten white stars.
-        for loop in range(0, 10):
+        for loop in range(0, NUM_STARS//4):
             screen.set_at(stars[loop], WHITE)
 
         # Control the starfield speed.
