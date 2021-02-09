@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:02:11>
+# Time-stamp: <2021-02-09 00:05:21>
 
 # Standard libraries
 import sys
@@ -40,31 +40,6 @@ from collections import defaultdict
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
 
-GREEK_ALPHABET = """Alpha
-Beta
-Gamma
-Delta
-Epsilon
-Zeta
-Eta
-Theta
-Iota
-Kappa
-Lambda
-Mu
-Nu
-Xi
-Omicron
-Pi
-Rho
-Sigma
-Tau
-Upsilon
-Phi
-Chi
-Psi
-Omega""".split()
-
 defaults = argparse.Namespace()
 defaults.count = 10
 defaults.min = 4
@@ -74,28 +49,55 @@ defaults.new = False
 # Name generator END
 
 
-# A function to name a star using Bayer-style names in made-up
-# constellations with pseudo-latin names.
-def gen_star_name(options=defaults):
 
-    # Generate a pseudo-latin constellation name.
-    if random.randrange(2):
-        constellation = markov.gen_name("latinm", options)
-    else:
-        constellation = markov.gen_name("latinf", options)
+def main2():
 
-    # Choose a rank for the star within the constellation;
-    # making the brighter ranks (Alpha, Beta...) more likely
-    # because we're magnitude elitists.
-    rank = random.randrange(5)
-    while random.randrange(2):
-        rank += 1
-    # Take that ranked Greek letter; if we rolled an
-    # extraordinarily high rank, just wrap around the list.
-    rankname = GREEK_ALPHABET[rank % 24]
+    log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
+                    filename='./log/main.log', level=log.DEBUG)
 
-    # for example, "Epsilon Athanatille"
-    return "%s %s" % (rankname, constellation)
+    log.info("===========================================")
+    log.info("START")
+
+    map = SpaceMap()
+
+    map.read_space_map()
+    map.write_space_map()
+    # map.write_networkx_map()
+    # map.read_networkx_map()
+    # print(map)
+
+    ships = Ship()
+    ships.map = map
+    ships.add("Ship 1")
+    ships.add("Ship 2")
+    ships.add("Ship 3")
+    ships.add("Ship 4")
+    ships.delete("Ship 4")
+
+    #scheduler = BlockingScheduler()
+    #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
+    # scheduler.start()
+
+    c = map.get_coordinates('black-planet-5-3')
+    ships.set_location("Ship 1", c)
+
+    c = map.get_coordinates('black-planet-5-1')
+    ships.set_target("Ship 1", c)
+
+    #c = map.get_coordinates('black-planet-5-3')
+
+    log.info("DONE")
+
+
+
+def main_namegen():
+    markov = MarkovChainNamer()
+
+
+
+    for i in range(10):
+        print(markov.gen_name("finnish", defaults))
+
 
 
 class MarkovChainNamer(object):
@@ -105,18 +107,20 @@ class MarkovChainNamer(object):
         self.source = defaultdict(list)
 
     def next(self, setname, current):
+        #print("next:",setname, current)
         if not current:
             return "^"
-        k = current
+
         while True:
-            if k:
-                if (setname, k) in self.chains:
-                    return random.choice(self.chains[(setname, k)])
-                k = k[1:]
+            if current:
+                if (setname, current) in self.chains:
+                    return random.choice(self.chains[(setname, current)])
+                current = current[1:]
             else:
                 return random.choice(self.splat[setname])
 
     def load_chains(self, setname, name):
+        #print ("load_chains:", setname, name)
         if not name:
             return
         self.source[setname].append(name)
@@ -131,6 +135,7 @@ class MarkovChainNamer(object):
                     self.chains[(setname, prefix)].append(seq[-1])
 
     def load_dataset_file(self, setname, filepath):
+        #print("load_dataset:", setname,filepath)
         names = [line.strip() for line in open(filepath, 'rt').readlines()]
         for name in names:
             if name.startswith('#'):
@@ -141,6 +146,7 @@ class MarkovChainNamer(object):
             self.load_chains("all", name)
 
     def load_dataset(self, setname):
+        #print("load_dataset:",setname)
         if setname == "all":
             self.load_all_name_data()
         else:
@@ -152,6 +158,7 @@ class MarkovChainNamer(object):
                 sys.exit(-1)
 
     def load_all_name_data(self):
+        #print("load_all_name_data")
         for fn in os.listdir(os.path.join(HOME_FOLDER, NAME_DATA_FOLDER)):
             if fn.endswith(".txt"):
                 setname, ext = os.path.splitext(fn)
@@ -159,6 +166,7 @@ class MarkovChainNamer(object):
                 self.load_dataset_file(setname, path)
 
     def _gen_name(self, setname, options):
+        #print ("_gen_name:",setname, options)
         ok = False
 
         if setname not in self.splat:
@@ -179,6 +187,7 @@ class MarkovChainNamer(object):
         return name.replace("^", "")
 
     def gen_name(self, setname, options):
+        #print("gen_name:",setname, options)
         acceptable = False
         while not acceptable:
             name = self._gen_name(setname, options)
@@ -191,7 +200,7 @@ class MarkovChainNamer(object):
         return name
 
 
-markov = MarkovChainNamer()
+
 
 
 class Ship:
@@ -426,52 +435,7 @@ class SpaceMapGenerator():
         pass
 
 
-def main2():
 
-    log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
-                    filename='./log/main.log', level=log.DEBUG)
-
-    log.info("===========================================")
-    log.info("START")
-
-    map = SpaceMap()
-
-    map.read_space_map()
-    map.write_space_map()
-    # map.write_networkx_map()
-    # map.read_networkx_map()
-    # print(map)
-
-    ships = Ship()
-    ships.map = map
-    ships.add("Ship 1")
-    ships.add("Ship 2")
-    ships.add("Ship 3")
-    ships.add("Ship 4")
-    ships.delete("Ship 4")
-
-    #scheduler = BlockingScheduler()
-    #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
-    # scheduler.start()
-
-    c = map.get_coordinates('black-planet-5-3')
-    ships.set_location("Ship 1", c)
-
-    c = map.get_coordinates('black-planet-5-1')
-    ships.set_target("Ship 1", c)
-
-    #c = map.get_coordinates('black-planet-5-3')
-
-    log.info("DONE")
-
-
-def simulate():
-    passtart
-
-
-def main_namegen():
-    print("start")
-    print(gen_star_name())
 
 
 if __name__ == "__main__":
