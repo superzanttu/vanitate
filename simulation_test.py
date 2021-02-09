@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 01:07:15>
+# Time-stamp: <2021-02-09 01:07:52>
 
 # Standard libraries
 import sys
@@ -433,7 +433,7 @@ class SpaceMapGenerator():
         name = "Suomi"
 
         starcount=0
-        for s in range(10):
+        for s in range(100):
             starcount+=1
 
             while name in self.systems:
@@ -452,7 +452,7 @@ class SpaceMapGenerator():
 
             self.systems[name]={'x:': x, 'y:': y}
 
-            print(starcount, "name:",name,"x:",x, "y:",y)
+            print(s, "name:",name,"x:",x, "y:",y)
 
 
 def main_map():
