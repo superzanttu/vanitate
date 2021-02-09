@@ -18,3 +18,8 @@
 
   1 au = 149 597 870 700 m.
   Aurinkokunnan halkaisija on 1000 au
+
+
+# Refefences
+
+- https://github.com/borogove/names 

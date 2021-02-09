@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-05 14:24:47>
+# Time-stamp: <2021-02-09 00:00:32>
 
 # Standard libraries
 import sys
@@ -28,6 +28,173 @@ import yaml
 import networkx as nx
 from apscheduler.schedulers.blocking import BlockingScheduler
 
+
+#Name generator START
+import sys
+import argparse
+import os
+import random
+
+from collections import defaultdict
+
+HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
+NAME_DATA_FOLDER = "namedata"
+
+GREEK_ALPHABET = """Alpha
+Beta
+Gamma
+Delta
+Epsilon
+Zeta
+Eta
+Theta
+Iota
+Kappa
+Lambda
+Mu
+Nu
+Xi
+Omicron
+Pi
+Rho
+Sigma
+Tau
+Upsilon
+Phi
+Chi
+Psi
+Omega""".split()
+
+defaults = argparse.Namespace()
+defaults.count = 1
+defaults.min = 4
+defaults.max = 13
+defaults.new = False
+
+#Name generator END
+
+
+# A function to name a star using Bayer-style names in made-up
+# constellations with pseudo-latin names.
+def gen_star_name(options = defaults ):
+
+    # Generate a pseudo-latin constellation name.
+    if random.randrange(2):
+        constellation = markov.gen_name( "latinm", options )
+    else:
+        constellation = markov.gen_name( "latinf", options )
+
+
+    # Choose a rank for the star within the constellation;
+    # making the brighter ranks (Alpha, Beta...) more likely
+    # because we're magnitude elitists.
+    rank = random.randrange(5)
+    while random.randrange(2):
+        rank += 1
+    # Take that ranked Greek letter; if we rolled an
+    # extraordinarily high rank, just wrap around the list.
+    rankname = GREEK_ALPHABET[ rank % 24 ]
+
+    # for example, "Epsilon Athanatille"
+    return "%s %s"%(rankname,constellation)
+
+
+
+class MarkovChainNamer( object ):
+    def __init__(self):
+        self.chains = defaultdict(list)
+        self.splat = defaultdict(str)
+        self.source = defaultdict(list)
+
+    def next( self, setname, current ):
+        if not current:
+            return "^"
+        k = current
+        while True:
+            if k:
+                if (setname,k) in self.chains:
+                    return random.choice( self.chains[(setname,k)] )
+                k = k[1:]
+            else:
+                return random.choice(self.splat[setname])
+
+    def load_chains( self, setname, name ):
+        if not name:
+            return
+        self.source[setname].append(name)
+        name = "^" + name + "|"
+        self.splat[setname] = self.splat[setname] + name
+        # initials[setname] = initials[setname] + name[0]
+        for count in range(2,4):
+            for i in range(len(name)):
+                seq = name[i:i+count]
+                if len(seq) > 1:
+                    prefix = seq[:-1]
+                    self.chains[(setname,prefix)].append( seq[-1] )
+
+
+    def load_dataset_file( self, setname, filepath ):
+        names = [line.strip() for line in open(filepath,'rt').readlines()]
+        for name in names:
+            if name.startswith('#'):
+                continue
+            # Keep everything as unicode internally
+            #name = name.decode('utf-8')
+            self.load_chains( setname, name )
+            self.load_chains( "all", name )
+
+
+    def load_dataset( self, setname ):
+        if setname == "all":
+            self.load_all_name_data()
+        else:
+            path = os.path.join( HOME_FOLDER, NAME_DATA_FOLDER, setname+".txt" )
+            if os.path.exists(path):
+                self.load_dataset_file( setname, path )
+            else:
+                print ("Error: name data file '%s' not found."%(path))
+                sys.exit(-1)
+
+    def load_all_name_data(self):
+        for fn in os.listdir( os.path.join( HOME_FOLDER, NAME_DATA_FOLDER ) ):
+            if fn.endswith(".txt"):
+                setname, ext = os.path.splitext(fn)
+                path = os.path.join( HOME_FOLDER, NAME_DATA_FOLDER, setname+".txt" )
+                self.load_dataset_file( setname, path )
+
+    def _gen_name( self, setname, options ):
+        ok = False
+
+        if setname not in self.splat:
+            self.load_dataset(setname)
+
+        while not ok:
+            name = "^"
+
+            while len(name) < options.max:
+                next = self.next( setname, name )
+                if next != "|":
+                    name += next
+                else:
+                    if len(name) > options.min:
+                        ok=True
+                    break
+
+        return name.replace("^","")
+
+    def gen_name( self, setname, options ):
+        acceptable = False
+        while not acceptable:
+            name = self._gen_name( setname, options )
+            if not options.new:
+                acceptable = True
+            else:
+                # compare the generated name against existing names for the set
+                if name not in self.source[setname]:
+                    acceptable = True
+        return name
+
+markov = MarkovChainNamer()
 
 class Ship:
     """Ship functions"""
@@ -59,18 +226,18 @@ class Ship:
 
             self.ship_data[id] = {}
             sl = self.ship_data[id]['location'] = {}
-            sl['x_uu'] = 0
-            sl['y_uu'] = 0
-            sl['x_gu'] = 0
-            sl['y_gu'] = 0
+            #sl['x_uu'] = 0
+            #sl['y_uu'] = 0
+            #sl['x_gu'] = 0
+            #sl['y_gu'] = 0
             sl['x_su'] = 0
             sl['y_su'] = 0
 
             st = self.ship_data[id]['target'] = {}
-            st['x_uu'] = 0
-            st['y_uu'] = 0
-            st['x_gu'] = 0
-            st['y_gu'] = 0
+            #st['x_uu'] = 0
+            #st['y_uu'] = 0
+            #st['x_gu'] = 0
+            #st['y_gu'] = 0
             st['x_su'] = 0
             st['y_su'] = 0
 
@@ -89,10 +256,10 @@ class Ship:
         if id in self.ships:
             log.debug("%s %s" % (id,coordinates))
             sc = self.ship_data[id]['location']
-            sc['x_uu'] = coordinates['x_uu']
-            sc['y_uu'] = coordinates['y_uu']
-            sc['x_gu'] = coordinates['x_gu']
-            sc['y_gu'] = coordinates['y_gu']
+            #sc['x_uu'] = coordinates['x_uu']
+            #sc['y_uu'] = coordinates['y_uu']
+            #sc['x_gu'] = coordinates['x_gu']
+            #sc['y_gu'] = coordinates['y_gu']
             sc['x_su'] = coordinates['x_su']
             sc['y_su'] = coordinates['y_su']
         else:
@@ -103,10 +270,10 @@ class Ship:
         if id in self.ships:
             log.debug("%s %s" % (id,coordinates))
             sc = self.ship_data[id]['target']
-            sc['x_uu'] = coordinates['x_uu']
-            sc['y_uu'] = coordinates['y_uu']
-            sc['x_gu'] = coordinates['x_gu']
-            sc['y_gu'] = coordinates['y_gu']
+            #sc['x_uu'] = coordinates['x_uu']
+            #sc['y_uu'] = coordinates['y_uu']
+            #sc['x_gu'] = coordinates['x_gu']
+            #sc['y_gu'] = coordinates['y_gu']
             sc['x_su'] = coordinates['x_su']
             sc['y_su'] = coordinates['y_su']
             self.set_heading_to(id,coordinates)
@@ -118,14 +285,14 @@ class Ship:
 
         # Current location
         sl = self.ship_data[id]['location']
-        cx_uu=sl['x_uu']
-        cy_uu=sl['y_uu']
-        cx_gu=sl['x_gu']
-        cy_hu=sl['y_gu']
+        #cx_uu=sl['x_uu']
+        #cy_uu=sl['y_uu']
+        #cx_gu=sl['x_gu']
+        #cy_hu=sl['y_gu']
         cx_su=sl['x_su']
         cy_su=sl['y_su']
 
-        double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
+        #double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
         FIXME
 
 
@@ -253,7 +420,16 @@ class SpaceMap:
             log.error("Object not found (%s)" % (id))
 
 
-def main():
+class SpaceMapGenerator():
+
+    systems={}
+
+    def generateStars():
+
+        pass
+
+
+def main2():
 
     log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',filename='./log/main.log', level=log.DEBUG)
 
@@ -292,8 +468,10 @@ def main():
 
 
 def simulate():
-    pass
-
+    passtart
+def main_namegen():
+    print("start")
+    print (gen_star_name())
 
 if __name__ == "__main__":
-    main()
+    main_namegen()
