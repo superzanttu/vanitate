@@ -16,13 +16,14 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:42:29>
+# Time-stamp: <2021-02-09 01:05:55>
 
 # Standard libraries
 import sys
 import logging as log
 import time
 import pprint
+import math
 
 # External libraries
 import yaml
@@ -416,22 +417,45 @@ class SpaceMap:
 
 class SpaceMapGenerator():
 
-    X_MAX = 5e-17
-    Y_MAX = 5e-17
-    STAR_MINIMUM_DISTANCE = 4.7302642-13
+    markov = MarkovChainNamer()
+
+    X_MAX = 5 * 10 **17
+    Y_MAX = 5 *10**17
+    STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
+
+
 
     systems = {}
+    systems['Suomi']={'x':0, 'y':0}
 
-    def generateStars():
+    def generateStars(self):
 
-        x = random.randrange(X_MAX)
-        y = random.randrange(Y_MAX)
+        name = "Suomi"
 
+        for s in range(10):
 
+            while name in self.systems:
+                name = self.markov.gen_name("finnish", 8, 13)
+
+            distance_ok = False
+            while not distance_ok:
+                x = random.randrange(self.X_MAX)
+                y = random.randrange(self.Y_MAX)
+
+                distance_ok = True
+                for s in self.systems:
+                    if math.sqrt(x**2 + y**2) < self.STAR_MINIMUM_DISTANCE:
+                        distance_ok = False
+                        exit
+
+            self.systems[name]={'x:': x, 'y:': y}
+
+            print("name:",name,"x:",x, "y:",y)
 
 
 def main_map():
     space = SpaceMapGenerator()
+    space.generateStars()
 
 
 
