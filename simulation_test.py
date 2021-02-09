@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:35:30>
+# Time-stamp: <2021-02-09 00:42:29>
 
 # Standard libraries
 import sys
@@ -416,12 +416,26 @@ class SpaceMap:
 
 class SpaceMapGenerator():
 
+    X_MAX = 5e-17
+    Y_MAX = 5e-17
+    STAR_MINIMUM_DISTANCE = 4.7302642-13
+
     systems = {}
 
     def generateStars():
 
-        pass
+        x = random.randrange(X_MAX)
+        y = random.randrange(Y_MAX)
+
+
+
+
+def main_map():
+    space = SpaceMapGenerator()
+
+
+
 
 
 if __name__ == "__main__":
-    main_namegen()
+    main_map()
