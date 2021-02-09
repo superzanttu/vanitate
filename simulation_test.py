@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:11:17>
+# Time-stamp: <2021-02-09 00:12:01>
 
 # Standard libraries
 import sys
@@ -46,7 +46,6 @@ defaults.max = 13
 
 
 # Name generator END
-
 
 
 def main2():
@@ -88,13 +87,11 @@ def main2():
     log.info("DONE")
 
 
-
 def main_namegen():
     markov = MarkovChainNamer()
 
     for i in range(10):
         print(markov.gen_name("finnish", defaults))
-
 
 
 class MarkovChainNamer(object):
@@ -143,7 +140,7 @@ class MarkovChainNamer(object):
             self.load_chains("all", name)
 
     def load_dataset(self, setname):
-        #print("load_dataset:",setname)
+        # print("load_dataset:",setname)
         if setname == "all":
             self.load_all_name_data()
         else:
@@ -155,7 +152,7 @@ class MarkovChainNamer(object):
                 sys.exit(-1)
 
     def load_all_name_data(self):
-        #print("load_all_name_data")
+        # print("load_all_name_data")
         for fn in os.listdir(os.path.join(HOME_FOLDER, NAME_DATA_FOLDER)):
             if fn.endswith(".txt"):
                 setname, ext = os.path.splitext(fn)
@@ -184,7 +181,7 @@ class MarkovChainNamer(object):
         return name.replace("^", "")
 
     def gen_name(self, setname, options):
-        print("gen_name:",setname, options)
+        print("gen_name:", setname, options)
         acceptable = False
         while not acceptable:
             name = self._gen_name(setname, options)
@@ -193,9 +190,6 @@ class MarkovChainNamer(object):
             if name not in self.source[setname]:
                 acceptable = True
         return name
-
-
-
 
 
 class Ship:
@@ -428,9 +422,6 @@ class SpaceMapGenerator():
     def generateStars():
 
         pass
-
-
-
 
 
 if __name__ == "__main__":
