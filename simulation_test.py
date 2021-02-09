@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:05:21>
+# Time-stamp: <2021-02-09 00:11:17>
 
 # Standard libraries
 import sys
@@ -41,10 +41,9 @@ HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
 
 defaults = argparse.Namespace()
-defaults.count = 10
 defaults.min = 4
 defaults.max = 13
-defaults.new = False
+
 
 # Name generator END
 
@@ -92,8 +91,6 @@ def main2():
 
 def main_namegen():
     markov = MarkovChainNamer()
-
-
 
     for i in range(10):
         print(markov.gen_name("finnish", defaults))
@@ -187,16 +184,14 @@ class MarkovChainNamer(object):
         return name.replace("^", "")
 
     def gen_name(self, setname, options):
-        #print("gen_name:",setname, options)
+        print("gen_name:",setname, options)
         acceptable = False
         while not acceptable:
             name = self._gen_name(setname, options)
-            if not options.new:
+
+            # Name should not exsist in word list
+            if name not in self.source[setname]:
                 acceptable = True
-            else:
-                # compare the generated name against existing names for the set
-                if name not in self.source[setname]:
-                    acceptable = True
         return name
 
 
