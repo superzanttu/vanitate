@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 13:25:30>
+# Time-stamp: <2021-02-09 13:26:38>
 
 # Standard libraries
 import sys
@@ -537,7 +537,7 @@ def draw_map(map):
         elif (event.type == pygame.KEYDOWN):
             if (event.key == pygame.K_ESCAPE):
                 break
-    
+
 
 
 
@@ -572,6 +572,8 @@ def main_ship():
     space = SpaceMapGenerator()
     space.generateStars()
 
+
+    exit(1)
 
 
     ships = Ship()
