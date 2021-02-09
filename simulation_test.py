@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:12:01>
+# Time-stamp: <2021-02-09 00:13:22>
 
 # Standard libraries
 import sys
@@ -96,6 +96,7 @@ def main_namegen():
 
 class MarkovChainNamer(object):
     def __init__(self):
+        print(object)
         self.chains = defaultdict(list)
         self.splat = defaultdict(str)
         self.source = defaultdict(list)
