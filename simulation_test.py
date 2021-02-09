@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:32:36>
+# Time-stamp: <2021-02-09 00:35:30>
 
 # Standard libraries
 import sys
@@ -41,15 +41,12 @@ from collections import defaultdict
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
 
-defaults = argparse.Namespace()
-defaults.min = 4
-defaults.max = 13
 
 
 # Name generator END
 
 
-def main2():
+def main_ship():
 
     log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
                     filename='./log/main.log', level=log.DEBUG)
@@ -131,7 +128,7 @@ class MarkovChainNamer():
                     self.chains[(listname, prefix)].append(seq[-1])
 
     def load_wordlist_file(self, listname, filepath):
-        print("  load_wordlist:", listname, filepath)
+        #print("load_wordlist:", listname, filepath)
         names = [line.strip() for line in open(filepath, 'rt').readlines()]
         for name in names:
             if name.startswith('#'):
@@ -142,7 +139,7 @@ class MarkovChainNamer():
             self.load_chains("", name)
 
     def load_wordlist(self, listname):
-        print("load_wordlist:", listname)
+        #print("load_wordlist:", listname)
         if listname == "":
             self.load_all_name_data()
         else:
@@ -154,7 +151,7 @@ class MarkovChainNamer():
                 sys.exit(-1)
 
     def load_all_name_data(self):
-        print("load_all_name_data")
+        #print("load_all_name_data")
         for fn in os.listdir(os.path.join(HOME_FOLDER, NAME_DATA_FOLDER)):
             if fn.endswith(".txt"):
                 listname, ext = os.path.splitext(fn)
@@ -183,7 +180,7 @@ class MarkovChainNamer():
         return name.replace("^", "")
 
     def gen_name(self, listname, min_lenght, max_lenght):
-        print("gen_name:", listname, min_lenght, max_lenght)
+        #print("gen_name:", listname, min_lenght, max_lenght)
         acceptable = False
         while not acceptable:
             name = self._gen_name(listname, min_lenght, max_lenght)
