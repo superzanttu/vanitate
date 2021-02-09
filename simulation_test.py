@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 13:26:38>
+# Time-stamp: <2021-02-09 13:37:53>
 
 # Standard libraries
 import sys
@@ -299,7 +299,7 @@ class SpaceMapGenerator():
 
     # Initialize systems and and center system
     systems = {}
-    systems['Suomi'] = {'x': 0, 'y': 0}
+    systems['Suomi'] = {'location' : {'x': 0, 'y': 0}}
 
     # Store maximum and minimum coordinates
     system_x_min = 0
@@ -339,14 +339,14 @@ class SpaceMapGenerator():
 
                     distance_ok = True
                     for s in self.systems:
-                        sx = self.systems[s]['x']
-                        sy = self.systems[s]['y']
+                        sx = self.systems[s]['location']['x']
+                        sy = self.systems[s]['location']['y']
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
 
                             distance_ok = False
                             break
 
-                self.systems[name] = {'x': x, 'y': y}
+                self.systems[name] = {'location' : {'x': x, 'y': y}}
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -459,43 +459,8 @@ class Ship:
         # double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
         FIXME
 
-def initStars(screen):
-    "Create the starfield"
 
-    # The starfield is represented as a dictionary of x and y values.
-    stars = []
-
-    # Create a list of (x,y) coordinates.
-    for loop in range(0, NUM_STARS):
-        star = [random.randrange(0, screen.get_width() - 1),
-                random.randrange(0, screen.get_height() - 1)]
-        stars.append(star);
-
-    print(stars)
-
-    return stars
-
-def moveStars(screen, stars, start, end, direction):
-    "Correct for stars hitting the screen's borders"
-
-    for loop in range(start, end):
-        if (direction == LEFT):
-            if (stars[loop][0] != 1):
-                stars[loop][0] = stars[loop][0] - 1
-            else:
-                stars[loop][1] = random.randrange(0, screen.get_height() - 1)
-                stars[loop][0] = screen.get_width() - 1
-        elif (direction == RIGHT):
-            if (stars[loop][0] != screen.get_width() - 1):
-                stars[loop][0] = stars[loop][0] + 1
-            else:
-                stars[loop][1] = random.randrange(0, screen.get_height() - 1)
-                stars[loop][0] = 1
-
-    return stars
-
-
-def draw_map(map):
+def draw_map(space):
 
 
 
@@ -511,18 +476,9 @@ def draw_map(map):
 
     # Set the background to black.
     screen.fill(BLACK)
-
-    # Simulation variables.
-    delay = 8
-    inc = 2
-    direction = LEFT
-
-    # Create the starfield.
-    stars = initStars(screen)
-
     # Place ten white stars
-    for loop in range(0, NUM_STARS // 4):
-        screen.set_at(stars[loop], WHITE)
+    for key in space.systems:
+        screen.set_at(space.systems[key]['location'], WHITE)
 
     # Update the screen.
     pygame.display.update()
@@ -571,10 +527,6 @@ def main_ship():
 
     space = SpaceMapGenerator()
     space.generateStars()
-
-
-    exit(1)
-
 
     ships = Ship()
 
