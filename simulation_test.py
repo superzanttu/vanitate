@@ -92,8 +92,8 @@ def main_namegen():
     markov = MarkovChainNamer()
 
     for i in range(1):
-        print(markov.gen_name("", 4,13))
-        print(markov.gen_name("finnish", 4,13))
+        print(markov.gen_name("", 4, 13))
+        print(markov.gen_name("finnish", 4, 13))
 
 
 class MarkovChainNamer():
@@ -131,7 +131,7 @@ class MarkovChainNamer():
                     self.chains[(listname, prefix)].append(seq[-1])
 
     def load_wordlist_file(self, listname, filepath):
-        print("  load_wordlist:", listname,filepath)
+        print("  load_wordlist:", listname, filepath)
         names = [line.strip() for line in open(filepath, 'rt').readlines()]
         for name in names:
             if name.startswith('#'):
@@ -142,7 +142,7 @@ class MarkovChainNamer():
             self.load_chains("", name)
 
     def load_wordlist(self, listname):
-        print("load_wordlist:",listname)
+        print("load_wordlist:", listname)
         if listname == "":
             self.load_all_name_data()
         else:
