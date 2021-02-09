@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 13:15:04>
+# Time-stamp: <2021-02-09 13:25:30>
 
 # Standard libraries
 import sys
@@ -47,9 +47,9 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame test
 # Constants
-NUM_STARS = 40000
+NUM_STARS = 400
 SCREEN_SIZE = [3360, 2100]
-SCREEN_SIZE = [800, 600]
+#SCREEN_SIZE = [800, 600]
 WHITE = 255, 255, 255
 BLACK = 20, 20, 40
 LIGHTGRAY = 180, 180, 180
@@ -471,6 +471,8 @@ def initStars(screen):
                 random.randrange(0, screen.get_height() - 1)]
         stars.append(star);
 
+    print(stars)
+
     return stars
 
 def moveStars(screen, stars, start, end, direction):
@@ -522,6 +524,9 @@ def draw_map(map):
     for loop in range(0, NUM_STARS // 4):
         screen.set_at(stars[loop], WHITE)
 
+    # Update the screen.
+    pygame.display.update()
+
     # Main loop
     while 1:
 
@@ -532,65 +537,10 @@ def draw_map(map):
         elif (event.type == pygame.KEYDOWN):
             if (event.key == pygame.K_ESCAPE):
                 break
-            elif (event.key == pygame.K_UP):
-                if (delay >= 2): delay = delay - 1
-            elif (event.key == pygame.K_DOWN):
-                if (delay <= 16): delay = delay + 1
-            elif (event.key == pygame.K_LEFT):
-                direction = LEFT
-            elif (event.key == pygame.K_RIGHT):
-                direction = RIGHT
+    
 
-        # Used to slow down the second and third field.
-        inc = inc + 1
 
-        # Erase the first star field.
-        for loop in range(0, NUM_STARS // 4):
-            screen.set_at(stars[loop], BLACK)
 
-        # Check if first field's stars hit the screen border.
-        stars = moveStars(screen, stars, 0, NUM_STARS // 4, direction)
-
-        # Second star field algorythms.
-        if (inc % 2 == 0):
-
-            # Erase the second field.
-            for loop in range(NUM_STARS // 4 +1, NUM_STARS //4 * 2):
-                screen.set_at(stars[loop], BLACK)
-
-            # Checks to see if the second field's stars hit the screen border.
-            stars = moveStars(screen, stars, NUM_STARS // 4+1, NUM_STARS//4*2, direction)
-
-            # Place ten light gray stars.
-            for loop in range(NUM_STARS//4+1, NUM_STARS//4*2):
-                screen.set_at(stars[loop], LIGHTGRAY)
-
-        # Third star field algorythms.
-        if (inc % 5 == 0):
-
-            # Erase the third field.
-            for loop in range(NUM_STARS//4*2+1, NUM_STARS):
-                screen.set_at(stars[loop], BLACK)
-
-            # Checks to see if the third field's stars hit the screen border.
-            stars = moveStars(screen, stars, NUM_STARS//4*2+1, NUM_STARS, direction)
-
-            # Place ten dark gray stars.
-            for loop in range(NUM_STARS//4*2+1, NUM_STARS):
-                screen.set_at(stars[loop], DARKGRAY)
-
-        # Place ten white stars.
-        for loop in range(0, NUM_STARS//4):
-            screen.set_at(stars[loop], WHITE)
-
-        # Control the starfield speed.
-        pygame.time.delay(delay)
-
-        # Make sure this variable doesn't get too large.
-        if (inc == 500): inc = 2
-
-        # Update the screen.
-        pygame.display.update()
 
 
 
