@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:00:32>
+# Time-stamp: <2021-02-09 00:02:11>
 
 # Standard libraries
 import sys
@@ -66,7 +66,7 @@ Psi
 Omega""".split()
 
 defaults = argparse.Namespace()
-defaults.count = 1
+defaults.count = 10
 defaults.min = 4
 defaults.max = 13
 defaults.new = False
