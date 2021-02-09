@@ -16,12 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 00:13:22>
+# Time-stamp: <2021-02-09 00:32:36>
 
 # Standard libraries
 import sys
 import logging as log
 import time
+import pprint
 
 # External libraries
 import yaml
@@ -90,105 +91,105 @@ def main2():
 def main_namegen():
     markov = MarkovChainNamer()
 
-    for i in range(10):
-        print(markov.gen_name("finnish", defaults))
+    for i in range(1):
+        print(markov.gen_name("", 4,13))
+        print(markov.gen_name("finnish", 4,13))
 
 
-class MarkovChainNamer(object):
+class MarkovChainNamer():
     def __init__(self):
-        print(object)
         self.chains = defaultdict(list)
         self.splat = defaultdict(str)
         self.source = defaultdict(list)
 
-    def next(self, setname, current):
-        #print("next:",setname, current)
+    def next(self, listname, current):
+        #print("next:",listname, current)
         if not current:
             return "^"
 
         while True:
             if current:
-                if (setname, current) in self.chains:
-                    return random.choice(self.chains[(setname, current)])
+                if (listname, current) in self.chains:
+                    return random.choice(self.chains[(listname, current)])
                 current = current[1:]
             else:
-                return random.choice(self.splat[setname])
+                return random.choice(self.splat[listname])
 
-    def load_chains(self, setname, name):
-        #print ("load_chains:", setname, name)
+    def load_chains(self, listname, name):
+        #print ("load_chains:", listname, name)
         if not name:
             return
-        self.source[setname].append(name)
+        self.source[listname].append(name)
         name = "^" + name + "|"
-        self.splat[setname] = self.splat[setname] + name
-        # initials[setname] = initials[setname] + name[0]
+        self.splat[listname] = self.splat[listname] + name
+        # initials[listname] = initials[listname] + name[0]
         for count in range(2, 4):
             for i in range(len(name)):
                 seq = name[i:i+count]
                 if len(seq) > 1:
                     prefix = seq[:-1]
-                    self.chains[(setname, prefix)].append(seq[-1])
+                    self.chains[(listname, prefix)].append(seq[-1])
 
-    def load_dataset_file(self, setname, filepath):
-        #print("load_dataset:", setname,filepath)
+    def load_wordlist_file(self, listname, filepath):
+        print("  load_wordlist:", listname,filepath)
         names = [line.strip() for line in open(filepath, 'rt').readlines()]
         for name in names:
             if name.startswith('#'):
                 continue
             # Keep everything as unicode internally
             #name = name.decode('utf-8')
-            self.load_chains(setname, name)
-            self.load_chains("all", name)
+            self.load_chains(listname, name)
+            self.load_chains("", name)
 
-    def load_dataset(self, setname):
-        # print("load_dataset:",setname)
-        if setname == "all":
+    def load_wordlist(self, listname):
+        print("load_wordlist:",listname)
+        if listname == "":
             self.load_all_name_data()
         else:
-            path = os.path.join(HOME_FOLDER, NAME_DATA_FOLDER, setname+".txt")
+            path = os.path.join(HOME_FOLDER, NAME_DATA_FOLDER, listname+".txt")
             if os.path.exists(path):
-                self.load_dataset_file(setname, path)
+                self.load_wordlist_file(listname, path)
             else:
                 print("Error: name data file '%s' not found." % (path))
                 sys.exit(-1)
 
     def load_all_name_data(self):
-        # print("load_all_name_data")
+        print("load_all_name_data")
         for fn in os.listdir(os.path.join(HOME_FOLDER, NAME_DATA_FOLDER)):
             if fn.endswith(".txt"):
-                setname, ext = os.path.splitext(fn)
-                path = os.path.join(HOME_FOLDER, NAME_DATA_FOLDER, setname+".txt")
-                self.load_dataset_file(setname, path)
+                listname, ext = os.path.splitext(fn)
+                path = os.path.join(HOME_FOLDER, NAME_DATA_FOLDER, listname+".txt")
+                self.load_wordlist_file(listname, path)
 
-    def _gen_name(self, setname, options):
+    def _gen_name(self, listname, min_lenght, max_lenght):
         #print ("_gen_name:",setname, options)
         ok = False
 
-        if setname not in self.splat:
-            self.load_dataset(setname)
+        if listname not in self.splat:
+            self.load_wordlist(listname)
 
         while not ok:
             name = "^"
 
-            while len(name) < options.max:
-                next = self.next(setname, name)
+            while len(name) < max_lenght:
+                next = self.next(listname, name)
                 if next != "|":
                     name += next
                 else:
-                    if len(name) > options.min:
+                    if len(name) > min_lenght:
                         ok = True
                     break
 
         return name.replace("^", "")
 
-    def gen_name(self, setname, options):
-        print("gen_name:", setname, options)
+    def gen_name(self, listname, min_lenght, max_lenght):
+        print("gen_name:", listname, min_lenght, max_lenght)
         acceptable = False
         while not acceptable:
-            name = self._gen_name(setname, options)
+            name = self._gen_name(listname, min_lenght, max_lenght)
 
             # Name should not exsist in word list
-            if name not in self.source[setname]:
+            if name not in self.source[listname]:
                 acceptable = True
         return name
 
