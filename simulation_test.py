@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 09:46:13>
+# Time-stamp: <2021-02-10 09:56:29>
 
 # Standard libraries
 import sys
@@ -332,6 +332,8 @@ class SpaceMapGenerator():
                 while not distance_ok:
                     x = random.randrange(-self.SPACE_X_MAX,self.SPACE_X_MAX)
                     y = random.randrange(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
+                    #x = random.uniform(-self.SPACE_X_MAX,self.SPACE_X_MAX)
+                    #y = random.uniform(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
                     distance_ok = True
                     for s in self.systems:
@@ -420,6 +422,8 @@ class Ship:
             sl['x_su'] = 0
             sl['y_su'] = 0
 
+            self.ship_data[id]['angle'] = 0
+
             st = self.ship_data[id]['target'] = {}
             #st['x_uu'] = 0
             #st['y_uu'] = 0
@@ -428,9 +432,10 @@ class Ship:
             st['x_su'] = 0
             st['y_su'] = 0
 
-            ss = self.ship_data[id]['speed'] = {}
+            ss = self.ship_data[id]['velosity'] = {}
             ss['x_ms'] = 0
             ss['y_ms'] = 0
+
             sa = self.ship_data[id]['acceleration'] = {}
             sa['x_ms2'] = 0
             sa['y_ms2'] = 0
