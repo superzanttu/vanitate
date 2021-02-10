@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 10:55:30>
+# Time-stamp: <2021-02-10 10:56:40>
 
 # Standard libraries
 import sys
@@ -57,7 +57,6 @@ DARKGRAY = 120, 120, 120
 LEFT = 0
 RIGHT = 1
 ############
-
 
 
 class MarkovChainNamer():
@@ -156,6 +155,7 @@ class MarkovChainNamer():
             if name not in self.source[listname]:
                 acceptable = True
         return name
+
 
 class SpaceMap_YAML:
     """Space map functions"""
@@ -290,19 +290,15 @@ class SpaceMapGenerator():
     SPACE_Y_MAX = 5 * 10**17
     STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
-
-
-
     # Initialize systems and and center system
     systems = {}
-    systems['Suomi'] = {'location' : [0,0]}
+    systems['Suomi'] = {'location': [0, 0]}
 
     # Store maximum and minimum coordinates
     system_x_min = 0
-    system_x_max  = 0
+    system_x_max = 0
     system_y_min = 0
-    system_y_max  = 0
-
+    system_y_max = 0
 
     def __init__(self):
         log.debug("__init__")
@@ -314,11 +310,11 @@ class SpaceMapGenerator():
         sc1r = 10
         sc2r = 10
 
-        log.info ("Generating %s star names" % (sc1r*sc2r))
+        log.info("Generating %s star names" % (sc1r*sc2r))
 
         for sc1 in range(sc1r):
 
-            log.info("Generated %s of %s star names" %  (sc1*sc2r, sc1r*sc2r))
+            log.info("Generated %s of %s star names" % (sc1*sc2r, sc1r*sc2r))
 
             for sc2 in range(sc2r):
 
@@ -330,8 +326,8 @@ class SpaceMapGenerator():
                 distance_ok = False
 
                 while not distance_ok:
-                    x = random.randrange(-self.SPACE_X_MAX,self.SPACE_X_MAX)
-                    y = random.randrange(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
+                    x = random.randrange(-self.SPACE_X_MAX, self.SPACE_X_MAX)
+                    y = random.randrange(-self.SPACE_Y_MAX, self.SPACE_Y_MAX)
                     #x = random.uniform(-self.SPACE_X_MAX,self.SPACE_X_MAX)
                     #y = random.uniform(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
@@ -345,7 +341,7 @@ class SpaceMapGenerator():
                             distance_ok = False
                             break
 
-                self.systems[name] = {'location' : [x, y]}
+                self.systems[name] = {'location': [x, y]}
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -357,30 +353,34 @@ class SpaceMapGenerator():
                 elif y < self.system_y_min:
                     self.system_y_min = y
 
-        log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" % (self.system_x_max,self.system_x_min,self.system_y_max,self.system_y_min))
+        log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
+                  (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
 
-    def scaleCoordinates(self,source,target_min,target_max):
-        log.debug("source: %s, target_min: %s target: max: %s" % (source,target_min,target_max))
+    def scaleCoordinates(self, source, target_min, target_max):
+        log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
         # Scale x coordinate
-        tx = int(((target_max[0] - target_min[0])*(source[0] - self.system_x_min))/( self.system_x_max - self.system_x_min)+target_min[0])
-        ty = int(((target_max[1] - target_min[1])*(source[1] - self.system_y_min))/( self.system_y_max - self.system_y_min)+target_min[1])
+        tx = int(((target_max[0] - target_min[0])*(source[0] - self.system_x_min)
+                  )/(self.system_x_max - self.system_x_min)+target_min[0])
+        ty = int(((target_max[1] - target_min[1])*(source[1] - self.system_y_min)
+                  )/(self.system_y_max - self.system_y_min)+target_min[1])
 
-        log.debug("Scaled coordinates: %s, %s" % (tx,ty))
-        return [tx,ty]
+        log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        return [tx, ty]
 
-    def drawStars(self,screen, font):
+    def drawStars(self, screen, font):
 
         for key in self.systems:
             c1 = self.systems[key]['location']
-            c2=self.scaleCoordinates(c1,[SCREEN_SIZE[0]*0.02,SCREEN_SIZE[1]*0.02],[SCREEN_SIZE[0]*0.98,SCREEN_SIZE[1]*0.98])
+            c2 = self.scaleCoordinates(
+                c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
             screen.set_at(c2, WHITE)
-            pygame.draw.circle(screen,WHITE, c2, 5,0)
+            pygame.draw.circle(screen, WHITE, c2, 5, 0)
 
             img = font.render(key, True, (255, 255, 255))
-            screen.blit(img, [c2[0]+7,c2[1]-6])
+            screen.blit(img, [c2[0]+7, c2[1]-6])
 
         pygame.display.update()
 
@@ -388,8 +388,8 @@ class SpaceMapGenerator():
 class Ship:
     """Ship functions"""
 
-    font= None
-    screen=None
+    font = None
+    screen = None
 
     def __init__(self):
         self.ships = []
@@ -417,13 +417,13 @@ class Ship:
             self.ships.append(id)
 
             self.ship_data[id] = {}
-            sl = self.ship_data[id]['location'] = [0,0]
+            sl = self.ship_data[id]['location'] = [0, 0]
 
             self.ship_data[id]['angle'] = 0
 
-            ss = self.ship_data[id]['velosity_ms'] = [0,0]
+            ss = self.ship_data[id]['velosity_ms'] = [0, 0]
 
-            sa = self.ship_data[id]['acceleration_ms2'] = [0,0]
+            sa = self.ship_data[id]['acceleration_ms2'] = [0, 0]
 
         else:
             log.error("Can't add ship with existing name (%s)" % id)
@@ -432,24 +432,25 @@ class Ship:
 
         if id in self.ships:
             log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['location']=coordinates
+            sc = self.ship_data[id]['location'] = coordinates
 
         else:
             log.error("Can't find ship %s" % id)
 
-    def set_acceleration(self,id, acceleration_ms2):
+    def set_acceleration(self, id, acceleration_ms2):
         log.debug("Set ship %s acceleration to %s m/sˆ" % (id, acceleration_ms2))
         ax = acceleration_ms2 * math.cos(self.ship_data[id]['angle'])
         ay = acceleration_ms2 * math.sin(self.ship_data[id]['angle'])
-        self.ship_data[id]['acceleration_xy_ms2']=[ax,ay]
-        self.ship_data[id]['acceleration_ms2']=acceleration_ms2
+        self.ship_data[id]['acceleration_xy_ms2'] = [ax, ay]
+        self.ship_data[id]['acceleration_ms2'] = acceleration_ms2
 
         self.draw_ship_data(id)
 
-    def draw_ship_data(self,id):
+    def draw_ship_data(self, id):
 
         s = self.ship_data[id]
-        text="ID:%s Location:%s Angle:%s Acceleration: %s m/s2 AccXY: %s m/s2" % (id, s['location'],s['angle'],s['acceleration_ms2'],s['acceleration_xy_ms2'])
+        text = "ID:%s Location:%s Angle:%s Acceleration: %s m/s2 AccXY: %s m/s2" % (
+            id, s['location'], s['angle'], s['acceleration_ms2'], s['acceleration_xy_ms2'])
 
         log.debug("Draw ship data for %s: %s" % (id, text))
         img = self.font.render(text, True, (0, 0, 255))
@@ -461,7 +462,6 @@ class Ship:
         pygame.display.update()
 
 
-
 def main_map():
     space = SpaceMapGenerator()
     space.generateStars()
@@ -471,12 +471,14 @@ def main_map():
         for key in space.systems.keys():
             f.write("%s,%s\n" % (key, space.systems[key]))
 
+
 def main_namegen():
     markov = MarkovChainNamer()
 
     for i in range(1):
         print(markov.gen_name("", 4, 13))
         print(markov.gen_name("finnish", 4, 13))
+
 
 def main_ship():
 
@@ -495,13 +497,12 @@ def main_ship():
     font_size_22 = pygame.font.SysFont(None, 22)
     font_size_32 = pygame.font.SysFont(None, 32)
 
-    log.debug("pygame dislay modes: %s",pygame.display.list_modes())
+    log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
     # Set the background to black.
     screen.fill(BLACK)
-
 
     space = SpaceMapGenerator()
     space.generateStars()
@@ -513,8 +514,7 @@ def main_ship():
 
     ships.add("Ship 1")
 
-    #space.scaleCoordinates([10,20],[0,0],SCREEN_SIZE)
-
+    # space.scaleCoordinates([10,20],[0,0],SCREEN_SIZE)
 
     #scheduler = BlockingScheduler()
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
@@ -527,31 +527,24 @@ def main_ship():
 
         # Handle input events.
         event = pygame.event.poll()
-        keys=pygame.key.get_pressed()
+        keys = pygame.key.get_pressed()
         if (event.type == pygame.QUIT):
             break
         elif (event.type == pygame.KEYDOWN):
             if (event.key == pygame.K_ESCAPE):
                 break
-            elif  (event.key == pygame.K_UP):
-                ships.set_acceleration("Ship 1",9)
-            elif  (event.key == pygame.K_DOWN):
-                ships.set_acceleration("Ship 1",0)
+            elif (event.key == pygame.K_UP):
+                ships.set_acceleration("Ship 1", 9)
+            elif (event.key == pygame.K_DOWN):
+                ships.set_acceleration("Ship 1", 0)
 
-        #elif keys[pygame.K_UP]:
+        # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
-
-
-
 
     log.info("DONE")
 
 
-
-
-
-
 if __name__ == "__main__":
-    #main_namegen()
-    #main_map()
+    # main_namegen()
+    # main_map()
     main_ship()
