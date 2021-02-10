@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 09:56:29>
+# Time-stamp: <2021-02-10 10:55:30>
 
 # Standard libraries
 import sys
@@ -388,6 +388,9 @@ class SpaceMapGenerator():
 class Ship:
     """Ship functions"""
 
+    font= None
+    screen=None
+
     def __init__(self):
         self.ships = []
         self.ship_data = {}
@@ -414,31 +417,13 @@ class Ship:
             self.ships.append(id)
 
             self.ship_data[id] = {}
-            sl = self.ship_data[id]['location'] = {}
-            #sl['x_uu'] = 0
-            #sl['y_uu'] = 0
-            #sl['x_gu'] = 0
-            #sl['y_gu'] = 0
-            sl['x_su'] = 0
-            sl['y_su'] = 0
+            sl = self.ship_data[id]['location'] = [0,0]
 
             self.ship_data[id]['angle'] = 0
 
-            st = self.ship_data[id]['target'] = {}
-            #st['x_uu'] = 0
-            #st['y_uu'] = 0
-            #st['x_gu'] = 0
-            #st['y_gu'] = 0
-            st['x_su'] = 0
-            st['y_su'] = 0
+            ss = self.ship_data[id]['velosity_ms'] = [0,0]
 
-            ss = self.ship_data[id]['velosity'] = {}
-            ss['x_ms'] = 0
-            ss['y_ms'] = 0
-
-            sa = self.ship_data[id]['acceleration'] = {}
-            sa['x_ms2'] = 0
-            sa['y_ms2'] = 0
+            sa = self.ship_data[id]['acceleration_ms2'] = [0,0]
 
         else:
             log.error("Can't add ship with existing name (%s)" % id)
@@ -447,44 +432,34 @@ class Ship:
 
         if id in self.ships:
             log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['location']
-            #sc['x_uu'] = coordinates['x_uu']
-            #sc['y_uu'] = coordinates['y_uu']
-            #sc['x_gu'] = coordinates['x_gu']
-            #sc['y_gu'] = coordinates['y_gu']
-            sc['x_su'] = coordinates['x_su']
-            sc['y_su'] = coordinates['y_su']
+            sc = self.ship_data[id]['location']=coordinates
+
         else:
             log.error("Can't find ship %s" % id)
 
-    def set_target(self, id, coordinates):
-        if id in self.ships:
-            log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['target']
-            #sc['x_uu'] = coordinates['x_uu']
-            #sc['y_uu'] = coordinates['y_uu']
-            #sc['x_gu'] = coordinates['x_gu']
-            #sc['y_gu'] = coordinates['y_gu']
-            sc['x_su'] = coordinates['x_su']
-            sc['y_su'] = coordinates['y_su']
-            self.set_heading_to(id, coordinates)
-        else:
-            log.error("Can't find ship %s" % id)
+    def set_acceleration(self,id, acceleration_ms2):
+        log.debug("Set ship %s acceleration to %s m/sˆ" % (id, acceleration_ms2))
+        ax = acceleration_ms2 * math.cos(self.ship_data[id]['angle'])
+        ay = acceleration_ms2 * math.sin(self.ship_data[id]['angle'])
+        self.ship_data[id]['acceleration_xy_ms2']=[ax,ay]
+        self.ship_data[id]['acceleration_ms2']=acceleration_ms2
 
-    def set_heading_to(self, id, coordinates):
-        log.debug("%s" % coordinates)
+        self.draw_ship_data(id)
 
-        # Current location
-        sl = self.ship_data[id]['location']
-        # cx_uu=sl['x_uu']
-        # cy_uu=sl['y_uu']
-        # cx_gu=sl['x_gu']
-        # cy_hu=sl['y_gu']
-        cx_su = sl['x_su']
-        cy_su = sl['y_su']
+    def draw_ship_data(self,id):
 
-        # double angle = atan2(y2 - y1, x2 - x1) * 180 / PI;".
-        FIXME
+        s = self.ship_data[id]
+        text="ID:%s Location:%s Angle:%s Acceleration: %s m/s2 AccXY: %s m/s2" % (id, s['location'],s['angle'],s['acceleration_ms2'],s['acceleration_xy_ms2'])
+
+        log.debug("Draw ship data for %s: %s" % (id, text))
+        img = self.font.render(text, True, (0, 0, 255))
+
+        c = img.copy()
+        c.fill(WHITE)
+        self.screen.blit(c, (0, 0))
+        self.screen.blit(img, (0, 0))
+        pygame.display.update()
+
 
 
 def main_map():
@@ -518,6 +493,7 @@ def main_ship():
 
     log.debug("Initializing pygame fonts")
     font_size_22 = pygame.font.SysFont(None, 22)
+    font_size_32 = pygame.font.SysFont(None, 32)
 
     log.debug("pygame dislay modes: %s",pygame.display.list_modes())
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
@@ -532,6 +508,8 @@ def main_ship():
     space.drawStars(screen, font_size_22)
 
     ships = Ship()
+    ships.font = font_size_32
+    ships.screen = screen
 
     ships.add("Ship 1")
 
@@ -542,10 +520,6 @@ def main_ship():
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
     # scheduler.start()
 
-
-    img = font_size_22.render('DONE - press ESC to quit', True, (255, 0, 0))
-    screen.blit(img, (0, 0))
-
     log.debug("Waiting for ESC")
 
     # Main loop
@@ -553,11 +527,21 @@ def main_ship():
 
         # Handle input events.
         event = pygame.event.poll()
+        keys=pygame.key.get_pressed()
         if (event.type == pygame.QUIT):
             break
         elif (event.type == pygame.KEYDOWN):
             if (event.key == pygame.K_ESCAPE):
                 break
+            elif  (event.key == pygame.K_UP):
+                ships.set_acceleration("Ship 1",9)
+            elif  (event.key == pygame.K_DOWN):
+                ships.set_acceleration("Ship 1",0)
+
+        #elif keys[pygame.K_UP]:
+        #    ships.setAcceleration
+
+
 
 
     log.info("DONE")
