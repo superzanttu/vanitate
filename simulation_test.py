@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-09 13:37:53>
+# Time-stamp: <2021-02-10 02:41:27>
 
 # Standard libraries
 import sys
@@ -299,7 +299,7 @@ class SpaceMapGenerator():
 
     # Initialize systems and and center system
     systems = {}
-    systems['Suomi'] = {'location' : {'x': 0, 'y': 0}}
+    systems['Suomi'] = {'location' : [0,0]}
 
     # Store maximum and minimum coordinates
     system_x_min = 0
@@ -316,7 +316,7 @@ class SpaceMapGenerator():
         name = "Suomi"
 
         sc1r = 10
-        sc2r = 100
+        sc2r = 10
 
         log.info ("Generating %s star names" % (sc1r*sc2r))
 
@@ -339,14 +339,15 @@ class SpaceMapGenerator():
 
                     distance_ok = True
                     for s in self.systems:
-                        sx = self.systems[s]['location']['x']
-                        sy = self.systems[s]['location']['y']
+                        sc = self.systems[s]['location']
+                        sx = sc[0]
+                        sy = sc[1]
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
 
                             distance_ok = False
                             break
 
-                self.systems[name] = {'location' : {'x': x, 'y': y}}
+                self.systems[name] = {'location' : [x, y]}
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -358,7 +359,21 @@ class SpaceMapGenerator():
                 elif y < self.system_y_min:
                     self.system_y_min = y
 
-        log.debug("System x_max: %s x_min: %s y_max: %s y_min: %s" % (self.system_x_max,self.system_x_min,self.system_y_max,self.system_y_min))
+        log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" % (self.system_x_max,self.system_x_min,self.system_y_max,self.system_y_min))
+
+    def scaleCoordinates(self,source,target_min,target_max):
+        log.debug("source: %s, target_min: %s target: max: %s" % (source,target_min,target_max))
+        s=source[0]
+        smin=-10
+        smax=10
+        tmin=0
+        tmax=100
+        log.debug("s:%s smin:%s smax:%s tmin:%s tmax:%s" % (s,smin,smax,tmin,tmax))
+
+        t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
+
+        print("t:",t)
+
 
 
 class Ship:
@@ -478,7 +493,9 @@ def draw_map(space):
     screen.fill(BLACK)
     # Place ten white stars
     for key in space.systems:
-        screen.set_at(space.systems[key]['location'], WHITE)
+        c1 = space.systems[key]['location']
+        c2=space.scaleCoordinates(c1,[0,0],SCREEN_SIZE)
+        screen.set_at(c2, WHITE)
 
     # Update the screen.
     pygame.display.update()
@@ -531,6 +548,9 @@ def main_ship():
     ships = Ship()
 
     ships.add("Ship 1")
+
+    space.scaleCoordinates([10,20],[0,0],SCREEN_SIZE)
+    exit(1)
 
 
     #scheduler = BlockingScheduler()
