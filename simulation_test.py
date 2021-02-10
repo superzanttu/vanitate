@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 09:10:40>
+# Time-stamp: <2021-02-10 09:46:13>
 
 # Standard libraries
 import sys
@@ -157,11 +157,7 @@ class MarkovChainNamer():
                 acceptable = True
         return name
 
-
-
-
-
-class SpaceMap:
+class SpaceMap_YAML:
     """Space map functions"""
 
     def __init__(self):
@@ -373,6 +369,18 @@ class SpaceMapGenerator():
         log.debug("Scaled coordinates: %s, %s" % (tx,ty))
         return [tx,ty]
 
+    def drawStars(self,screen, font):
+
+        for key in self.systems:
+            c1 = self.systems[key]['location']
+            c2=self.scaleCoordinates(c1,[SCREEN_SIZE[0]*0.02,SCREEN_SIZE[1]*0.02],[SCREEN_SIZE[0]*0.98,SCREEN_SIZE[1]*0.98])
+            screen.set_at(c2, WHITE)
+            pygame.draw.circle(screen,WHITE, c2, 5,0)
+
+            img = font.render(key, True, (255, 255, 255))
+            screen.blit(img, [c2[0]+7,c2[1]-6])
+
+        pygame.display.update()
 
 
 class Ship:
@@ -474,62 +482,6 @@ class Ship:
         FIXME
 
 
-def draw_map(space):
-
-
-
-    random.seed()
-
-    # Initialize the pygame library.
-    pygame.init()
-
-    log.debug("Initializing font")
-    font = pygame.font.SysFont(None, 22)
-
-    log.debug("Drawing systems")
-    log.debug("pygame dislay modes: %s",pygame.display.list_modes())
-    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
-    pygame.display.set_caption("Starfield")
-    pygame.mouse.set_visible(0)
-
-    # Set the background to black.
-    screen.fill(BLACK)
-    # Place ten white stars
-    for key in space.systems:
-        c1 = space.systems[key]['location']
-        c2=space.scaleCoordinates(c1,[SCREEN_SIZE[0]*0.02,SCREEN_SIZE[1]*0.02],[SCREEN_SIZE[0]*0.98,SCREEN_SIZE[1]*0.98])
-        screen.set_at(c2, WHITE)
-        pygame.draw.circle(screen,WHITE, c2, 5,0)
-
-        img = font.render(key, True, (255, 255, 255))
-        screen.blit(img, [c2[0]+5,c2[1]])
-
-    img = font.render('DONE', True, (0, 0, 255))
-    screen.blit(img, (0, 0))
-
-
-    # Update the screen.
-    pygame.display.update()
-
-    log.debug("Waiting for ESC")
-
-    # Main loop
-    while 1:
-
-        # Handle input events.
-        event = pygame.event.poll()
-        if (event.type == pygame.QUIT):
-            break
-        elif (event.type == pygame.KEYDOWN):
-            if (event.key == pygame.K_ESCAPE):
-                break
-
-
-
-
-
-
-
 def main_map():
     space = SpaceMapGenerator()
     space.generateStars()
@@ -554,9 +506,25 @@ def main_ship():
     log.info("===========================================")
     log.info("START")
 
+    random.seed()
+
+    # Initialize the pygame library.
+    pygame.init()
+
+    log.debug("Initializing pygame fonts")
+    font_size_22 = pygame.font.SysFont(None, 22)
+
+    log.debug("pygame dislay modes: %s",pygame.display.list_modes())
+    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
+    pygame.display.set_caption("Starfield")
+    pygame.mouse.set_visible(0)
+    # Set the background to black.
+    screen.fill(BLACK)
+
 
     space = SpaceMapGenerator()
     space.generateStars()
+    space.drawStars(screen, font_size_22)
 
     ships = Ship()
 
@@ -569,7 +537,23 @@ def main_ship():
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
     # scheduler.start()
 
-    draw_map(space)
+
+    img = font_size_22.render('DONE - press ESC to quit', True, (255, 0, 0))
+    screen.blit(img, (0, 0))
+
+    log.debug("Waiting for ESC")
+
+    # Main loop
+    while 1:
+
+        # Handle input events.
+        event = pygame.event.poll()
+        if (event.type == pygame.QUIT):
+            break
+        elif (event.type == pygame.KEYDOWN):
+            if (event.key == pygame.K_ESCAPE):
+                break
+
 
     log.info("DONE")
 
