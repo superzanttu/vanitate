@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 02:41:27>
+# Time-stamp: <2021-02-10 09:10:40>
 
 # Standard libraries
 import sys
@@ -114,7 +114,7 @@ class MarkovChainNamer():
             if os.path.exists(path):
                 self.load_wordlist_file(listname, path)
             else:
-                print("Error: name data file '%s' not found." % (path))
+                log.error("Error: name data file '%s' not found." % (path))
                 sys.exit(-1)
 
     def load_all_name_data(self):
@@ -363,16 +363,15 @@ class SpaceMapGenerator():
 
     def scaleCoordinates(self,source,target_min,target_max):
         log.debug("source: %s, target_min: %s target: max: %s" % (source,target_min,target_max))
-        s=source[0]
-        smin=-10
-        smax=10
-        tmin=0
-        tmax=100
-        log.debug("s:%s smin:%s smax:%s tmin:%s tmax:%s" % (s,smin,smax,tmin,tmax))
 
-        t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
+        # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
-        print("t:",t)
+        # Scale x coordinate
+        tx = int(((target_max[0] - target_min[0])*(source[0] - self.system_x_min))/( self.system_x_max - self.system_x_min)+target_min[0])
+        ty = int(((target_max[1] - target_min[1])*(source[1] - self.system_y_min))/( self.system_y_max - self.system_y_min)+target_min[1])
+
+        log.debug("Scaled coordinates: %s, %s" % (tx,ty))
+        return [tx,ty]
 
 
 
@@ -484,7 +483,11 @@ def draw_map(space):
     # Initialize the pygame library.
     pygame.init()
 
-    print(pygame.display.list_modes())
+    log.debug("Initializing font")
+    font = pygame.font.SysFont(None, 22)
+
+    log.debug("Drawing systems")
+    log.debug("pygame dislay modes: %s",pygame.display.list_modes())
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
@@ -494,11 +497,21 @@ def draw_map(space):
     # Place ten white stars
     for key in space.systems:
         c1 = space.systems[key]['location']
-        c2=space.scaleCoordinates(c1,[0,0],SCREEN_SIZE)
+        c2=space.scaleCoordinates(c1,[SCREEN_SIZE[0]*0.02,SCREEN_SIZE[1]*0.02],[SCREEN_SIZE[0]*0.98,SCREEN_SIZE[1]*0.98])
         screen.set_at(c2, WHITE)
+        pygame.draw.circle(screen,WHITE, c2, 5,0)
+
+        img = font.render(key, True, (255, 255, 255))
+        screen.blit(img, [c2[0]+5,c2[1]])
+
+    img = font.render('DONE', True, (0, 0, 255))
+    screen.blit(img, (0, 0))
+
 
     # Update the screen.
     pygame.display.update()
+
+    log.debug("Waiting for ESC")
 
     # Main loop
     while 1:
@@ -549,8 +562,7 @@ def main_ship():
 
     ships.add("Ship 1")
 
-    space.scaleCoordinates([10,20],[0,0],SCREEN_SIZE)
-    exit(1)
+    #space.scaleCoordinates([10,20],[0,0],SCREEN_SIZE)
 
 
     #scheduler = BlockingScheduler()
