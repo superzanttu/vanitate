@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-11 03:10:51>
+# Time-stamp: <2021-02-11 05:32:10>
 
 # Standard libraries
 import sys
@@ -292,8 +292,10 @@ class SpaceMapGenerator():
 
     # Initialize systems and and center system
     systems = {}
-    systems['Suomi'] = {'location_xy': [0, 0]}
-    systems['Suomi'] = {'planets': []}
+    systems['Suomi']={}
+    systems['Suomi']['location_xy']=  (0, 0)
+    systems['Suomi']['planets'] = {}
+
 
     # Store maximum and minimum coordinates
     system_x_min = 0
@@ -324,6 +326,8 @@ class SpaceMapGenerator():
                 while name in self.systems:
                     name = self.markov.gen_name("finnish", 4, 13)
 
+                self.systems[name]={}
+
                 distance_ok = False
 
                 while not distance_ok:
@@ -333,6 +337,7 @@ class SpaceMapGenerator():
                     #y = random.uniform(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
                     distance_ok = True
+                    print(systems)
                     for s in self.systems:
                         sc = self.systems[s]['location_xy']
                         sx = sc[0]
@@ -342,7 +347,9 @@ class SpaceMapGenerator():
                             distance_ok = False
                             break
 
-                self.systems[name] = {'location_xy': [x, y]}
+                self.systems[name]['location_xy'] = [x, y]
+
+
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -353,6 +360,8 @@ class SpaceMapGenerator():
                     self.system_y_max = y
                 elif y < self.system_y_min:
                     self.system_y_min = y
+
+
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
@@ -386,7 +395,16 @@ class SpaceMapGenerator():
         pygame.display.update()
 
     def generate_planets(self,system):
+
         planets = randrange (3,12)
+
+        orbit_min = 57950000 + randrange(-10000000,10000000)
+        ormit_max = 5913000000 + randrange(-10000000,10000000)
+
+        for p in planets:
+            orbit = (ormit_max-ormit_min)/planets*p +randrange(-10000000,10000000)
+            name = name = self.markov.gen_name(["finnish","asteroids"], 4, 13)
+            print (name)
 
 
 
@@ -521,27 +539,30 @@ def main():
     # Initialize the pygame library.
     pygame.init()
 
+    space = SpaceMapGenerator()
+    space.generate_stars()
+
+
+    ships = Ship()
+    ships.font = font_size_32
+    ships.space = space
+
+    ships.add("Ship 1")
+
+    log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
     font_size_22 = pygame.font.SysFont(None, 22)
     font_size_32 = pygame.font.SysFont(None, 32)
 
-    log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
-    # Set the background to black.
-    screen.fill(BLACK)
 
-    space = SpaceMapGenerator()
-    space.generate_stars()
+    ships.screen = screen
     space.draw_stars(screen, font_size_22)
 
-    ships = Ship()
-    ships.font = font_size_32
-    ships.screen = screen
-    ships.space = space
-
-    ships.add("Ship 1")
+    # Set the background to black.
+    screen.fill(BLACK)
 
     # space.scale_coordinates([10,20],[0,0],SCREEN_SIZE)
 
