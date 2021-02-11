@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-11 00:13:15>
+# Time-stamp: <2021-02-10 23:29:07>
 
 # Standard libraries
 import sys
@@ -453,17 +453,30 @@ class Ship:
     def draw_ship_data(self, id):
 
         s = self.ship_data[id]
-        text = "ID:%s Location:%s Angle:%s Velosity: %s m/sˆ2 Acceleration: %s m/s2 AccXY: %s m/s2       " % (
-            id, s['location_xy'], s['angle'], s['velosity_xy_ms'],s['acceleration_ms2'], s['acceleration_xy_ms2'])
+        t_id = "ID:%s   " % id
+        t_location="Location:%s   " % s['location_xy']
+        t_angle = "Angle:%s   " %  s['angle']
+        t_velosity ="Velosity: %s m/sˆ2   " % s['velosity_xy_ms']
+        t_acceleration="Acceleration: %s m/s2   " % s['acceleration_ms2']
+        t_acceleration_xy="Acceleration XY: %s m/s2   " % s['acceleration_xy_ms2']
 
-        log.debug("Draw ship data for %s: %s" % (id, text))
-        img = self.font.render(text, True, (0, 0, 255))
+        text=(t_id,t_location,t_angle,t_velosity,t_acceleration,t_acceleration_xy)
 
-        c = img.copy()
-        c.fill(WHITE)
-        self.screen.blit(c, (0, 0))
-        self.screen.blit(img, (0, 0))
-        pygame.display.update()
+
+
+        text_y=0
+        text_y_step = 32
+
+        pygame.draw.rect(self.screen,(0,200,0),(0,0,1000,len(text)*text_y_step))
+
+        for t in text:
+
+            img = self.font.render(t, True, (0, 0, 255))
+            self.screen.blit(img, (0, text_y))
+            text_y+=text_y_step
+
+
+
 
     def update(self,id):
         sd = self.ship_data[id]
@@ -536,6 +549,8 @@ def main():
     # Main loop
     while 1:
 
+        pygame.display.update()
+
         ships.update("Ship 1")
         ships.draw_ship_data("Ship 1")
 
@@ -548,7 +563,7 @@ def main():
             if (event.key == pygame.K_ESCAPE):
                 break
             elif (event.key == pygame.K_UP):
-                ships.set_acceleration("Ship 1", 9)
+                ships.set_acceleration("Ship 1", 100)
             elif (event.key == pygame.K_DOWN):
                 ships.set_acceleration("Ship 1", 0)
 
