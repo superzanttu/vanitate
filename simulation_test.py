@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-11 00:50:23>
+# Time-stamp: <2021-02-11 03:10:51>
 
 # Standard libraries
 import sys
@@ -293,6 +293,7 @@ class SpaceMapGenerator():
     # Initialize systems and and center system
     systems = {}
     systems['Suomi'] = {'location_xy': [0, 0]}
+    systems['Suomi'] = {'planets': []}
 
     # Store maximum and minimum coordinates
     system_x_min = 0
@@ -303,7 +304,7 @@ class SpaceMapGenerator():
     def __init__(self):
         log.debug("__init__")
 
-    def generateStars(self):
+    def generate_stars(self):
 
         name = "Suomi"
 
@@ -356,7 +357,7 @@ class SpaceMapGenerator():
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
 
-    def scaleCoordinates(self, source, target_min, target_max):
+    def scale_coordinates(self, source, target_min, target_max):
         #log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
@@ -370,11 +371,11 @@ class SpaceMapGenerator():
         #log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return [tx, ty]
 
-    def drawStars(self, screen, font):
+    def draw_stars(self, screen, font):
 
         for key in self.systems:
             c1 = self.systems[key]['location_xy']
-            c2 = self.scaleCoordinates(
+            c2 = self.scale_coordinates(
                 c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
             screen.set_at(c2, WHITE)
             pygame.draw.circle(screen, WHITE, c2, 5, 0)
@@ -383,6 +384,11 @@ class SpaceMapGenerator():
             screen.blit(img, [c2[0]+7, c2[1]-6])
 
         pygame.display.update()
+
+    def generate_planets(self,system):
+        planets = randrange (3,12)
+
+
 
 
 class Ship:
@@ -493,7 +499,7 @@ class Ship:
         lo = lo_a + ve
         self.ship_data[id]['location_xy']=lo
 
-        sc = self.space.scaleCoordinates(
+        sc = self.space.scale_coordinates(
             lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
         pygame.draw.circle(self.screen, (0,0,255), sc, 10, 0)
 
@@ -527,8 +533,8 @@ def main():
     screen.fill(BLACK)
 
     space = SpaceMapGenerator()
-    space.generateStars()
-    space.drawStars(screen, font_size_22)
+    space.generate_stars()
+    space.draw_stars(screen, font_size_22)
 
     ships = Ship()
     ships.font = font_size_32
@@ -537,7 +543,7 @@ def main():
 
     ships.add("Ship 1")
 
-    # space.scaleCoordinates([10,20],[0,0],SCREEN_SIZE)
+    # space.scale_coordinates([10,20],[0,0],SCREEN_SIZE)
 
     #scheduler = BlockingScheduler()
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')

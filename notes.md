@@ -26,6 +26,10 @@
 
   - https://github.com/borogove/names
 
+## Planetary system in scale_coordinates
+
+  - https://www.exploratorium.edu/ronh/solar_system/
+
 # Fixes
 
 ## Git doesn't work in MacOS
