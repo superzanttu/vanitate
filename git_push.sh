@@ -1,36 +1,19 @@
 #!/bin/bash
-# Time-stamp: <2021-02-10 22:49:25>
+# Time-stamp: <2021-02-10 22:52:52>
 
-commitmsg="Quick and dirty push!"
-
-if [ ! $# -eq 0 ]; then
-  commitmsg=${*:1}
-fi
-
-git add .
-git commit -m "$commitmsg"
-git push
-
-echo ===============================
-git status -sb
-echo ===============================
-
-
-
-#!/bin/bash
-v1=$1
-v2=$2
 while :
 do
-  echo "1 = Quick commit"
-  echo "2 = Commit with message"
-  echo "3 = Quick commit and push"
-  echo "4 = Commit with message and push"
-  echo "0 = Quit"
-  echo -n "Press key:"
-  read -n 1 -t 15 a
-  printf "\n"
-  case $a in
+  echo ===============================
+  echo "  1 = Quick commit"
+  echo "  2 = Commit with message"
+  echo "  3 = Quick commit and push"
+  echo "  4 = Commit with message and push"
+  echo "  5 = Show status"
+  echo "  0 = Quit"
+  echo -n "Select action:"
+  read -n 1 -t 15 action
+  printf "\n\n"
+  case $action in
     1* )
       echo Quick commit
       git add .
@@ -59,10 +42,15 @@ do
       git push
       ;;
 
+    5* )
+      git status -sb
+      ;;
+
     0* )
       exit 0
       ;;
 
     * )     echo "Try again.";;
   esac
+  printf "\n\n"
 done
