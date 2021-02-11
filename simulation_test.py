@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 22:36:33>
+# Time-stamp: <2021-02-11 00:13:15>
 
 # Standard libraries
 import sys
@@ -31,6 +31,7 @@ import yaml
 import networkx as nx
 from apscheduler.schedulers.blocking import BlockingScheduler
 import pygame
+import numpy
 
 # Name generator START
 import sys
@@ -264,7 +265,7 @@ class SpaceMap_YAML:
             od = self.map[id] = {}
             od['name'] = name
             od['type'] = type
-            ol = od['location'] = {}
+            ol = od['location_xy'] = {}
             ol['x_uu'] = x_uu
             ol['y_uu'] = y_uu
             ol['x_gu'] = x_gu
@@ -276,7 +277,7 @@ class SpaceMap_YAML:
 
     def get_coordinates(self, id):
         if id in self.objects:
-            return(self.map[id]['location'])
+            return(self.map[id]['location_xy'])
         else:
             log.error("Object not found (%s)" % (id))
 
@@ -292,7 +293,7 @@ class SpaceMapGenerator():
 
     # Initialize systems and and center system
     systems = {}
-    systems['Suomi'] = {'location': [0, 0]}
+    systems['Suomi'] = {'location_xy': [0, 0]}
 
     # Store maximum and minimum coordinates
     system_x_min = 0
@@ -333,7 +334,7 @@ class SpaceMapGenerator():
 
                     distance_ok = True
                     for s in self.systems:
-                        sc = self.systems[s]['location']
+                        sc = self.systems[s]['location_xy']
                         sx = sc[0]
                         sy = sc[1]
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
@@ -341,7 +342,7 @@ class SpaceMapGenerator():
                             distance_ok = False
                             break
 
-                self.systems[name] = {'location': [x, y]}
+                self.systems[name] = {'location_xy': [x, y]}
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -357,7 +358,7 @@ class SpaceMapGenerator():
                   (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
 
     def scaleCoordinates(self, source, target_min, target_max):
-        log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        #log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
@@ -367,13 +368,13 @@ class SpaceMapGenerator():
         ty = int(((target_max[1] - target_min[1])*(source[1] - self.system_y_min)
                   )/(self.system_y_max - self.system_y_min)+target_min[1])
 
-        log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        #log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return [tx, ty]
 
     def drawStars(self, screen, font):
 
         for key in self.systems:
-            c1 = self.systems[key]['location']
+            c1 = self.systems[key]['location_xy']
             c2 = self.scaleCoordinates(
                 c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
             screen.set_at(c2, WHITE)
@@ -390,11 +391,12 @@ class Ship:
 
     font = None
     screen = None
+    space = None
 
     def __init__(self):
         self.ships = []
         self.ship_data = {}
-        self.map = None
+
 
     def __str__(self):
         text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
@@ -417,13 +419,15 @@ class Ship:
             self.ships.append(id)
 
             self.ship_data[id] = {}
-            sl = self.ship_data[id]['location'] = [0, 0]
+            sl = self.ship_data[id]['location_xy'] = [0, 0]
 
-            self.ship_data[id]['angle'] = 0
+            self.ship_data[id]['angle'] = math.pi/6
 
-            ss = self.ship_data[id]['velosity_ms'] = [0, 0]
+            ss = self.ship_data[id]['velosity_xy_ms'] = [0, 0]
 
-            sa = self.ship_data[id]['acceleration_ms2'] = [0, 0]
+            sa = self.ship_data[id]['acceleration_ms2'] = [0]
+
+            sa = self.ship_data[id]['acceleration_xy_ms2'] = [0,0]
 
         else:
             log.error("Can't add ship with existing name (%s)" % id)
@@ -432,7 +436,7 @@ class Ship:
 
         if id in self.ships:
             log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['location'] = coordinates
+            sc = self.ship_data[id]['location_xy'] = coordinates
 
         else:
             log.error("Can't find ship %s" % id)
@@ -449,8 +453,8 @@ class Ship:
     def draw_ship_data(self, id):
 
         s = self.ship_data[id]
-        text = "ID:%s Location:%s Angle:%s Acceleration: %s m/s2 AccXY: %s m/s2" % (
-            id, s['location'], s['angle'], s['acceleration_ms2'], s['acceleration_xy_ms2'])
+        text = "ID:%s Location:%s Angle:%s Velosity: %s m/sˆ2 Acceleration: %s m/s2 AccXY: %s m/s2       " % (
+            id, s['location_xy'], s['angle'], s['velosity_xy_ms'],s['acceleration_ms2'], s['acceleration_xy_ms2'])
 
         log.debug("Draw ship data for %s: %s" % (id, text))
         img = self.font.render(text, True, (0, 0, 255))
@@ -460,6 +464,30 @@ class Ship:
         self.screen.blit(c, (0, 0))
         self.screen.blit(img, (0, 0))
         pygame.display.update()
+
+    def update(self,id):
+        sd = self.ship_data[id]
+        lo = sd['location_xy']
+        ve = sd['velosity_xy_ms']
+        ac = sd['acceleration_xy_ms2']
+
+        ac_a =numpy.array(ac)
+        lo_a= numpy.array(lo)
+        ve_a = numpy.array(ve)
+
+        ve = ve_a + ac_a
+        self.ship_data[id]['velosity_xy_ms']=ve
+
+        lo = lo_a + ve
+        self.ship_data[id]['location_xy']=lo
+
+        sc = self.space.scaleCoordinates(
+            lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+        pygame.draw.circle(self.screen, (0,0,255), sc, 10, 0)
+
+
+
+
 
 
 def main():
@@ -493,6 +521,7 @@ def main():
     ships = Ship()
     ships.font = font_size_32
     ships.screen = screen
+    ships.space = space
 
     ships.add("Ship 1")
 
@@ -502,10 +531,13 @@ def main():
     #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
     # scheduler.start()
 
-    log.debug("Waiting for ESC")
+    log.debug("Simulation runnning. Press ESC to stop.")
 
     # Main loop
     while 1:
+
+        ships.update("Ship 1")
+        ships.draw_ship_data("Ship 1")
 
         # Handle input events.
         event = pygame.event.poll()
