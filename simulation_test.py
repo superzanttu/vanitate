@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 23:30:41>
+# Time-stamp: <2021-02-11 00:49:42>
 
 # Standard libraries
 import sys
@@ -546,11 +546,17 @@ def main():
     log.debug("Simulation runnning. Press ESC to stop.")
 
     # Main loop
+
     while 1:
+
+
 
         pygame.display.update()
 
-        ships.update("Ship 1")
+        for x in range(1000):
+            print(x)
+            ships.update("Ship 1")
+
         ships.draw_ship_data("Ship 1")
 
         # Handle input events.
