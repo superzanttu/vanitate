@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-10 22:53:13>
+# Time-stamp: <2021-02-10 22:56:27>
 
 while :
 do
@@ -11,31 +11,31 @@ do
   echo "  5 = Show status"
   echo "  0 = Quit"
   echo -n "Select action:"
-  read -n 1 -t 15 action
+  read -n 1  action
   printf "\n\n"
   case $action in
     1* )
-      echo Quick commit
+      echo === Quick commit
       git add .
       git commit -m "Quick and dirty!"
       ;;
 
     2* )
-      echo Commit with message
+      echo === Commit with message
       read -p "Message:" commitmessage
       git add .
       git commit -m $commitmessage
       ;;
 
     3* )
-      echo Quick commit and push
+      echo === Quick commit and push
       git add .
       git commit -m "Quick and dirty!"
       git push
       ;;
 
     4* )
-      echo Commit with message and push
+      echo === Commit with message and push
       read -p "Message:" commitmessage
       git add .
       git commit -m $commitmessage
@@ -43,6 +43,7 @@ do
       ;;
 
     5* )
+      echo === Status
       git status -sb
       ;;
 
