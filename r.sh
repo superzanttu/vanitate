@@ -4,5 +4,6 @@ python3 simulation_test.py
 echo ===============================
 git status -sb
 echo ===============================
-pause
-r.sh
+read -p "Press any key to try again... " -n1 -s
+
+./r.sh
