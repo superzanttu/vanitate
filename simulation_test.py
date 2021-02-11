@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-11 00:29:56>
+# Time-stamp: <2021-02-10 23:30:41>
 
 # Standard libraries
 import sys
@@ -48,7 +48,6 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame test
 # Constants
-NUM_STARS = 10
 SCREEN_SIZE = [3360, 2100]
 #SCREEN_SIZE = [800, 600]
 WHITE = 255, 255, 255
@@ -308,7 +307,7 @@ class SpaceMapGenerator():
 
         name = "Suomi"
 
-        sc1r = 10
+        sc1r = 1
         sc2r = 10
 
         log.info("Generating %s star names" % (sc1r*sc2r))
