@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-11 00:49:42>
+# Time-stamp: <2021-02-11 00:50:23>
 
 # Standard libraries
 import sys
@@ -553,8 +553,7 @@ def main():
 
         pygame.display.update()
 
-        for x in range(1000):
-            print(x)
+        for _ in range(10000):
             ships.update("Ship 1")
 
         ships.draw_ship_data("Ship 1")
