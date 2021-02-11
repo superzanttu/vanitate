@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-10 22:52:52>
+# Time-stamp: <2021-02-10 22:53:13>
 
 while :
 do
@@ -52,5 +52,5 @@ do
 
     * )     echo "Try again.";;
   esac
-  printf "\n\n"
+  printf "\n"
 done
