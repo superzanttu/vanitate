@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-10 10:56:40>
+# Time-stamp: <2021-02-10 22:28:33>
 
 # Standard libraries
 import sys
@@ -462,25 +462,7 @@ class Ship:
         pygame.display.update()
 
 
-def main_map():
-    space = SpaceMapGenerator()
-    space.generateStars()
-
-    print("Writing CVS file")
-    with open('stars.csv', 'w') as f:
-        for key in space.systems.keys():
-            f.write("%s,%s\n" % (key, space.systems[key]))
-
-
-def main_namegen():
-    markov = MarkovChainNamer()
-
-    for i in range(1):
-        print(markov.gen_name("", 4, 13))
-        print(markov.gen_name("finnish", 4, 13))
-
-
-def main_ship():
+def main():
 
     log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
                     filename='./log/main.log', level=log.DEBUG)
@@ -545,6 +527,4 @@ def main_ship():
 
 
 if __name__ == "__main__":
-    # main_namegen()
-    # main_map()
-    main_ship()
+    main()

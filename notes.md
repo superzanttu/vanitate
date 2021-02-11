@@ -25,3 +25,13 @@
 ## Markov algoritm
 
   - https://github.com/borogove/names
+
+# Fixes
+
+## Git doesn't work in MacOS
+
+Error message:
+    xcrun: error: invalid active developer path (/Library/Developer/CommandLineTools), missing xcrun at: /Library/Developer/CommandLineTools/usr/bin/xcrun
+
+Run to fix:
+    vanitate % xcode-select --install
