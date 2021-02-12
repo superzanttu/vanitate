@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-11 05:32:10>
+# Time-stamp: <2021-02-12 00:19:36>
 
 # Standard libraries
 import sys
@@ -337,7 +337,7 @@ class SpaceMapGenerator():
                     #y = random.uniform(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
                     distance_ok = True
-                    print(systems)
+                    print(self.systems)
                     for s in self.systems:
                         sc = self.systems[s]['location_xy']
                         sx = sc[0]
