@@ -16,7 +16,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 00:19:36>
+# Time-stamp: <2021-02-12 00:29:48>
 
 # Standard libraries
 import sys
@@ -292,10 +292,9 @@ class SpaceMapGenerator():
 
     # Initialize systems and and center system
     systems = {}
-    systems['Suomi']={}
-    systems['Suomi']['location_xy']=  (0, 0)
+    systems['Suomi'] = {}
+    systems['Suomi']['location_xy'] = (0, 0)
     systems['Suomi']['planets'] = {}
-
 
     # Store maximum and minimum coordinates
     system_x_min = 0
@@ -326,7 +325,7 @@ class SpaceMapGenerator():
                 while name in self.systems:
                     name = self.markov.gen_name("finnish", 4, 13)
 
-                self.systems[name]={}
+                self.systems[name] = {}
 
                 distance_ok = False
 
@@ -337,19 +336,29 @@ class SpaceMapGenerator():
                     #y = random.uniform(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
                     distance_ok = True
-                    print(self.systems)
+                    log.debug("Systems: %s" % self.systems)
                     for s in self.systems:
-                        sc = self.systems[s]['location_xy']
+                        log.debug("s: %s" % s)
+
+                        print(type(s))
+                        sd = self.systems[s]
+                        log.debug("sd: %s" % sd)
+
+                        #sc = sd['location_xy']
+                        #log.debug("sc: %s" % sc)
+
                         sx = sc[0]
+                        log.debug("sx: %s" % sx)
+
                         sy = sc[1]
+                        log.debug("sy: %s" % sy)
+
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
 
                             distance_ok = False
                             break
 
                 self.systems[name]['location_xy'] = [x, y]
-
-
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -360,8 +369,6 @@ class SpaceMapGenerator():
                     self.system_y_max = y
                 elif y < self.system_y_min:
                     self.system_y_min = y
-
-
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
@@ -394,19 +401,17 @@ class SpaceMapGenerator():
 
         pygame.display.update()
 
-    def generate_planets(self,system):
+    def generate_planets(self, system):
 
-        planets = randrange (3,12)
+        planets = randrange(3, 12)
 
-        orbit_min = 57950000 + randrange(-10000000,10000000)
-        ormit_max = 5913000000 + randrange(-10000000,10000000)
+        orbit_min = 57950000 + randrange(-10000000, 10000000)
+        ormit_max = 5913000000 + randrange(-10000000, 10000000)
 
         for p in planets:
-            orbit = (ormit_max-ormit_min)/planets*p +randrange(-10000000,10000000)
-            name = name = self.markov.gen_name(["finnish","asteroids"], 4, 13)
-            print (name)
-
-
+            orbit = (ormit_max-ormit_min)/planets*p + randrange(-10000000, 10000000)
+            name = name = self.markov.gen_name(["finnish", "asteroids"], 4, 13)
+            print(name)
 
 
 class Ship:
@@ -419,7 +424,6 @@ class Ship:
     def __init__(self):
         self.ships = []
         self.ship_data = {}
-
 
     def __str__(self):
         text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
@@ -450,7 +454,7 @@ class Ship:
 
             sa = self.ship_data[id]['acceleration_ms2'] = [0]
 
-            sa = self.ship_data[id]['acceleration_xy_ms2'] = [0,0]
+            sa = self.ship_data[id]['acceleration_xy_ms2'] = [0, 0]
 
         else:
             log.error("Can't add ship with existing name (%s)" % id)
@@ -477,53 +481,44 @@ class Ship:
 
         s = self.ship_data[id]
         t_id = "ID:%s   " % id
-        t_location="Location:%s   " % s['location_xy']
-        t_angle = "Angle:%s   " %  s['angle']
-        t_velosity ="Velosity: %s m/sˆ2   " % s['velosity_xy_ms']
-        t_acceleration="Acceleration: %s m/s2   " % s['acceleration_ms2']
-        t_acceleration_xy="Acceleration XY: %s m/s2   " % s['acceleration_xy_ms2']
+        t_location = "Location:%s   " % s['location_xy']
+        t_angle = "Angle:%s   " % s['angle']
+        t_velosity = "Velosity: %s m/sˆ2   " % s['velosity_xy_ms']
+        t_acceleration = "Acceleration: %s m/s2   " % s['acceleration_ms2']
+        t_acceleration_xy = "Acceleration XY: %s m/s2   " % s['acceleration_xy_ms2']
 
-        text=(t_id,t_location,t_angle,t_velosity,t_acceleration,t_acceleration_xy)
+        text = (t_id, t_location, t_angle, t_velosity, t_acceleration, t_acceleration_xy)
 
-
-
-        text_y=0
+        text_y = 0
         text_y_step = 32
 
-        pygame.draw.rect(self.screen,(0,200,0),(0,0,1000,len(text)*text_y_step))
+        pygame.draw.rect(self.screen, (0, 200, 0), (0, 0, 1000, len(text)*text_y_step))
 
         for t in text:
 
             img = self.font.render(t, True, (0, 0, 255))
             self.screen.blit(img, (0, text_y))
-            text_y+=text_y_step
+            text_y += text_y_step
 
-
-
-
-    def update(self,id):
+    def update(self, id):
         sd = self.ship_data[id]
         lo = sd['location_xy']
         ve = sd['velosity_xy_ms']
         ac = sd['acceleration_xy_ms2']
 
-        ac_a =numpy.array(ac)
-        lo_a= numpy.array(lo)
+        ac_a = numpy.array(ac)
+        lo_a = numpy.array(lo)
         ve_a = numpy.array(ve)
 
         ve = ve_a + ac_a
-        self.ship_data[id]['velosity_xy_ms']=ve
+        self.ship_data[id]['velosity_xy_ms'] = ve
 
         lo = lo_a + ve
-        self.ship_data[id]['location_xy']=lo
+        self.ship_data[id]['location_xy'] = lo
 
         sc = self.space.scale_coordinates(
             lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
-        pygame.draw.circle(self.screen, (0,0,255), sc, 10, 0)
-
-
-
-
+        pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
 
 
 def main():
@@ -541,7 +536,6 @@ def main():
 
     space = SpaceMapGenerator()
     space.generate_stars()
-
 
     ships = Ship()
     ships.font = font_size_32
@@ -575,8 +569,6 @@ def main():
     # Main loop
 
     while 1:
-
-
 
         pygame.display.update()
 
