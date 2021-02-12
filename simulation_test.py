@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 04:56:47>
+# Time-stamp: <2021-02-12 05:00:37>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -574,10 +574,10 @@ def main():
 
         pygame.display.update()
 
-        for _ in range(10000):
-            ships.update("Ship 1")
+        #for _ in range(10000):
+        #    ships.update("Ship 1")
 
-        ships.draw_ship_data("Ship 1")
+        #ships.draw_ship_data("Ship 1")
 
         # Handle input events.
         event = pygame.event.poll()
