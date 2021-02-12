@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 04:38:45>
+# Time-stamp: <2021-02-12 04:47:28>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -296,11 +296,11 @@ class SpaceMapGenerator():
     systems['Suomi']['location_xy'] = (0, 0)
     systems['Suomi']['planets'] = {}
 
-    # Store maximum and minimum coordinates
-    system_x_min = 0
-    system_x_max = 0
-    system_y_min = 0
-    system_y_max = 0
+    # Store maximum and minimum coordinates for space
+    space_x_min = 0
+    space_x_max = 0
+    space_y_min = 0
+    space_y_max = 0
 
     def __init__(self):
         log.debug("__init__")
@@ -321,37 +321,31 @@ class SpaceMapGenerator():
 
             for sc2 in range(sc2r):
 
-                starcount = sc1 * sc2r + sc1
-
                 while name in self.systems:
                     name = self.markov.gen_name("finnish", 4, 13)
 
-                self.systems[name] = {}
                 distance_ok = False
 
                 while not distance_ok:
                     x = random.randrange(-self.SPACE_X_MAX, self.SPACE_X_MAX)
                     y = random.randrange(-self.SPACE_Y_MAX, self.SPACE_Y_MAX)
-                    #x = random.uniform(-self.SPACE_X_MAX,self.SPACE_X_MAX)
-                    #y = random.uniform(-self.SPACE_Y_MAX,self.SPACE_Y_MAX)
 
                     distance_ok = True
-                    log.debug("Systems: %s" % self.systems)
+                    #log.debug("Systems: %s" % self.systems)
                     for s in self.systems:
-                        log.debug("s: %s" % s)
+                        # log.debug("Checking distance to s: %s" % s)
 
                         sd = self.systems[s]
-                        log.debug("sd: %s" % sd)
+                        # log.debug("sd: %s" % sd)
 
-                        print(type(sd))
                         sc = sd['location_xy']
-                        log.debug("sc: (%s,%s)" % sc)
+                        # log.debug("sc: (%s,%s)" % sc)
 
                         sx = sc[0]
-                        log.debug("sx: %s" % sx)
+                        # log.debug("sx: %s" % sx)
 
                         sy = sc[1]
-                        log.debug("sy: %s" % sy)
+                        # log.debug("sy: %s" % sy)
 
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
                             distance_ok = False
@@ -362,31 +356,31 @@ class SpaceMapGenerator():
 
                 log.debug("New system: %s %s" % (name, self.systems[name]))
 
-                if x > self.system_x_max:
-                    self.system_x_max = x
-                elif x < self.system_x_min:
-                    self.system_x_min = x
+                if x > self.space_x_max:
+                    self.space_x_max = x
+                elif x < self.space_x_min:
+                    self.space_x_min = x
 
-                if y > self.system_y_max:
-                    self.system_y_max = y
-                elif y < self.system_y_min:
-                    self.system_y_min = y
+                if y > self.space_y_max:
+                    self.space_y_max = y
+                elif y < self.space_y_min:
+                    self.space_y_min = y
 
                 self.systems[name]['planets'] = {}
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
-                  (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
+                  (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
     def scale_coordinates(self, source, target_min, target_max):
-        #log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        # log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
         # Scale x coordinate
-        tx = int(((target_max[0] - target_min[0])*(source[0] - self.system_x_min)
-                  )/(self.system_x_max - self.system_x_min)+target_min[0])
-        ty = int(((target_max[1] - target_min[1])*(source[1] - self.system_y_min)
-                  )/(self.system_y_max - self.system_y_min)+target_min[1])
+        tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min)
+                  )/(self.space_x_max - self.space_x_min)+target_min[0])
+        ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min)
+                  )/(self.space_y_max - self.space_y_min)+target_min[1])
 
         #log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return [tx, ty]
@@ -585,7 +579,7 @@ def main():
 
         # Handle input events.
         event = pygame.event.poll()
-        keys = pygame.key.get_pressed()
+        # keys = pygame.key.get_pressed()
         if (event.type == pygame.QUIT):
             break
         elif (event.type == pygame.KEYDOWN):

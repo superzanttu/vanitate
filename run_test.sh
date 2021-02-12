@@ -5,5 +5,5 @@ echo ===============================
 git status -sb
 echo ===============================
 read -p "Press any key to try again... " -n1 -s
-
-./r.sh
+echo STARTED
+./run_test.sh
