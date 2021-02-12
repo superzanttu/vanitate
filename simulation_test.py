@@ -18,31 +18,31 @@
 
 # Time-stamp: <2021-02-12 04:11:29>
 
-# Start logging before other libraries 
+# Start logging before other libraries
+from collections import defaultdict
+import random
+import os
+import argparse
+import numpy
+import pygame
+from apscheduler.schedulers.blocking import BlockingScheduler
+import networkx as nx
+import yaml
+import csv
+import math
+import pprint
+import time
+import sys
 import logging as log
-log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',filename='./log/main.log', level=log.DEBUG) #
+log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
+                filename='./log/main.log', level=log.DEBUG)
 
 # Standard libraries
-import sys
-import time
-import pprint
-import math
-import csv
 
 # External libraries
-import yaml
-import networkx as nx
-from apscheduler.schedulers.blocking import BlockingScheduler
-import pygame
-import numpy
 
 # Name generator START
-import sys
-import argparse
-import os
-import random
 
-from collections import defaultdict
 
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
@@ -57,6 +57,7 @@ LIGHTGRAY = 180, 180, 180
 DARKGRAY = 120, 120, 120
 LEFT = 0
 RIGHT = 1
+
 
 class MarkovChainNamer():
     def __init__(self):
@@ -292,7 +293,7 @@ class SpaceMapGenerator():
     # Initialize systems and and center system
     systems = {}
     systems['Suomi'] = {}
-    systems['Suomi']['location_xy'] = (0,0)
+    systems['Suomi']['location_xy'] = (0, 0)
     systems['Suomi']['planets'] = {}
 
     # Store maximum and minimum coordinates
@@ -304,7 +305,6 @@ class SpaceMapGenerator():
     def __init__(self):
         log.debug("__init__")
         log.debug("Initial systems: %s" % self.systems)
-
 
     def generate_stars(self):
 
@@ -357,10 +357,10 @@ class SpaceMapGenerator():
                             distance_ok = False
                             break
 
-                self.systems[name]={}
+                self.systems[name] = {}
                 self.systems[name]['location_xy'] = (x, y)
 
-                log.debug("New system: %s %s" % (name,self.systems[name]))
+                log.debug("New system: %s %s" % (name, self.systems[name]))
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -373,7 +373,6 @@ class SpaceMapGenerator():
                     self.system_y_min = y
 
                 self.systems[name]['planets'] = {}
-
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
@@ -528,14 +527,11 @@ class Ship:
 
 def main():
 
-
-
-    for _ in range(1,20):
+    for _ in range(1, 20):
         log.debug("")
 
     log.info("===========================================")
     log.info("START")
-
 
     random.seed()
 
