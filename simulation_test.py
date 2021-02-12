@@ -1,4 +1,6 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*-
+#
 # Maps test for Vanitate
 #
 # Copyright (C) 2021 Kai Käpölä
@@ -16,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 04:11:29>
+# Time-stamp: <2021-02-12 04:38:45>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -50,7 +52,7 @@ NAME_DATA_FOLDER = "namedata"
 # Pygame
 # Constants
 SCREEN_SIZE = [3360, 2100]
-#SCREEN_SIZE = [800, 600]
+# SCREEN_SIZE = [800, 600]
 WHITE = 255, 255, 255
 BLACK = 20, 20, 40
 LIGHTGRAY = 180, 180, 180
@@ -66,7 +68,6 @@ class MarkovChainNamer():
         self.source = defaultdict(list)
 
     def next(self, listname, current):
-        #print("next:",listname, current)
         if not current:
             return "^"
 
@@ -79,7 +80,6 @@ class MarkovChainNamer():
                 return random.choice(self.splat[listname])
 
     def load_chains(self, listname, name):
-        #print ("load_chains:", listname, name)
         if not name:
             return
         self.source[listname].append(name)
@@ -94,7 +94,7 @@ class MarkovChainNamer():
                     self.chains[(listname, prefix)].append(seq[-1])
 
     def load_wordlist_file(self, listname, filepath):
-        #print("load_wordlist:", listname, filepath)
+        # print("load_wordlist:", listname, filepath)
         names = [line.strip() for line in open(filepath, 'rt').readlines()]
         for name in names:
             if name.startswith('#'):
