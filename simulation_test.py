@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 05:00:37>
+# Time-stamp: <2021-02-12 05:03:38>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -389,8 +389,8 @@ class SpaceMapGenerator():
 
         for key in self.systems:
             c1 = self.systems[key]['location_xy']
-
-            log.debug("Star location: (%s, %s)" % c1)
+            print("c1:",c1)
+            log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
 
             c2 = self.scale_coordinates(
                 c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
