@@ -16,11 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 01:09:33>
+# Time-stamp: <2021-02-12 04:11:29>
+
+# Start logging before other libraries 
+import logging as log
+log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',filename='./log/main.log', level=log.DEBUG) #
 
 # Standard libraries
-import logging as log
-log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',filename='./log/main.log', level=log.DEBUG)
 import sys
 import time
 import pprint
@@ -343,13 +345,13 @@ class SpaceMapGenerator():
 
                         print(type(sd))
                         sc = sd['location_xy']
-                        log.debug("sc: %s" % sc)
+                        log.debug("sc: (%s,%s)" % sc)
 
                         sx = sc[0]
                         log.debug("sx: %s" % sx)
 
                         sy = sc[1]
-                        slog.debug("sy: %s" % sy)
+                        log.debug("sy: %s" % sy)
 
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
                             distance_ok = False
