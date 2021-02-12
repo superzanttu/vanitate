@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 04:47:28>
+# Time-stamp: <2021-02-12 04:56:47>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -372,7 +372,7 @@ class SpaceMapGenerator():
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
     def scale_coordinates(self, source, target_min, target_max):
-        # log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
@@ -382,13 +382,16 @@ class SpaceMapGenerator():
         ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min)
                   )/(self.space_y_max - self.space_y_min)+target_min[1])
 
-        #log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return [tx, ty]
 
     def draw_stars(self, screen, font):
 
         for key in self.systems:
             c1 = self.systems[key]['location_xy']
+
+            log.debug("Star location: (%s, %s)" % c1)
+
             c2 = self.scale_coordinates(
                 c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
             screen.set_at(c2, WHITE)
@@ -547,7 +550,6 @@ def main():
     font_size_32 = pygame.font.SysFont(None, 32)
     ships.font = font_size_32
 
-    exit(1)
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
