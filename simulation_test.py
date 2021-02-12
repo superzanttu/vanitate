@@ -16,11 +16,12 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 00:29:48>
+# Time-stamp: <2021-02-12 01:09:33>
 
 # Standard libraries
-import sys
 import logging as log
+log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',filename='./log/main.log', level=log.DEBUG)
+import sys
 import time
 import pprint
 import math
@@ -43,10 +44,8 @@ from collections import defaultdict
 
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
-# Name generator END
 
-
-# Pygame test
+# Pygame
 # Constants
 SCREEN_SIZE = [3360, 2100]
 #SCREEN_SIZE = [800, 600]
@@ -56,8 +55,6 @@ LIGHTGRAY = 180, 180, 180
 DARKGRAY = 120, 120, 120
 LEFT = 0
 RIGHT = 1
-############
-
 
 class MarkovChainNamer():
     def __init__(self):
@@ -293,7 +290,7 @@ class SpaceMapGenerator():
     # Initialize systems and and center system
     systems = {}
     systems['Suomi'] = {}
-    systems['Suomi']['location_xy'] = (0, 0)
+    systems['Suomi']['location_xy'] = (0,0)
     systems['Suomi']['planets'] = {}
 
     # Store maximum and minimum coordinates
@@ -304,6 +301,8 @@ class SpaceMapGenerator():
 
     def __init__(self):
         log.debug("__init__")
+        log.debug("Initial systems: %s" % self.systems)
+
 
     def generate_stars(self):
 
@@ -320,13 +319,12 @@ class SpaceMapGenerator():
 
             for sc2 in range(sc2r):
 
-                starcount = sc1*sc2r+sc1
+                starcount = sc1 * sc2r + sc1
 
                 while name in self.systems:
                     name = self.markov.gen_name("finnish", 4, 13)
 
                 self.systems[name] = {}
-
                 distance_ok = False
 
                 while not distance_ok:
@@ -340,25 +338,27 @@ class SpaceMapGenerator():
                     for s in self.systems:
                         log.debug("s: %s" % s)
 
-                        print(type(s))
                         sd = self.systems[s]
                         log.debug("sd: %s" % sd)
 
-                        #sc = sd['location_xy']
-                        #log.debug("sc: %s" % sc)
+                        print(type(sd))
+                        sc = sd['location_xy']
+                        log.debug("sc: %s" % sc)
 
                         sx = sc[0]
                         log.debug("sx: %s" % sx)
 
                         sy = sc[1]
-                        log.debug("sy: %s" % sy)
+                        slog.debug("sy: %s" % sy)
 
                         if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
-
                             distance_ok = False
                             break
 
-                self.systems[name]['location_xy'] = [x, y]
+                self.systems[name]={}
+                self.systems[name]['location_xy'] = (x, y)
+
+                log.debug("New system: %s %s" % (name,self.systems[name]))
 
                 if x > self.system_x_max:
                     self.system_x_max = x
@@ -369,6 +369,9 @@ class SpaceMapGenerator():
                     self.system_y_max = y
                 elif y < self.system_y_min:
                     self.system_y_min = y
+
+                self.systems[name]['planets'] = {}
+
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.system_x_max, self.system_x_min, self.system_y_max, self.system_y_min))
@@ -523,11 +526,14 @@ class Ship:
 
 def main():
 
-    log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
-                    filename='./log/main.log', level=log.DEBUG)
+
+
+    for _ in range(1,20):
+        log.debug("")
 
     log.info("===========================================")
     log.info("START")
+
 
     random.seed()
 
@@ -538,16 +544,18 @@ def main():
     space.generate_stars()
 
     ships = Ship()
-    ships.font = font_size_32
     ships.space = space
 
     ships.add("Ship 1")
 
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
+
     font_size_22 = pygame.font.SysFont(None, 22)
     font_size_32 = pygame.font.SysFont(None, 32)
+    ships.font = font_size_32
 
+    exit(1)
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
