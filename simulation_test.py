@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 08:03:46>
+# Time-stamp: <2021-02-13 08:21:21>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -57,6 +57,12 @@ WHITE = 255, 255, 255
 BLACK = 20, 20, 40
 LIGHTGRAY = 180, 180, 180
 DARKGRAY = 120, 120, 120
+RED = 255, 0, 0
+GREEN = 0, 255, 0
+BLUE = 0, 0, 255
+YELLOW = 255, 255, 0
+CYAN = 0, 255, 255
+MAGENTA = 255, 0, 255
 LEFT = 0
 RIGHT = 1
 
@@ -641,14 +647,14 @@ def main():
             elif event.key == pygame.K_DOWN:
                 ships.set_acceleration("Ship 1", 0)
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            if mouse_state == False:
-                mouse_pos_1 = pygame.mouse.get_pos()
-                mouse_state = True
-        elif event.type == pygame.MOUSEBUTTONUP:
-            if mouse_state == True:
-                mouse_pos_2 = pygame.mouse.get_pos()
-                pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(mouse_pos_1[0], mouse_pos_1[1], mouse_pos_2[0], mouse_pos_2[1]))
-                mouse_state = False
+            mouse_pos_1 = pygame.mouse.get_pos()
+            screen.set_at(mouse_pos_1,YELLOW)
+
+        #elif event.type == pygame.MOUSEBUTTONUP:
+        #    if mouse_state == True:
+        #        mouse_pos_2 = pygame.mouse.get_pos()
+        #        #pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(mouse_pos_1[0], mouse_pos_1[1], mouse_pos_2[0], mouse_pos_2[1]))
+        #        mouse_state = False
 
 
         # elif keys[pygame.K_UP]:
