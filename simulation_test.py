@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 05:32:42>
+# Time-stamp: <2021-02-13 05:45:53>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -401,7 +401,6 @@ class SpaceMapGenerator():
                 c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
             # Draw star
-            self.screen.set_at(c2, WHITE)
             pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
             # Draw system name
@@ -422,8 +421,8 @@ class SpaceMapGenerator():
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
 
-            px = orbit *  cos(angle)
-            py = orbit *  sin(angle)
+            px = orbit * math.cos(angle)
+            py = orbit * math.sin(angle)
 
             log.debug("Planet %s location: (%s, %s)" % (key, px, py))
 
@@ -431,13 +430,14 @@ class SpaceMapGenerator():
             sc = self.scale_coordinates(
                 (px,py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
+            log.debug("Scaled coordinates: (%s, %s)" % (sc[0],sc[1]))
+
             # Draw planet
-            self.screen.set_at(sc, WHITE)
-            pygame.draw.circle(self.screen, (255,255,0), sc, 5, 0)
+            pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
 
             # Draw planet name
             planet_name = font.render(key, True, (255, 80, 80))
-            self.screen.blit(planet_name, [pc+7, py-6])
+            self.screen.blit(planet_name, [px+7, py-6])
 
         pygame.display.update()
 
@@ -454,7 +454,7 @@ class SpaceMapGenerator():
             angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
             log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" % (name, p, planets, orbit, angle))
-            self.systems[system]['planets'][name]=[orbit, angle]
+            self.systems[system]['planets'][name]={'orbit': orbit, 'angle': angle}
 
 
 class Ship:
