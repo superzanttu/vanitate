@@ -10,7 +10,7 @@ do
   echo "  3 = Push         4 = Quick commit and push 5 = Commit with message and push"
   echo "  9 = Show status  0 = Quit"
   echo -------------------------------
-  echo Status at $ct
+  echo "Status at $ct (updated every 10 minutes)"
   git status -sb
   echo -------------------------------
   echo -n "Select action:"
