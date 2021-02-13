@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 07:50:17>
+# Time-stamp: <2021-02-13 08:01:00>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -617,6 +617,8 @@ def main():
 
     # Main loop
 
+    mouse_state = False
+
     while 1:
 
         pygame.display.update()
@@ -639,7 +641,15 @@ def main():
             elif event.key == pygame.K_DOWN:
                 ships.set_acceleration("Ship 1", 0)
         elif event.type == pygame.MOUSEBUTTONDOWN:
-            pass
+            if mouse_state == False:
+                mouse_pos_1 = pygame.mouse.get_pos()
+                mouse_state = True
+        elif event.type == pygame.MOUSEBUTTONUP:
+            if mouse_state == True:
+                mouse_pos_2 = pygame.mouse.get_pos()
+                pygame.draw.rect(screen, (0, 255, 0), 1, mouse_pos_1[0], mouse_pos_1[1], mouse_pos_2[0], mouse_pos_2[1])
+                mouse_state = False
+
 
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
