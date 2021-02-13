@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 04:54:53>
+# Time-stamp: <2021-02-13 05:08:19>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -410,8 +410,35 @@ class SpaceMapGenerator():
 
         pygame.display.update()
 
-    def generate_planets(self):
-        log.debug("Generating planets")
+    def draw_stars(self, system, font):
+        log.debug("Drawing planets and names for system %s" %s)
+
+        for key in self.systems[system]['planets']:
+
+            angle = self.systems[system]['planets'][key]['angle']
+            orbit = self.systems[system]['planets'][key]['orbit']
+
+            px = orbit *  cos(angle)
+            py = orbit *  sin(angle)
+
+            log.debug("Planet %s location: (%s, %s)" % (key, px, py))
+
+            # Scale system coordinates to screeb coordinates
+            c2 = self.scale_coordinates(
+                c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+
+            # Draw planet
+            self.screen.set_at(c2, WHITE)
+            pygame.draw.circle(self.screen, (255,255,0), c2, 5, 0)
+
+            # Draw planet name
+            planet_name = font.render(key, True, (255, 80, 80))
+            self.screen.blit(planet_name, [c2[0]+7, c2[1]-6])
+
+        pygame.display.update()
+
+    def generate_planets(self,system):
+        log.debug("Generating planets for system %s" % system)
 
         planets = random.randrange(3, 12)
 
@@ -419,10 +446,12 @@ class SpaceMapGenerator():
         ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
         for p in range(1,planets+1):
-            log.debug("Generating planet %s of %s"  % (p, planets))
             orbit = (ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000)
+            angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
-            print(name)
+            log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" % (name, p, planets, orbit, angle))
+            self.systems[system]['planets'] = {}
+
 
 
 class Ship:
@@ -548,7 +577,7 @@ def main():
 
     space = SpaceMapGenerator()
     space.generate_stars()
-    space.generate_planets()
+    space.generate_planets("Suomi")
 
     ships = Ship()
     ships.space = space
