@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 09:05:05>
+# Time-stamp: <2021-02-13 10:00:29>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -51,7 +51,8 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame
 # Constants
-SCREEN_SIZE = [3360, 2100]
+#SCREEN_SIZE = [3360, 2100]
+SCREEN_SIZE = []
 # SCREEN_SIZE = [800, 600]
 WHITE = 255, 255, 255
 BLACK = 20, 20, 40
@@ -311,14 +312,12 @@ class SpaceMapGenerator():
     space_y_min = 0
     space_y_max = 0
 
-    space_x1_view = 0
-    space_y1_view = 0
-    space_x2_view = 0
-    space_y2_view = 0
+    space_view = ()
 
     # Pygame screen and font
     screen = None
-    font = None
+    font_size_m = None
+    font_size_l = None
 
     def __init__(self):
         log.debug("__init__")
@@ -384,10 +383,7 @@ class SpaceMapGenerator():
                 elif y < self.space_y_min:
                     self.space_y_min = y
 
-                self.space_x1_view = self.space_x_min 
-                self.space_y1_view = self.space_y_min
-                self.space_x2_view = self.space_x_max
-                self.space_y2_view = self.space_y_max
+                self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
 
@@ -408,31 +404,39 @@ class SpaceMapGenerator():
         # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return (tx, ty)
 
-    def draw_stars(self, font):
+    def is_visible_location(self,c):
+        print(c, self.space_view)
+        log.debug("Location: %s View: %s" % (c, self.space_view))
+        return True
+
+
+    def draw_stars(self):
         log.debug("Drawing stars and names")
 
         for key in self.systems:
             c1 = self.systems[key]['location_xy']
 
-            # log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
+            if True:
 
-            # Scale system coordinates to screeb coordinates
-            c2 = self.scale_coordinates(
-                c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+                # log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
 
-            # Draw star
-            pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
+                # Scale system coordinates to screeb coordinates
+                c2 = self.scale_coordinates(
+                    c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
-            # Draw system name
-            system_name = font.render(key, True, (255, 255, 255))
-            self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
+                # Draw star
+                pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
-            self.generate_planets(key)
-            self.draw_planets(key, self.font)
+                # Draw system name
+                system_name = self.font_size_m.render(key, True, (255, 255, 255))
+                self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
+
+                self.generate_planets(key)
+                self.draw_planets(key)
 
         pygame.display.update()
 
-    def draw_planets(self, system, font):
+    def draw_planets(self, system):
         log.debug("Drawing planets and names for system %s" % system)
 
         log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
@@ -461,7 +465,7 @@ class SpaceMapGenerator():
             pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
 
             # Draw planet name
-            planet_name = font.render(key, True, (255, 80, 0))
+            planet_name = self.font_size_m.render(key, True, (255, 80, 0))
             self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
         pygame.display.update()
@@ -481,6 +485,15 @@ class SpaceMapGenerator():
             log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" %
                       (name, p, planets, orbit, angle))
             self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
+
+
+    def draw_space_info(self, x, y):
+        log.debug("Draw space info to (%s,%s)" % (x,y))
+        view_text = "View area: %s,%s %s,%s" % self.space_view
+        log.debug("View data: %s" % view_text)
+        view_rect = self.font_size_l.render(view_text, True, YELLOW)
+        self.screen.blit(view_rect, (x, y))
+
 
 
 class Ship:
@@ -604,6 +617,8 @@ def main():
     # Initialize the pygame library.
     pygame.init()
 
+    SCREEN_SIZE_X, SCREEN_SIZE_Y=pygame.display.get_surface().get_size() 
+
     space = SpaceMapGenerator()
     space.generate_stars()
     space.generate_planets("Suomi")
@@ -618,17 +633,18 @@ def main():
 
     font_size_22 = pygame.font.SysFont(None, 22)
     font_size_32 = pygame.font.SysFont(None, 32)
-    ships.font = font_size_32
-    space.font = font_size_22
+    ships.font = font_size_22
+    space.font_size_m = font_size_22
+    space.font_size_l = font_size_32
 
-    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.RESIZABLE)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(True)
     screen.fill(BLACK)
 
     ships.screen = screen
     space.screen = screen
-    space.draw_stars(font_size_22)
+    space.draw_stars()
     # space.draw_planets("Suomi",font_size_22)
 
     # Set the background to black.
@@ -641,7 +657,7 @@ def main():
 
     while 1:
 
-        pygame.display.update()
+        space.draw_space_info(0,0)
 
         # for _ in range(10000):
         #    ships.update("Ship 1")
@@ -681,6 +697,12 @@ def main():
                 mouse_state = 2
             elif mouse_state == 3:
                 mouse_state = 0
+
+        #elif event.type ==  pygame.VIDEORESIZE:
+            #SCREEN_SIZE = [event.w, event.h]
+
+
+        pygame.display.update()
 
         # elif event.type == pygame.MOUSEBUTTONUP:
         #    if mouse_state == True:
