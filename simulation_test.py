@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 08:21:21>
+# Time-stamp: <2021-02-13 08:40:58>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -65,6 +65,9 @@ CYAN = 0, 255, 255
 MAGENTA = 255, 0, 255
 LEFT = 0
 RIGHT = 1
+MOUSE_LEFT_BUTTON = 1
+MOUSE_MIDDLE_BUTTON = 2
+MOUSE_RIGHT_BUTTON = 3
 
 
 class MarkovChainNamer():
@@ -623,7 +626,7 @@ def main():
 
     # Main loop
 
-    mouse_state = False
+    mouse_state = 0
 
     while 1:
 
@@ -646,9 +649,23 @@ def main():
                 ships.set_acceleration("Ship 1", 100)
             elif event.key == pygame.K_DOWN:
                 ships.set_acceleration("Ship 1", 0)
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            mouse_pos_1 = pygame.mouse.get_pos()
-            screen.set_at(mouse_pos_1,YELLOW)
+
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_LEFT_BUTTON:
+            if mouse_state == 0:
+                mouse_pos_1 = pygame.mouse.get_pos()
+                screen.set_at(mouse_pos_1, YELLOW)
+                mouse_state = 1
+            elif mouse_state == 2:
+                mouse_pos_2 = pygame.mouse.get_pos()
+                screen.set_at(mouse_pos_1, YELLOW)
+                mouse_state = 3
+
+        elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
+            if mouse_state == 1:
+                mouse_state = 2
+            elif mouse_state == 3:
+                mouse_state = 0
+
 
         #elif event.type == pygame.MOUSEBUTTONUP:
         #    if mouse_state == True:
