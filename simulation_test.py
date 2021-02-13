@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 05:16:59>
+# Time-stamp: <2021-02-13 05:32:42>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -416,7 +416,8 @@ class SpaceMapGenerator():
         log.debug("Planets at %s: %s" % (system,self.systems[system]['planets'] ))
 
         for key in self.systems[system]['planets']:
-
+            log.debug("Key: %s" % key)
+            log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
