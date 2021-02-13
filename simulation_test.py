@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 08:40:58>
+# Time-stamp: <2021-02-13 08:49:07>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -657,8 +657,13 @@ def main():
                 mouse_state = 1
             elif mouse_state == 2:
                 mouse_pos_2 = pygame.mouse.get_pos()
-                screen.set_at(mouse_pos_1, YELLOW)
+                screen.set_at(mouse_pos_2, YELLOW)
                 mouse_state = 3
+
+
+                r = pygame.Rect(mouse_pos_2,mouse_pos_1)
+                pygame.draw.rect(screen, YELLOW, r,1)
+
 
         elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
             if mouse_state == 1:
