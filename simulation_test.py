@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 05:45:53>
+# Time-stamp: <2021-02-13 05:49:32>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -302,8 +302,9 @@ class SpaceMapGenerator():
     space_y_min = 0
     space_y_max = 0
 
-    # Pygame screen
+    # Pygame screen and font
     screen = None
+    font = None
 
     def __init__(self):
         log.debug("__init__")
@@ -407,6 +408,9 @@ class SpaceMapGenerator():
             system_name = font.render(key, True, (255, 255, 255))
             self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
+            self.generate_planets(key)
+            self.draw_planets(key,self.font)
+
         pygame.display.update()
 
     def draw_planets(self, system, font):
@@ -437,7 +441,7 @@ class SpaceMapGenerator():
 
             # Draw planet name
             planet_name = font.render(key, True, (255, 80, 80))
-            self.screen.blit(planet_name, [px+7, py-6])
+            self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
         pygame.display.update()
 
@@ -593,6 +597,7 @@ def main():
     font_size_22 = pygame.font.SysFont(None, 22)
     font_size_32 = pygame.font.SysFont(None, 32)
     ships.font = font_size_32
+    space.font = font_size_22
 
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
@@ -602,7 +607,7 @@ def main():
     ships.screen = screen
     space.screen = screen
     space.draw_stars(font_size_22)
-    space.draw_planets("Suomi",font_size_22)
+    #space.draw_planets("Suomi",font_size_22)
 
     # Set the background to black.
 
