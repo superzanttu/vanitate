@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 05:49:32>
+# Time-stamp: <2021-02-13 07:50:17>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -425,6 +425,8 @@ class SpaceMapGenerator():
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
 
+            log.debug("Orbit: %s Angle: %s" % (orbit, angle))
+
             px = orbit * math.cos(angle)
             py = orbit * math.sin(angle)
 
@@ -440,7 +442,7 @@ class SpaceMapGenerator():
             pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
 
             # Draw planet name
-            planet_name = font.render(key, True, (255, 80, 80))
+            planet_name = font.render(key, True, (255, 80, 0))
             self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
         pygame.display.update()
@@ -601,7 +603,7 @@ def main():
 
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
-    pygame.mouse.set_visible(0)
+    pygame.mouse.set_visible(True)
     screen.fill(BLACK)
 
     ships.screen = screen
@@ -627,15 +629,17 @@ def main():
         # Handle input events.
         event = pygame.event.poll()
         # keys = pygame.key.get_pressed()
-        if (event.type == pygame.QUIT):
+        if event.type == pygame.QUIT:
             break
-        elif (event.type == pygame.KEYDOWN):
-            if (event.key == pygame.K_ESCAPE):
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_ESCAPE:
                 break
-            elif (event.key == pygame.K_UP):
+            elif event.key == pygame.K_UP:
                 ships.set_acceleration("Ship 1", 100)
-            elif (event.key == pygame.K_DOWN):
+            elif event.key == pygame.K_DOWN:
                 ships.set_acceleration("Ship 1", 0)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            pass
 
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
