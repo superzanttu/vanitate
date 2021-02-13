@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 04:48:30>
+# Time-stamp: <2021-02-13 04:54:53>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -410,17 +410,18 @@ class SpaceMapGenerator():
 
         pygame.display.update()
 
-    def generate_planets(self, system):
+    def generate_planets(self):
         log.debug("Generating planets")
 
-        planets = randrange(3, 12)
+        planets = random.randrange(3, 12)
 
-        orbit_min = 57950000 + randrange(-10000000, 10000000)
-        ormit_max = 5913000000 + randrange(-10000000, 10000000)
+        orbit_min = 57950000 + random.randrange(-10000000, 10000000)
+        ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
-        for p in planets:
-            orbit = (ormit_max-ormit_min)/planets*p + randrange(-10000000, 10000000)
-            name = name = self.markov.gen_name(["finnish", "asteroids"], 4, 13)
+        for p in range(1,planets+1):
+            log.debug("Generating planet %s of %s"  % (p, planets))
+            orbit = (ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000)
+            name = self.markov.gen_name("finnish", 4, 13)
             print(name)
 
 
