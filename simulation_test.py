@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 08:49:07>
+# Time-stamp: <2021-02-13 09:00:40>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -418,14 +418,14 @@ class SpaceMapGenerator():
             self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
             self.generate_planets(key)
-            self.draw_planets(key,self.font)
+            self.draw_planets(key, self.font)
 
         pygame.display.update()
 
     def draw_planets(self, system, font):
         log.debug("Drawing planets and names for system %s" % system)
 
-        log.debug("Planets at %s: %s" % (system,self.systems[system]['planets'] ))
+        log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
         for key in self.systems[system]['planets']:
             log.debug("Key: %s" % key)
@@ -443,9 +443,9 @@ class SpaceMapGenerator():
 
             # Scale planet coordinates to screeb coordinates
             sc = self.scale_coordinates(
-                (px,py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+                (px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
-            log.debug("Scaled coordinates: (%s, %s)" % (sc[0],sc[1]))
+            log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
             # Draw planet
             pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
@@ -456,7 +456,7 @@ class SpaceMapGenerator():
 
         pygame.display.update()
 
-    def generate_planets(self,system):
+    def generate_planets(self, system):
         log.debug("Generating planets for system %s" % system)
 
         planets = random.randrange(3, 12)
@@ -464,12 +464,13 @@ class SpaceMapGenerator():
         orbit_min = 57950000 + random.randrange(-10000000, 10000000)
         ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
-        for p in range(1,planets+1):
+        for p in range(1, planets+1):
             orbit = int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
             angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
-            log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" % (name, p, planets, orbit, angle))
-            self.systems[system]['planets'][name]={'orbit': orbit, 'angle': angle}
+            log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" %
+                      (name, p, planets, orbit, angle))
+            self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
 
 class Ship:
@@ -618,7 +619,7 @@ def main():
     ships.screen = screen
     space.screen = screen
     space.draw_stars(font_size_22)
-    #space.draw_planets("Suomi",font_size_22)
+    # space.draw_planets("Suomi",font_size_22)
 
     # Set the background to black.
 
@@ -660,10 +661,10 @@ def main():
                 screen.set_at(mouse_pos_2, YELLOW)
                 mouse_state = 3
 
+                r = pygame.Rect(
+                    mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
 
-                r = pygame.Rect(mouse_pos_2,mouse_pos_1)
-                pygame.draw.rect(screen, YELLOW, r,1)
-
+                pygame.draw.rect(screen, YELLOW, r, 1)
 
         elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
             if mouse_state == 1:
@@ -671,13 +672,11 @@ def main():
             elif mouse_state == 3:
                 mouse_state = 0
 
-
-        #elif event.type == pygame.MOUSEBUTTONUP:
+        # elif event.type == pygame.MOUSEBUTTONUP:
         #    if mouse_state == True:
         #        mouse_pos_2 = pygame.mouse.get_pos()
         #        #pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(mouse_pos_1[0], mouse_pos_1[1], mouse_pos_2[0], mouse_pos_2[1]))
         #        mouse_state = False
-
 
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
