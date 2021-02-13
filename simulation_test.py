@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 05:08:19>
+# Time-stamp: <2021-02-13 05:16:59>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -410,10 +410,13 @@ class SpaceMapGenerator():
 
         pygame.display.update()
 
-    def draw_stars(self, system, font):
-        log.debug("Drawing planets and names for system %s" %s)
+    def draw_planets(self, system, font):
+        log.debug("Drawing planets and names for system %s" % system)
+
+        log.debug("Planets at %s: %s" % (system,self.systems[system]['planets'] ))
 
         for key in self.systems[system]['planets']:
+
 
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
@@ -423,17 +426,17 @@ class SpaceMapGenerator():
 
             log.debug("Planet %s location: (%s, %s)" % (key, px, py))
 
-            # Scale system coordinates to screeb coordinates
-            c2 = self.scale_coordinates(
-                c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+            # Scale planet coordinates to screeb coordinates
+            sc = self.scale_coordinates(
+                (px,py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
             # Draw planet
-            self.screen.set_at(c2, WHITE)
-            pygame.draw.circle(self.screen, (255,255,0), c2, 5, 0)
+            self.screen.set_at(sc, WHITE)
+            pygame.draw.circle(self.screen, (255,255,0), sc, 5, 0)
 
             # Draw planet name
             planet_name = font.render(key, True, (255, 80, 80))
-            self.screen.blit(planet_name, [c2[0]+7, c2[1]-6])
+            self.screen.blit(planet_name, [pc+7, py-6])
 
         pygame.display.update()
 
@@ -446,12 +449,11 @@ class SpaceMapGenerator():
         ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
         for p in range(1,planets+1):
-            orbit = (ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000)
+            orbit = int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
             angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
             log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" % (name, p, planets, orbit, angle))
-            self.systems[system]['planets'] = {}
-
+            self.systems[system]['planets'][name]=[orbit, angle]
 
 
 class Ship:
@@ -599,6 +601,7 @@ def main():
     ships.screen = screen
     space.screen = screen
     space.draw_stars(font_size_22)
+    space.draw_planets("Suomi",font_size_22)
 
     # Set the background to black.
 
