@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-12 05:03:38>
+# Time-stamp: <2021-02-13 04:16:11>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -302,6 +302,9 @@ class SpaceMapGenerator():
     space_y_min = 0
     space_y_max = 0
 
+    # Pygame screen
+    screen = None
+
     def __init__(self):
         log.debug("__init__")
         log.debug("Initial systems: %s" % self.systems)
@@ -354,7 +357,7 @@ class SpaceMapGenerator():
                 self.systems[name] = {}
                 self.systems[name]['location_xy'] = (x, y)
 
-                log.debug("New system: %s %s" % (name, self.systems[name]))
+                #log.debug("New system: %s %s" % (name, self.systems[name]))
 
                 if x > self.space_x_max:
                     self.space_x_max = x
@@ -372,7 +375,7 @@ class SpaceMapGenerator():
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
     def scale_coordinates(self, source, target_min, target_max):
-        log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        # log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
@@ -382,27 +385,33 @@ class SpaceMapGenerator():
         ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min)
                   )/(self.space_y_max - self.space_y_min)+target_min[1])
 
-        log.debug("Scaled coordinates: %s, %s" % (tx, ty))
-        return [tx, ty]
+        # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        return (tx, ty)
 
-    def draw_stars(self, screen, font):
+    def draw_stars(self, font):
+        log.debug("Drawing stars and names")
 
         for key in self.systems:
             c1 = self.systems[key]['location_xy']
-            print("c1:",c1)
-            log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
 
+            # log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
+
+            # Scale system coordinates to screeb coordinates
             c2 = self.scale_coordinates(
                 c1, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
-            screen.set_at(c2, WHITE)
-            pygame.draw.circle(screen, WHITE, c2, 5, 0)
 
-            img = font.render(key, True, (255, 255, 255))
-            screen.blit(img, [c2[0]+7, c2[1]-6])
+            # Draw star
+            self.screen.set_at(c2, WHITE)
+            pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
+
+            # Draw system name
+            system_name = font.render(key, True, (255, 255, 255))
+            self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
         pygame.display.update()
 
     def generate_planets(self, system):
+        log.debug("Generating planets")
 
         planets = randrange(3, 12)
 
@@ -423,6 +432,7 @@ class Ship:
     space = None
 
     def __init__(self):
+        log.debug("__init__")
         self.ships = []
         self.ship_data = {}
 
@@ -553,18 +563,13 @@ def main():
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(0)
-
-    ships.screen = screen
-    space.draw_stars(screen, font_size_22)
-
-    # Set the background to black.
     screen.fill(BLACK)
 
-    # space.scale_coordinates([10,20],[0,0],SCREEN_SIZE)
+    ships.screen = screen
+    space.screen = screen
+    space.draw_stars(font_size_22)
 
-    #scheduler = BlockingScheduler()
-    #scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
-    # scheduler.start()
+    # Set the background to black.
 
     log.debug("Simulation runnning. Press ESC to stop.")
 
@@ -574,7 +579,7 @@ def main():
 
         pygame.display.update()
 
-        #for _ in range(10000):
+        # for _ in range(10000):
         #    ships.update("Ship 1")
 
         #ships.draw_ship_data("Ship 1")
@@ -600,3 +605,8 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
+# scheduler = BlockingScheduler()
+# scheduler.add_job(simulate, 'interval', seconds=10, id='worker')
+# scheduler.start()
