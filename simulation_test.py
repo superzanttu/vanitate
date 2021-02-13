@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 09:00:40>
+# Time-stamp: <2021-02-13 09:05:05>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -311,6 +311,11 @@ class SpaceMapGenerator():
     space_y_min = 0
     space_y_max = 0
 
+    space_x1_view = 0
+    space_y1_view = 0
+    space_x2_view = 0
+    space_y2_view = 0
+
     # Pygame screen and font
     screen = None
     font = None
@@ -378,6 +383,11 @@ class SpaceMapGenerator():
                     self.space_y_max = y
                 elif y < self.space_y_min:
                     self.space_y_min = y
+
+                self.space_x1_view = self.space_x_min 
+                self.space_y1_view = self.space_y_min
+                self.space_x2_view = self.space_x_max
+                self.space_y2_view = self.space_y_max
 
                 self.systems[name]['planets'] = {}
 
