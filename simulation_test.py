@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-13 04:16:11>
+# Time-stamp: <2021-02-13 04:48:30>
 
 # Start logging before other libraries
 from collections import defaultdict
@@ -547,6 +547,7 @@ def main():
 
     space = SpaceMapGenerator()
     space.generate_stars()
+    space.generate_planets()
 
     ships = Ship()
     ships.space = space
