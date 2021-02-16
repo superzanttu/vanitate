@@ -24,16 +24,16 @@
 from collections import defaultdict
 import random
 import os
-import argparse
+# import argparse
 import numpy
 import pygame
-from apscheduler.schedulers.blocking import BlockingScheduler
+# from apscheduler.schedulers.blocking import BlockingScheduler
 import networkx as nx
 import yaml
-import csv
+# import csv
 import math
-import pprint
-import time
+# import pprint
+# import time
 import sys
 import logging as log
 log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
@@ -103,18 +103,16 @@ class MarkovChainNamer():
                     self.chains[(listname, prefix)].append(seq[-1])
 
     def load_wordlist_file(self, listname, filepath):
-        # print("load_wordlist:", listname, filepath)
         names = [line.strip() for line in open(filepath, 'rt').readlines()]
         for name in names:
             if name.startswith('#'):
                 continue
             # Keep everything as unicode internally
-            #name = name.decode('utf-8')
+            # name = name.decode('utf-8')
             self.load_chains(listname, name)
             self.load_chains("", name)
 
     def load_wordlist(self, listname):
-        #print("load_wordlist:", listname)
         if listname == "":
             self.load_all_name_data()
         else:
@@ -126,7 +124,6 @@ class MarkovChainNamer():
                 sys.exit(-1)
 
     def load_all_name_data(self):
-        # print("load_all_name_data")
         for fn in os.listdir(os.path.join(HOME_FOLDER, NAME_DATA_FOLDER)):
             if fn.endswith(".txt"):
                 listname, ext = os.path.splitext(fn)
@@ -134,7 +131,6 @@ class MarkovChainNamer():
                 self.load_wordlist_file(listname, path)
 
     def _gen_name(self, listname, min_lenght, max_lenght):
-        #print ("_gen_name:",setname, options)
         ok = False
 
         if listname not in self.splat:
@@ -155,7 +151,6 @@ class MarkovChainNamer():
         return name.replace("^", "")
 
     def gen_name(self, listname, min_lenght, max_lenght):
-        #print("gen_name:", listname, min_lenght, max_lenght)
         acceptable = False
         while not acceptable:
             name = self._gen_name(listname, min_lenght, max_lenght)
@@ -266,7 +261,7 @@ class SpaceMap_YAML:
                                     p_x_gu, p_y_gu, p_x_su, p_y_su)  # Add planet
 
     def add_object(self, id, type, name, x_uu, y_uu, x_gu, y_gu, x_su, y_su):
-        if not id in self.objects:
+        if id not in self.objects:
             log.debug("ID:%s Name:%s Type:%s x_uu:%s y_uu:%s x_gu:%s y_gu:%s x_su:%s y_su:%s" %
                       (id, name, type, x_uu, y_uu, x_gu, y_gu, x_su, y_su))
             self.objects.append(id)
@@ -382,7 +377,8 @@ class SpaceMapGenerator():
                 elif y < self.space_y_min:
                     self.space_y_min = y
 
-                self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+                self.space_view = (self.space_x_min, self.space_y_min,
+                                   self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
 
@@ -403,11 +399,10 @@ class SpaceMapGenerator():
         # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return (tx, ty)
 
-    def is_visible_location(self,c):
+    def is_visible_location(self, c):
         print(c, self.space_view)
         log.debug("Location: %s View: %s" % (c, self.space_view))
         return True
-
 
     def draw_stars(self):
         log.debug("Drawing stars and names")
@@ -485,14 +480,12 @@ class SpaceMapGenerator():
                       (name, p, planets, orbit, angle))
             self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
-
     def draw_space_info(self, x, y):
-        log.debug("Draw space info to (%s,%s)" % (x,y))
+        log.debug("Draw space info to (%s,%s)" % (x, y))
         view_text = "View area: %s,%s %s,%s" % self.space_view
         log.debug("View data: %s" % view_text)
         view_rect = self.font_size_l.render(view_text, True, YELLOW)
         self.screen.blit(view_rect, (x, y))
-
 
 
 class Ship:
@@ -523,20 +516,20 @@ class Ship:
             log.error("Ship not found %s" % id)
 
     def add(self, id):
-        if not id in self.ships:
+        if id not in self.ships:
             log.debug("Ship %s added" % id)
             self.ships.append(id)
 
             self.ship_data[id] = {}
-            sl = self.ship_data[id]['location_xy'] = [0, 0]
+            self.ship_data[id]['location_xy'] = [0, 0]
 
             self.ship_data[id]['angle'] = math.pi/6
 
-            ss = self.ship_data[id]['velosity_xy_ms'] = [0, 0]
+            self.ship_data[id]['velosity_xy_ms'] = [0, 0]
 
-            sa = self.ship_data[id]['acceleration_ms2'] = [0]
+            self.ship_data[id]['acceleration_ms2'] = [0]
 
-            sa = self.ship_data[id]['acceleration_xy_ms2'] = [0, 0]
+            self.ship_data[id]['acceleration_xy_ms2'] = [0, 0]
 
         else:
             log.error("Can't add ship with existing name (%s)" % id)
@@ -545,7 +538,7 @@ class Ship:
 
         if id in self.ships:
             log.debug("%s %s" % (id, coordinates))
-            sc = self.ship_data[id]['location_xy'] = coordinates
+            self.ship_data[id]['location_xy'] = coordinates
 
         else:
             log.error("Can't find ship %s" % id)
@@ -655,7 +648,7 @@ def main():
 
     while 1:
 
-        space.draw_space_info(0,0)
+        space.draw_space_info(0, 0)
 
         # for _ in range(10000):
         #    ships.update("Ship 1")
@@ -696,9 +689,8 @@ def main():
             elif mouse_state == 3:
                 mouse_state = 0
 
-        #elif event.type ==  pygame.VIDEORESIZE:
+        # elif event.type ==  pygame.VIDEORESIZE:
             #SCREEN_SIZE = [event.w, event.h]
-
 
         pygame.display.update()
 
