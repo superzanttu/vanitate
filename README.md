@@ -9,6 +9,7 @@ Experimental space simulation.
   - [NetworkX](https://networkx.org)
   - [Advanced Python Scheduler](https://apscheduler.readthedocs.io/en/v3.7.0/index.html)
   - NumPy
+  - PyGame
 
 
 

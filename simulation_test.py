@@ -51,9 +51,8 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame
 # Constants
-#SCREEN_SIZE = [3360, 2100]
-SCREEN_SIZE = []
-# SCREEN_SIZE = [800, 600]
+SCREEN_SIZE = [3360, 2100]
+SCREEN_SIZE = [800, 600]
 WHITE = 255, 255, 255
 BLACK = 20, 20, 40
 LIGHTGRAY = 180, 180, 180
@@ -617,8 +616,6 @@ def main():
     # Initialize the pygame library.
     pygame.init()
 
-    SCREEN_SIZE_X, SCREEN_SIZE_Y=pygame.display.get_surface().get_size() 
-
     space = SpaceMapGenerator()
     space.generate_stars()
     space.generate_planets("Suomi")
@@ -637,7 +634,8 @@ def main():
     space.font_size_m = font_size_22
     space.font_size_l = font_size_32
 
-    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.RESIZABLE)
+    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
+    #(SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(True)
     screen.fill(BLACK)
