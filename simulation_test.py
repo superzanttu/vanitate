@@ -196,7 +196,7 @@ class SpaceMap_YAML:
     def write_space_map(self):
         log.debug("Writing space map")
         with open('./resources/map_dump.yaml', 'w') as file:
-            data = yaml.dump(self.map, file)
+            yaml.dump(self.map, file)
 
     def read_space_map(self):
         log.debug("Reading space map")
@@ -342,7 +342,7 @@ class SpaceMapGenerator():
                     y = random.randrange(-self.SPACE_Y_MAX, self.SPACE_Y_MAX)
 
                     distance_ok = True
-                    #log.debug("Systems: %s" % self.systems)
+                    # log.debug("Systems: %s" % self.systems)
                     for s in self.systems:
                         # log.debug("Checking distance to s: %s" % s)
 
@@ -365,7 +365,7 @@ class SpaceMapGenerator():
                 self.systems[name] = {}
                 self.systems[name]['location_xy'] = (x, y)
 
-                #log.debug("New system: %s %s" % (name, self.systems[name]))
+                # log.debug("New system: %s %s" % (name, self.systems[name]))
 
                 if x > self.space_x_max:
                     self.space_x_max = x
@@ -628,7 +628,8 @@ def main():
     space.font_size_l = font_size_32
 
     screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
-    #(SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
+    # (SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
+    # FIXME
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(True)
     screen.fill(BLACK)
@@ -653,7 +654,7 @@ def main():
         # for _ in range(10000):
         #    ships.update("Ship 1")
 
-        #ships.draw_ship_data("Ship 1")
+        # ships.draw_ship_data("Ship 1")
 
         # Handle input events.
         event = pygame.event.poll()
@@ -690,7 +691,7 @@ def main():
                 mouse_state = 0
 
         # elif event.type ==  pygame.VIDEORESIZE:
-            #SCREEN_SIZE = [event.w, event.h]
+            # SCREEN_SIZE = [event.w, event.h]
 
         pygame.display.update()
 
