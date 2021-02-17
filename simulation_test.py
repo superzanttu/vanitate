@@ -35,9 +35,27 @@ import math
 # import pprint
 # import time
 import sys
+
+# Logging
 import logging as log
+class ListHandler(log.Handler): # Inherit from logging.Handler
+        def __init__(self, log_list):
+                # run the regular Handler __init__
+                log.Handler.__init__(self)
+                # Our custom argument
+                self.log_list = log_list
+        def emit(self, record):
+                # record.message is the log message
+                self.log_list.append(record.msg)
+
 log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
                 filename='./log/main.log', level=log.DEBUG)
+
+hud_console_log= []
+hud_console = ListHandler(hud_console_log)
+hud_console.setLevel(log.INFO)
+log.getLogger('').addHandler(hud_console)
+
 
 # Standard libraries
 
@@ -52,9 +70,9 @@ NAME_DATA_FOLDER = "namedata"
 # Pygame
 # Constants
 SCREEN_SIZE = [3360, 2100]
-SCREEN_SIZE = [800, 600]
+SCREEN_SIZE = [2880, 1800]
 WHITE = 255, 255, 255
-BLACK = 20, 20, 40
+BLACK = 0, 0, 0
 LIGHTGRAY = 180, 180, 180
 DARKGRAY = 120, 120, 120
 RED = 255, 0, 0
@@ -284,6 +302,113 @@ class SpaceMap_YAML:
         else:
             log.error("Object not found (%s)" % (id))
 
+class Ship:
+    """Ship functions"""
+
+    font = None
+    screen = None
+    space = None
+
+    def __init__(self):
+        log.debug("__init__")
+        self.ships = []
+        self.ship_data = {}
+
+    def __str__(self):
+        text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
+        for s in self.ships:
+            text += "\n\t\t%s" % (s)
+            for k in self.ship_data[s].keys():
+                text += "\n\t\t\t%s: %s" % (k, self.ship_data[s][k])
+        return(text)
+
+    def delete(self, id):
+        if id in self.ships:
+            self.ships.remove(id)
+            log.debug("Ship %s deleted" % id)
+        else:
+            log.error("Ship not found %s" % id)
+
+    def add(self, id):
+        if id not in self.ships:
+            log.debug("Ship %s added" % id)
+            self.ships.append(id)
+
+            self.ship_data[id] = {}
+            self.ship_data[id]['location_xy'] = [0, 0]
+
+            self.ship_data[id]['angle'] = math.pi/6
+
+            self.ship_data[id]['velosity_xy_ms'] = [0, 0]
+
+            self.ship_data[id]['acceleration_ms2'] = [0]
+
+            self.ship_data[id]['acceleration_xy_ms2'] = [0, 0]
+
+        else:
+            log.error("Can't add ship with existing name (%s)" % id)
+
+    def set_location(self, id, coordinates):
+
+        if id in self.ships:
+            log.debug("%s %s" % (id, coordinates))
+            self.ship_data[id]['location_xy'] = coordinates
+
+        else:
+            log.error("Can't find ship %s" % id)
+
+    def set_acceleration(self, id, acceleration_ms2):
+        log.debug("Set ship %s acceleration to %s m/sˆ" % (id, acceleration_ms2))
+        ax = acceleration_ms2 * math.cos(self.ship_data[id]['angle'])
+        ay = acceleration_ms2 * math.sin(self.ship_data[id]['angle'])
+        self.ship_data[id]['acceleration_xy_ms2'] = [ax, ay]
+        self.ship_data[id]['acceleration_ms2'] = acceleration_ms2
+
+        self.draw_ship_data(id)
+
+    def draw_ship_data(self, id):
+
+        s = self.ship_data[id]
+        t_id = "ID:%s   " % id
+        t_location = "Location:%s   " % s['location_xy']
+        t_angle = "Angle:%s   " % s['angle']
+        t_velosity = "Velosity: %s m/sˆ2   " % s['velosity_xy_ms']
+        t_acceleration = "Acceleration: %s m/s2   " % s['acceleration_ms2']
+        t_acceleration_xy = "Acceleration XY: %s m/s2   " % s['acceleration_xy_ms2']
+
+        text = (t_id, t_location, t_angle, t_velosity, t_acceleration, t_acceleration_xy)
+
+        text_y = 0
+        text_y_step = 32
+
+        pygame.draw.rect(self.screen, (0, 200, 0), (0, 0, 1000, len(text)*text_y_step))
+
+        for t in text:
+
+            img = self.font.render(t, True, (0, 0, 255))
+            self.screen.blit(img, (0, text_y))
+            text_y += text_y_step
+
+    def update(self, id):
+        sd = self.ship_data[id]
+        lo = sd['location_xy']
+        ve = sd['velosity_xy_ms']
+        ac = sd['acceleration_xy_ms2']
+
+        ac_a = numpy.array(ac)
+        lo_a = numpy.array(lo)
+        ve_a = numpy.array(ve)
+
+        ve = ve_a + ac_a
+        self.ship_data[id]['velosity_xy_ms'] = ve
+
+        lo = lo_a + ve
+        self.ship_data[id]['location_xy'] = lo
+
+        sc = self.space.scale_coordinates(
+            lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+        pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
+
 
 class SpaceMapGenerator():
 
@@ -306,7 +431,13 @@ class SpaceMapGenerator():
     space_y_min = 0
     space_y_max = 0
 
+    view_x_min = 0
+    view_x_max = 0
+    view_y_min = 0
+    view_y_max = 0
+
     space_view = ()
+
 
     # Pygame screen and font
     screen = None
@@ -487,114 +618,13 @@ class SpaceMapGenerator():
         view_rect = self.font_size_l.render(view_text, True, YELLOW)
         self.screen.blit(view_rect, (x, y))
 
-
-class Ship:
-    """Ship functions"""
-
-    font = None
-    screen = None
-    space = None
-
-    def __init__(self):
-        log.debug("__init__")
-        self.ships = []
-        self.ship_data = {}
-
-    def __str__(self):
-        text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
-        for s in self.ships:
-            text += "\n\t\t%s" % (s)
-            for k in self.ship_data[s].keys():
-                text += "\n\t\t\t%s: %s" % (k, self.ship_data[s][k])
-        return(text)
-
-    def delete(self, id):
-        if id in self.ships:
-            self.ships.remove(id)
-            log.debug("Ship %s deleted" % id)
-        else:
-            log.error("Ship not found %s" % id)
-
-    def add(self, id):
-        if id not in self.ships:
-            log.debug("Ship %s added" % id)
-            self.ships.append(id)
-
-            self.ship_data[id] = {}
-            self.ship_data[id]['location_xy'] = [0, 0]
-
-            self.ship_data[id]['angle'] = math.pi/6
-
-            self.ship_data[id]['velosity_xy_ms'] = [0, 0]
-
-            self.ship_data[id]['acceleration_ms2'] = [0]
-
-            self.ship_data[id]['acceleration_xy_ms2'] = [0, 0]
-
-        else:
-            log.error("Can't add ship with existing name (%s)" % id)
-
-    def set_location(self, id, coordinates):
-
-        if id in self.ships:
-            log.debug("%s %s" % (id, coordinates))
-            self.ship_data[id]['location_xy'] = coordinates
-
-        else:
-            log.error("Can't find ship %s" % id)
-
-    def set_acceleration(self, id, acceleration_ms2):
-        log.debug("Set ship %s acceleration to %s m/sˆ" % (id, acceleration_ms2))
-        ax = acceleration_ms2 * math.cos(self.ship_data[id]['angle'])
-        ay = acceleration_ms2 * math.sin(self.ship_data[id]['angle'])
-        self.ship_data[id]['acceleration_xy_ms2'] = [ax, ay]
-        self.ship_data[id]['acceleration_ms2'] = acceleration_ms2
-
-        self.draw_ship_data(id)
-
-    def draw_ship_data(self, id):
-
-        s = self.ship_data[id]
-        t_id = "ID:%s   " % id
-        t_location = "Location:%s   " % s['location_xy']
-        t_angle = "Angle:%s   " % s['angle']
-        t_velosity = "Velosity: %s m/sˆ2   " % s['velosity_xy_ms']
-        t_acceleration = "Acceleration: %s m/s2   " % s['acceleration_ms2']
-        t_acceleration_xy = "Acceleration XY: %s m/s2   " % s['acceleration_xy_ms2']
-
-        text = (t_id, t_location, t_angle, t_velosity, t_acceleration, t_acceleration_xy)
-
-        text_y = 0
-        text_y_step = 32
-
-        pygame.draw.rect(self.screen, (0, 200, 0), (0, 0, 1000, len(text)*text_y_step))
-
-        for t in text:
-
-            img = self.font.render(t, True, (0, 0, 255))
-            self.screen.blit(img, (0, text_y))
-            text_y += text_y_step
-
-    def update(self, id):
-        sd = self.ship_data[id]
-        lo = sd['location_xy']
-        ve = sd['velosity_xy_ms']
-        ac = sd['acceleration_xy_ms2']
-
-        ac_a = numpy.array(ac)
-        lo_a = numpy.array(lo)
-        ve_a = numpy.array(ve)
-
-        ve = ve_a + ac_a
-        self.ship_data[id]['velosity_xy_ms'] = ve
-
-        lo = lo_a + ve
-        self.ship_data[id]['location_xy'] = lo
-
-        sc = self.space.scale_coordinates(
-            lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
-        pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
-
+    def reset_view(self):
+        log.info("Reset view to space minmax")
+        self.view_x_max = self.space_x_max
+        self.view_x_min = self.space_x_min
+        self.view_y_max = self.space_y_max
+        self.view_y_min = self.space_y_min
+        self.screen.fill(BLUE)
 
 def main():
 
@@ -632,10 +662,13 @@ def main():
     # FIXME
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(True)
-    screen.fill(BLACK)
 
     ships.screen = screen
     space.screen = screen
+
+    space.reset_view()
+
+    screen.fill(BLACK)
     space.draw_stars()
     # space.draw_planets("Suomi",font_size_22)
 
@@ -669,6 +702,9 @@ def main():
             elif event.key == pygame.K_DOWN:
                 ships.set_acceleration("Ship 1", 0)
 
+        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_RIGHT_BUTTON:
+            space.reset_view()
+
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_LEFT_BUTTON:
             if mouse_state == 0:
                 mouse_pos_1 = pygame.mouse.get_pos()
@@ -679,8 +715,11 @@ def main():
                 screen.set_at(mouse_pos_2, YELLOW)
                 mouse_state = 3
 
-                r = pygame.Rect(
-                    mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
+                r = pygame.Rect(mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
+
+                log.info("Selected area %s" % r)
+
+
 
                 pygame.draw.rect(screen, YELLOW, r, 1)
 
@@ -705,10 +744,12 @@ def main():
         #    ships.setAcceleration
 
     log.info("DONE")
+    print("HUD_LOG:",hud_console_log)
 
 
 if __name__ == "__main__":
     main()
+    print("HUD_LOG:",hud_console_log)
 
 
 # scheduler = BlockingScheduler()
