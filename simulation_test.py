@@ -37,25 +37,26 @@ import math
 import sys
 
 # Logging
-import logging as log
-class ListHandler(log.Handler): # Inherit from logging.Handler
+import logging
+class ListHandler(logging.Handler): # Inherit from logging.Handler
         def __init__(self, log_list):
                 # run the regular Handler __init__
-                log.Handler.__init__(self)
+                logging.Handler.__init__(self)
                 # Our custom argument
                 self.log_list = log_list
         def emit(self, record):
                 # record.message is the log message
                 self.log_list.append(record.msg)
 
-log.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
-                filename='./log/main.log', level=log.DEBUG)
+logging.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
+                filename='./log/main.log', level=logging.DEBUG)
 
 hud_console_log= []
 hud_console = ListHandler(hud_console_log)
-hud_console.setLevel(log.INFO)
-log.getLogger('').addHandler(hud_console)
+hud_console.setLevel(logging.INFO)
+logging.getLogger('').addHandler(hud_console)
 
+log = logging.getLogger()
 
 # Standard libraries
 
@@ -458,11 +459,11 @@ class SpaceMapGenerator():
         sc1r = 1
         sc2r = 10
 
-        log.info("Generating %s star names" % (sc1r*sc2r))
+        log.debug("Generating %s star names" % (sc1r*sc2r))
 
         for sc1 in range(sc1r):
 
-            log.info("Generated %s of %s star names" % (sc1*sc2r, sc1r*sc2r))
+            log.debug("Generated %s of %s star names" % (sc1*sc2r, sc1r*sc2r))
 
             for sc2 in range(sc2r):
 
@@ -630,12 +631,12 @@ class SpaceMapGenerator():
 
     def draw_hud_log(self):
         x = 0
-        y = 0
+
 
         for r in range(0,len(self.hud_log_current)):
-                pass
-                #text_rect = self.font_size_s.render(self.hud_log_current), True, LIGHTGRAY))
-                #self.screen.blit(view_rect, (x, y))
+            text_rect = self.font_size_s.render(self.hud_log_current[r], True, LIGHTGRAY)
+            y = SCREEN_SIZE[1]-100 - r* 20
+            self.screen.blit(text_rect, (x, y))
 
 
 def main():
@@ -760,12 +761,11 @@ def main():
         #    ships.setAcceleration
 
     log.info("DONE")
-    print("HUD_LOG:",hud_console_log)
+
 
 
 if __name__ == "__main__":
     main()
-    print("HUD_LOG:",hud_console_log)
 
 
 # scheduler = BlockingScheduler()
