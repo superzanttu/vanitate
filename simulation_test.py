@@ -566,18 +566,18 @@ class SpaceMapGenerator():
         pygame.display.update()
 
     def draw_planets(self, system):
-        log.debug("Drawing planets and names for system %s" % system)
+        #log.debug("Drawing planets and names for system %s" % system)
 
-        log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
+        #log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
         for key in self.systems[system]['planets']:
-            log.debug("Key: %s" % key)
-            log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
+            #log.debug("Key: %s" % key)
+            #log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
 
-            log.debug("Orbit: %s Angle: %s" % (orbit, angle))
+            #log.debug("Orbit: %s Angle: %s" % (orbit, angle))
 
             px = orbit * math.cos(angle)
             py = orbit * math.sin(angle)
@@ -587,7 +587,7 @@ class SpaceMapGenerator():
             # Scale planet coordinates to screeb coordinates
             sc = self.scale_coordinates((px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
-            log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
+            #log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
             # Draw planet
             pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
@@ -627,16 +627,16 @@ class SpaceMapGenerator():
         self.view_x_min = self.space_x_min
         self.view_y_max = self.space_y_max
         self.view_y_min = self.space_y_min
-        self.screen.fill(BLUE)
+
 
     def hud_log_draw(self):
         x = 0
         for r in range(0,len(self.hud_log_current)):
-            text_rect = self.font_size_s.render(self.hud_log_current[r], True, LIGHTGRAY)
-            y = SCREEN_SIZE[1]-100 - text_rect.get_height()* r
+            text_rect = self.font_size_l.render(self.hud_log_current[r], True, LIGHTGRAY)
+            y = SCREEN_SIZE[1]/2 + text_rect.get_height()* r
             self.screen.blit(text_rect, (x, y))
 
-    def hud_log_add(self,msg)
+    def hud_log_add(self,msg):
         self.hud_log_current.pop(0)
         self.hud_log_current.append(msg)
 
@@ -685,8 +685,8 @@ def main():
 
     space.reset_view()
 
-    screen.fill(BLACK)
-    space.draw_stars()
+    #screen.fill(BLACK)
+    #space.draw_stars()
     # space.draw_planets("Suomi",font_size_22)
 
     # Set the background to black.
@@ -696,18 +696,20 @@ def main():
     # Main loop
 
     mouse_state = 0
-    space.draw_hud_log()
+    space.hud_log_draw()
 
     hud_log_delay = []
 
     while 1:
 
+        screen.fill(BLACK)
+        space.draw_stars()
         space.draw_space_info(0, 0)
 
         # Draw hud logging
         if len(hud_console_log) >0:
-            space.hud_log_add(hud_console_log.pop(0)
-            space.draw_hud_log()
+            space.hud_log_add(hud_console_log.pop(0))
+        space.hud_log_draw()
 
 
 
@@ -760,7 +762,7 @@ def main():
         # elif event.type ==  pygame.VIDEORESIZE:
             # SCREEN_SIZE = [event.w, event.h]
 
-        pygame.display.update()
+
 
         # elif event.type == pygame.MOUSEBUTTONUP:
         #    if mouse_state == True:
@@ -770,6 +772,8 @@ def main():
 
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
+        pygame.display.update()
+
 
     log.info("DONE")
 
