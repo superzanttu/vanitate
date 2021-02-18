@@ -708,7 +708,8 @@ def main():
 
         # Draw hud logging
         if len(hud_console_log) >0:
-            space.hud_log_add(hud_console_log.pop(0))
+            pass
+            # space.hud_log_add(hud_console_log.pop(0))
         space.hud_log_draw()
 
 
