@@ -664,9 +664,9 @@ def main():
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
 
-    font_size_16 = pygame.font.SysFont(None, 22)
-    font_size_22 = pygame.font.SysFont(None, 22)
-    font_size_32 = pygame.font.SysFont(None, 32)
+    font_size_16 = pygame.font.SysFont("menlo", 8)
+    font_size_22 = pygame.font.SysFont("menlo", 16)
+    font_size_32 = pygame.font.SysFont("menlo", 22)
     ships.font = font_size_22
     space.font_size_s = font_size_16
     space.font_size_m = font_size_22
