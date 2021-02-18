@@ -441,6 +441,7 @@ class SpaceMapGenerator():
 
     # Pygame screen and font
     screen = None
+    font_size_s = None
     font_size_m = None
     font_size_l = None
 
@@ -583,8 +584,7 @@ class SpaceMapGenerator():
             log.debug("Planet %s location: (%s, %s)" % (key, px, py))
 
             # Scale planet coordinates to screeb coordinates
-            sc = self.scale_coordinates(
-                (px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+            sc = self.scale_coordinates((px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
             log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
@@ -629,9 +629,13 @@ class SpaceMapGenerator():
         self.screen.fill(BLUE)
 
     def draw_hud_log(self):
+        x = 0
+        y = 0
 
         for r in range(0,len(self.hud_log_current)):
-            log.debug("Current hud log row %s: %s"  % (r,self.hud_log_current[r]))
+                pass
+                #text_rect = self.font_size_s.render(self.hud_log_current), True, LIGHTGRAY))
+                #self.screen.blit(view_rect, (x, y))
 
 
 def main():
@@ -646,6 +650,7 @@ def main():
 
     # Initialize the pygame library.
     pygame.init()
+    print (pygame.font.get_fonts())
 
     space = SpaceMapGenerator()
     space.generate_stars()
@@ -659,9 +664,11 @@ def main():
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
 
+    font_size_16 = pygame.font.SysFont(None, 22)
     font_size_22 = pygame.font.SysFont(None, 22)
     font_size_32 = pygame.font.SysFont(None, 32)
     ships.font = font_size_22
+    space.font_size_s = font_size_16
     space.font_size_m = font_size_22
     space.font_size_l = font_size_32
 
