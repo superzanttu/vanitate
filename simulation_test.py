@@ -444,6 +444,8 @@ class SpaceMapGenerator():
     font_size_m = None
     font_size_l = None
 
+    hud_log_current = ["Row 1","123456789012345678901234567890123456789012345678901234567890","Row 3", "Row 4","Row 5","Row 6","Row 7"]
+
     def __init__(self):
         log.debug("__init__")
         log.debug("Initial systems: %s" % self.systems)
@@ -612,9 +614,9 @@ class SpaceMapGenerator():
             self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
     def draw_space_info(self, x, y):
-        log.debug("Draw space info to (%s,%s)" % (x, y))
+        # log.debug("Draw space info to (%s,%s)" % (x, y))
         view_text = "View area: %s,%s %s,%s" % self.space_view
-        log.debug("View data: %s" % view_text)
+        # log.debug("View data: %s" % view_text)
         view_rect = self.font_size_l.render(view_text, True, YELLOW)
         self.screen.blit(view_rect, (x, y))
 
@@ -625,6 +627,12 @@ class SpaceMapGenerator():
         self.view_y_max = self.space_y_max
         self.view_y_min = self.space_y_min
         self.screen.fill(BLUE)
+
+    def draw_hud_log(self):
+
+        for r in range(0,len(self.hud_log_current)):
+            log.debug("Current hud log row %s: %s"  % (r,self.hud_log_current[r]))
+
 
 def main():
 
@@ -679,6 +687,7 @@ def main():
     # Main loop
 
     mouse_state = 0
+    space.draw_hud_log()
 
     while 1:
 
