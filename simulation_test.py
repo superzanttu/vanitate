@@ -629,15 +629,16 @@ class SpaceMapGenerator():
         self.view_y_min = self.space_y_min
         self.screen.fill(BLUE)
 
-    def draw_hud_log(self):
+    def hud_log_draw(self):
         x = 0
-
-
         for r in range(0,len(self.hud_log_current)):
             text_rect = self.font_size_s.render(self.hud_log_current[r], True, LIGHTGRAY)
-            y = SCREEN_SIZE[1]-100 - r* 20
+            y = SCREEN_SIZE[1]-100 - text_rect.get_height()* r
             self.screen.blit(text_rect, (x, y))
 
+    def hud_log_add(self,msg)
+        self.hud_log_current.pop(0)
+        self.hud_log_current.append(msg)
 
 def main():
 
@@ -651,7 +652,7 @@ def main():
 
     # Initialize the pygame library.
     pygame.init()
-    print (pygame.font.get_fonts())
+    # print (pygame.font.get_fonts())
 
     space = SpaceMapGenerator()
     space.generate_stars()
@@ -665,7 +666,7 @@ def main():
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
 
-    font_size_16 = pygame.font.SysFont("menlo", 8)
+    font_size_16 = pygame.font.SysFont("menlo", 12)
     font_size_22 = pygame.font.SysFont("menlo", 16)
     font_size_32 = pygame.font.SysFont("menlo", 22)
     ships.font = font_size_22
@@ -697,9 +698,19 @@ def main():
     mouse_state = 0
     space.draw_hud_log()
 
+    hud_log_delay = []
+
     while 1:
 
         space.draw_space_info(0, 0)
+
+        # Draw hud logging
+        if len(hud_console_log) >0:
+            space.hud_log_add(hud_console_log.pop(0)
+            space.draw_hud_log()
+
+
+
 
         # for _ in range(10000):
         #    ships.update("Ship 1")
