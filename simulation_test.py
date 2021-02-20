@@ -709,13 +709,7 @@ def main():
 
     space.reset_view()
 
-    # screen.fill(BLACK)
-    # space.draw_stars()
-    # space.draw_planets("Suomi",font_size_22)
-
-    # Set the background to black.
-
-    log.debug("Simulation runnning. Press ESC to stop.")
+    log.info("Simulation runnning. Press ESC to stop.")
 
     # Main loop
 
