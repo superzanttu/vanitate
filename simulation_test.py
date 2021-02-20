@@ -770,7 +770,7 @@ def main():
                 log.info("Selected area %s" % r)
 
                 sc_1 = space.scale_coordinates(
-                    mouse_pos_1, [space.view_x_min, space.view_y_min], [space.view_x_max, space.view_y_max])
+                    mouse_pos_1, [space.view_x_max, space.view_y_max], [space.view_x_min, space.view_y_min])
                 sc_2 = space.scale_coordinates(
                     mouse_pos_2, [space.view_x_min, space.view_y_min], [space.view_x_max, space.view_y_max])
 
