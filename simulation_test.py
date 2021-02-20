@@ -38,20 +38,24 @@ import sys
 
 # Logging
 import logging
-class ListHandler(logging.Handler): # Inherit from logging.Handler
-        def __init__(self, log_list):
-                # run the regular Handler __init__
-                logging.Handler.__init__(self)
-                # Our custom argument
-                self.log_list = log_list
-        def emit(self, record):
-                # record.message is the log message
-                self.log_list.append(record.msg)
+
+
+class ListHandler(logging.Handler):  # Inherit from logging.Handler
+    def __init__(self, log_list):
+        # run the regular Handler __init__
+        logging.Handler.__init__(self)
+        # Our custom argument
+        self.log_list = log_list
+
+    def emit(self, record):
+        # record.message is the log message
+        self.log_list.append(record.msg)
+
 
 logging.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
-                filename='./log/main.log', level=logging.DEBUG)
+                    filename='./log/main.log', level=logging.DEBUG)
 
-hud_console_log= []
+hud_console_log = []
 hud_console = ListHandler(hud_console_log)
 hud_console.setLevel(logging.INFO)
 logging.getLogger('').addHandler(hud_console)
@@ -303,6 +307,7 @@ class SpaceMap_YAML:
         else:
             log.error("Object not found (%s)" % (id))
 
+
 class Ship:
     """Ship functions"""
 
@@ -439,14 +444,14 @@ class SpaceMapGenerator():
 
     space_view = ()
 
-
     # Pygame screen and font
     screen = None
     font_size_s = None
     font_size_m = None
     font_size_l = None
 
-    hud_log_current = ["Row 1","123456789012345678901234567890123456789012345678901234567890","Row 3", "Row 4","Row 5","Row 6","Row 7"]
+    hud_log_current = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
+                       "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
 
     def __init__(self):
         log.debug("__init__")
@@ -566,18 +571,17 @@ class SpaceMapGenerator():
         pygame.display.update()
 
     def draw_planets(self, system):
-        #log.debug("Drawing planets and names for system %s" % system)
-
-        #log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
+        # log.debug("Drawing planets and names for system %s" % system)
+        # log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
         for key in self.systems[system]['planets']:
-            #log.debug("Key: %s" % key)
-            #log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
+            # log.debug("Key: %s" % key)
+            # log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
 
-            #log.debug("Orbit: %s Angle: %s" % (orbit, angle))
+            # log.debug("Orbit: %s Angle: %s" % (orbit, angle))
 
             px = orbit * math.cos(angle)
             py = orbit * math.sin(angle)
@@ -585,9 +589,10 @@ class SpaceMapGenerator():
             log.debug("Planet %s location: (%s, %s)" % (key, px, py))
 
             # Scale planet coordinates to screeb coordinates
-            sc = self.scale_coordinates((px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+            sc = self.scale_coordinates(
+                (px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
 
-            #log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
+            # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
             # Draw planet
             pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
@@ -628,17 +633,17 @@ class SpaceMapGenerator():
         self.view_y_max = self.space_y_max
         self.view_y_min = self.space_y_min
 
-
     def hud_log_draw(self):
         x = 0
-        for r in range(0,len(self.hud_log_current)):
+        for r in range(0, len(self.hud_log_current)):
             text_rect = self.font_size_l.render(self.hud_log_current[r], True, LIGHTGRAY)
-            y = SCREEN_SIZE[1]/2 + text_rect.get_height()* r
+            y = SCREEN_SIZE[1]/2 + text_rect.get_height() * r
             self.screen.blit(text_rect, (x, y))
 
-    def hud_log_add(self,msg):
+    def hud_log_add(self, msg):
         self.hud_log_current.pop(0)
         self.hud_log_current.append(msg)
+
 
 def main():
 
@@ -685,8 +690,8 @@ def main():
 
     space.reset_view()
 
-    #screen.fill(BLACK)
-    #space.draw_stars()
+    # screen.fill(BLACK)
+    # space.draw_stars()
     # space.draw_planets("Suomi",font_size_22)
 
     # Set the background to black.
@@ -699,21 +704,18 @@ def main():
     space.hud_log_draw()
 
     hud_log_delay = []
+    screen.fill(BLACK)
+    space.draw_stars()
 
     while 1:
 
-        screen.fill(BLACK)
-        space.draw_stars()
         space.draw_space_info(0, 0)
 
         # Draw hud logging
-        if len(hud_console_log) >0:
+        if len(hud_console_log) > 0:
             pass
             # space.hud_log_add(hud_console_log.pop(0))
         space.hud_log_draw()
-
-
-
 
         # for _ in range(10000):
         #    ships.update("Ship 1")
@@ -746,11 +748,10 @@ def main():
                 screen.set_at(mouse_pos_2, YELLOW)
                 mouse_state = 3
 
-                r = pygame.Rect(mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
+                r = pygame.Rect(
+                    mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
 
                 log.info("Selected area %s" % r)
-
-
 
                 pygame.draw.rect(screen, YELLOW, r, 1)
 
@@ -763,8 +764,6 @@ def main():
         # elif event.type ==  pygame.VIDEORESIZE:
             # SCREEN_SIZE = [event.w, event.h]
 
-
-
         # elif event.type == pygame.MOUSEBUTTONUP:
         #    if mouse_state == True:
         #        mouse_pos_2 = pygame.mouse.get_pos()
@@ -775,9 +774,7 @@ def main():
         #    ships.setAcceleration
         pygame.display.update()
 
-
     log.info("DONE")
-
 
 
 if __name__ == "__main__":
