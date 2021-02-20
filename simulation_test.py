@@ -524,7 +524,7 @@ class SpaceMapGenerator():
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
     def scale_coordinates(self, source, target_min, target_max):
-        # log.debug("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
