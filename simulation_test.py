@@ -771,7 +771,7 @@ def main():
                 sc_2 = space.scale_coordinates(
                     mouse_pos_2, [space.view_x_min, space.view_y_min], [space.view_x_max, space.view_y_max])
 
-                log.info("Space coordinates: %s,%s %s,%s" % (sc_1, sc_2))
+                log.info("Space coordinates: %s %s" % (sc_1, sc_2))
 
                 pygame.draw.rect(screen, YELLOW, r, 1)
 
