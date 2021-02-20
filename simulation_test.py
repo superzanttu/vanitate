@@ -58,6 +58,8 @@ logging.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|
 hud_console_log = []
 hud_console = ListHandler(hud_console_log)
 hud_console.setLevel(logging.INFO)
+hud_formatter = logging.Formatter('%(asctime)s|%(message)s')
+hud_formatter.setFormatter(hud_formatter)
 logging.getLogger('').addHandler(hud_console)
 
 log = logging.getLogger()
