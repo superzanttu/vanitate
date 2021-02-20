@@ -757,10 +757,10 @@ def main():
                 mouse_pos_1 = pygame.mouse.get_pos()
                 screen.set_at(mouse_pos_1, YELLOW)
                 mouse_state = 1
-                log.info("Selection 1: %s" % mouse_pos_1)
+                log.info("Selection 1: %s %s" % mouse_pos_1)
             elif mouse_state == 2:
                 mouse_pos_2 = pygame.mouse.get_pos()
-                log.info("Selection 2: %s" % mouse_pos_1)
+                log.info("Selection 2: %s %s" % mouse_pos_1)
                 screen.set_at(mouse_pos_2, YELLOW)
                 mouse_state = 3
 
