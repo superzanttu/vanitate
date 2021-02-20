@@ -635,10 +635,15 @@ class SpaceMapGenerator():
 
     def hud_log_draw(self):
         x = 0
+        empty_text = " " * 80
+        black_rect = self.font_size_l.render(empty_text, True, BLACK)
         for r in range(0, len(self.hud_log_current)):
+
             text_rect = self.font_size_l.render(self.hud_log_current[r], True, LIGHTGRAY)
             y = SCREEN_SIZE[1]/2 + text_rect.get_height() * r
+            self.screen.blit(black_rect, (x, y))
             self.screen.blit(text_rect, (x, y))
+        self.screen
 
     def hud_log_add(self, msg):
         self.hud_log_current.pop(0)
@@ -703,7 +708,6 @@ def main():
     mouse_state = 0
     space.hud_log_draw()
 
-    hud_log_delay = []
     screen.fill(BLACK)
     space.draw_stars()
 
@@ -775,6 +779,7 @@ def main():
         pygame.display.update()
 
     log.info("DONE")
+    print(hud_console_log)
 
 
 if __name__ == "__main__":
