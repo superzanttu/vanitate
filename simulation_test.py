@@ -63,7 +63,7 @@ hud_console = ListHandler(hud_console_log)
 hud_console.setLevel(logging.INFO)
 
 hud_formatter = logging.Formatter('%(asctime)s|%(message)s')
-hud_condole.setFormatter(hud_formatter)
+hud_console.setFormatter(hud_formatter)
 
 logging.getLogger('').addHandler(hud_console)
 
