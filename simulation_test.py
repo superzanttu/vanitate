@@ -636,25 +636,25 @@ class HudLog():
     font = None
 
     def __init__(self):
-        self.hud_log_current = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
-                                "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
+        self.log_visible = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
+                            "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
 
     def draw(self):
         x = 0
         empty_text = " " * 80
         black_rect = self.font.render(empty_text, True, BLACK)
 
-        for r in range(0, len(self.hud_log_current)):
+        for r in range(0, len(self.log_visible)):
 
-            text_rect = self.font.render(self.hud_log_current[r], True, LIGHTGRAY)
+            text_rect = self.font.render(self.log_visible[r], True, LIGHTGRAY)
             y = SCREEN_SIZE[1]/2 + text_rect.get_height() * r
             self.screen.blit(black_rect, (x, y))
             self.screen.blit(text_rect, (x, y))
         self.screen
 
     def add(self, msg):
-        self.hud_log_current.pop(0)
-        self.hud_log_current.append(msg)
+        self.log_visible.pop(0)
+        self.log_visible.append(msg)
 
 
 def main():
