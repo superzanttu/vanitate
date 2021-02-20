@@ -58,17 +58,13 @@ logging.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|
 hud_console_log = []
 hud_console = ListHandler(hud_console_log)
 hud_console.setLevel(logging.INFO)
+
 hud_formatter = logging.Formatter('%(asctime)s|%(message)s')
-hud_formatter.Formatter(hud_formatter)
+hud_formatter.setFormatter(hud_formatter)
+
 logging.getLogger('').addHandler(hud_console)
 
 log = logging.getLogger()
-
-# Standard libraries
-
-# External libraries
-
-# Name generator START
 
 
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
