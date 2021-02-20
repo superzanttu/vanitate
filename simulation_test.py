@@ -719,6 +719,9 @@ def main():
     screen.fill(BLACK)
     space.draw_stars()
 
+
+    log.info("Visible space: %s, %s %s, %s" % (space_x_min,space_y_min,space_x_max,space_y_max))
+
     while 1:
 
         space.draw_space_info(0, 0)
