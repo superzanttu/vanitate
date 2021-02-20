@@ -634,6 +634,7 @@ class SpaceMapGenerator():
 class HudLog():
 
     font = None
+    screen = None
 
     def __init__(self):
         self.log_visible = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
@@ -702,6 +703,7 @@ def main():
 
     hudlog = HudLog()
     hudlog.font = pygame_font_size_22
+    hudlog.screen = screen
 
     space.reset_view()
 
