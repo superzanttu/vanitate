@@ -644,6 +644,7 @@ class HudLog():
         x = 0
         empty_text = " " * 80
         black_rect = self.font.render(empty_text, True, BLACK)
+        black_rect.fill(BLACK)
 
         for r in range(0, len(self.log_visible)):
 
