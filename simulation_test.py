@@ -703,7 +703,7 @@ def main():
     space.screen = screen
 
     hudlog = HudLog()
-    hudlog.font = pygame_font_size_22
+    hudlog.font = pygame_font_size_32
     hudlog.screen = screen
 
     space.reset_view()
