@@ -643,9 +643,9 @@ class HudLog():
 
     def draw(self):
         x = 0
-        empty_text = " " * 80
+        empty_text = " " * 120
         black_rect = self.font.render(empty_text, True, BLACK)
-        black_rect.fill(BLACK)
+        black_rect.fill(DARKGRAY)
 
         for r in range(0, len(self.log_visible)):
 
@@ -719,7 +719,8 @@ def main():
     screen.fill(BLACK)
     space.draw_stars()
 
-    log.info("Visible space: %s, %s %s, %s" % (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
+    log.info("Visible space: %s, %s %s, %s" %
+             (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
 
     while 1:
 
