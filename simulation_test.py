@@ -649,7 +649,7 @@ class HudLog():
 
         for r in range(0, len(self.log_visible)):
 
-            text_rect = self.font.render(self.log_visible[r], True, LIGHTGRAY)
+            text_rect = self.font.render(self.log_visible[r], True, WHITE)
             y = SCREEN_SIZE_Y - text_rect.get_height() * (len(self.log_visible) - r)
             self.screen.blit(black_rect, (x, y))
             self.screen.blit(text_rect, (x, y))
