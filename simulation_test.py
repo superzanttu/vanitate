@@ -588,7 +588,7 @@ class SpaceMapGenerator():
 
             # Scale planet coordinates to screeb coordinates
             sc = self.scale_coordinates(
-                (px, py), [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
+                (px, py), [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y])
 
             # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
@@ -765,6 +765,9 @@ def main():
                     mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
 
                 log.info("Selected area %s" % r)
+
+                sc = self.scale_coordinates(
+                    (px, py), [self.view_x_min, self.view_y_min], [self.view_x_max, self.view_y_max])
 
                 pygame.draw.rect(screen, YELLOW, r, 1)
 
