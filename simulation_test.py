@@ -450,9 +450,6 @@ class SpaceMapGenerator():
     font_size_m = None
     font_size_l = None
 
-    hud_log_current = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
-                       "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
-
     def __init__(self):
         log.debug("__init__")
         log.debug("Initial systems: %s" % self.systems)
@@ -633,6 +630,13 @@ class SpaceMapGenerator():
         self.view_y_max = self.space_y_max
         self.view_y_min = self.space_y_min
 
+
+class HudLog():
+
+    def __init__(self):
+        hud_log_current = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
+                           "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
+
     def hud_log_draw(self):
         x = 0
         empty_text = " " * 80
@@ -717,9 +721,8 @@ def main():
 
         # Draw hud logging
         if len(hud_console_log) > 0:
-            pass
-            # space.hud_log_add(hud_console_log.pop(0))
-        space.hud_log_draw()
+            space.hud_log_add(hud_console_log.pop(0))
+            space.hud_log_draw()
 
         # for _ in range(10000):
         #    ships.update("Ship 1")
