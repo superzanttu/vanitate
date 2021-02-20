@@ -638,7 +638,7 @@ class HudLog():
     screen = None
 
     def __init__(self):
-        self.log_visible = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
+        self.log_visible = ["Row 1", "Row 2",
                             "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
 
     def draw(self):
