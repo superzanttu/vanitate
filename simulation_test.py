@@ -636,8 +636,8 @@ class HudLog():
     font = None
 
     def __init__(self):
-        hud_log_current = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
-                           "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
+        self.hud_log_current = ["Row 1", "123456789012345678901234567890123456789012345678901234567890",
+                                "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
 
     def draw(self):
         x = 0
