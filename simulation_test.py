@@ -766,7 +766,7 @@ def main():
 
                 log.info("Selected area %s" % r)
 
-                sc = self.scale_coordinates(
+                sc = space.scale_coordinates(
                     (px, py), [self.view_x_min, self.view_y_min], [self.view_x_max, self.view_y_max])
 
                 pygame.draw.rect(screen, YELLOW, r, 1)
