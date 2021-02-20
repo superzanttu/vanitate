@@ -72,8 +72,11 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame
 # Constants
-SCREEN_SIZE = [3360, 2100]
-SCREEN_SIZE = [2880, 1800]
+SCREEN_SIZE_X = 3360
+SCREEN_SIZE_Y = 2100
+# SCREEN_SIZE_X = 2880
+# SCREEN_SIZE_Y = 1800
+SCREEN_SIZE = [SCREEN_SIZE_X, SCREEN_SIZE_Y]
 WHITE = 255, 255, 255
 BLACK = 0, 0, 0
 LIGHTGRAY = 180, 180, 180
@@ -647,7 +650,7 @@ class HudLog():
         for r in range(0, len(self.log_visible)):
 
             text_rect = self.font.render(self.log_visible[r], True, LIGHTGRAY)
-            y = SCREEN_SIZE[1]/2 + text_rect.get_height() * r
+            y = SCREEN_SIZE_Y - text_rect.get_height() * r
             self.screen.blit(black_rect, (x, y))
             self.screen.blit(text_rect, (x, y))
         self.screen
