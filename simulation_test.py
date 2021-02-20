@@ -51,9 +51,6 @@ class ListHandler(logging.Handler):  # Inherit from logging.Handler
         # record.message is the log message
         self.log_list.append(record.msg)
 
-    def setFormatter(self):
-        pass
-
 
 logging.basicConfig(format='%(asctime)s|%(levelname)s|%(filename)s|%(funcName)s|%(lineno)d|%(message)s',
                     filename='./log/main.log', level=logging.DEBUG)
