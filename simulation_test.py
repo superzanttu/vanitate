@@ -698,7 +698,7 @@ class ShipSprite(pygame.sprite.Sprite):
 
         # Call the parent class (Sprite) constructor
         super().__init__()
-        #pygame.sprite.Sprite.__init__(self)
+        # pygame.sprite.Sprite.__init__(self)
 
         # Simple ship image
         self.image = pygame.Surface([32, 32])
