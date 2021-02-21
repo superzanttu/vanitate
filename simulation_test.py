@@ -460,8 +460,8 @@ class SpaceMapGenerator():
 
         name = "Suomi"
 
-        sc1r = 2
-        sc2r = 10
+        sc1r = 100
+        sc2r = 100
 
         log.debug("Generating %s star names" % (sc1r*sc2r))
 
@@ -801,7 +801,7 @@ def main():
                 r = pygame.Rect(
                     mouse_pos_1, (mouse_pos_2[0] - mouse_pos_1[0], mouse_pos_2[1] - mouse_pos_1[1]))
 
-                log.info("Yellow %s" % r)
+                # log.info("Yellow %s" % r)
 
                 sc1 = space.screen_coordinates_to_space_view(mouse_pos_1)
                 sc2 = space.screen_coordinates_to_space_view(mouse_pos_2)
