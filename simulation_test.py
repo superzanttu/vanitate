@@ -597,6 +597,12 @@ class SpaceMapGenerator():
         # log.debug("Drawing planets and names for system %s" % system)
         # log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
+        sd = self.systems[system]
+
+        sc = sd['location_xy']
+        sx = sc[0]
+        sy = sc[1]
+
         for key in self.systems[system]['planets']:
             # log.debug("Key: %s" % key)
             # log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
@@ -605,18 +611,6 @@ class SpaceMapGenerator():
             orbit = self.systems[system]['planets'][key]['orbit']
 
             # log.debug("Orbit: %s Angle: %s" % (orbit, angle))
-
-            sd = self.systems[key]
-            # log.debug("sd: %s" % sd)
-
-            sc = sd['location_xy']
-            # log.debug("sc: (%s,%s)" % sc)
-
-            sx = sc[0]
-            # log.debug("sx: %s" % sx)
-
-            sy = sc[1]
-            # log.debug("sy: %s" % sy)
 
             # Calculate planet location around star
             px = orbit * math.cos(angle) + sx
