@@ -611,9 +611,8 @@ class SpaceMapGenerator():
 
             log.debug("Planet %s location: (%s, %s)" % (key, px, py))
 
-            # Scale planet coordinates to screeb coordinates
-            sc = self.scale_coordinates(
-                (px, py), 0, 0, SCREEN_SIZE_X, SCREEN_SIZE_Y)
+            # Scale planet coordinates to screen coordinates
+            sc = self.space_coordinates_to_screen(px, py)
 
             # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
