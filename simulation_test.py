@@ -755,7 +755,7 @@ def main():
 
     while 1:
 
-        space.draw_space_info(0, 0)
+        space.draw_space_info(0, 100)
 
         # Draw hud logging
         if len(hud_console_log) > 0:
@@ -851,8 +851,8 @@ def main():
         pygame.display.update()
 
     log.info("DONE")
-    for s in space.systems:
-        pprint.pprint(space.systems[s])
+    # for s in space.systems:
+    #    pprint.pprint(space.systems[s])
 
 
 if __name__ == "__main__":
