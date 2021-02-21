@@ -774,7 +774,7 @@ def main():
                 r = pygame.Rect(
                     mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
 
-                log.info("Selected area %s" % r)
+                log.info("Yellow %s" % r)
 
                 sc_1 = space.scale_coordinates(
                     mouse_pos_1, [space.view_x_max, space.view_y_max], [space.view_x_min, space.view_y_min])
