@@ -634,7 +634,7 @@ class SpaceMapGenerator():
     def generate_planets(self, system):
         log.debug("Generating planets for system %s" % system)
 
-        planets = random.randrange(3, 12)
+        planets = random.randrange(1, 1)
 
         orbit_min = 57950000 + random.randrange(-10000000, 10000000)
         ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
