@@ -567,11 +567,11 @@ class SpaceMapGenerator():
                 pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
                 # Draw system name
-                system_name= self.font_size_m.render(key, True, (255, 255, 255))
+                system_name = self.font_size_m.render(key, True, (255, 255, 255))
                 self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
-                self.generate_planets(key)
-                self.draw_planets(key)
+                #self.generate_planets(key)
+                #self.draw_planets(key)
 
         pygame.display.update()
 
@@ -583,18 +583,18 @@ class SpaceMapGenerator():
             # log.debug("Key: %s" % key)
             # log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
-            angle= self.systems[system]['planets'][key]['angle']
-            orbit= self.systems[system]['planets'][key]['orbit']
+            angle = self.systems[system]['planets'][key]['angle']
+            orbit = self.systems[system]['planets'][key]['orbit']
 
             # log.debug("Orbit: %s Angle: %s" % (orbit, angle))
 
-            px= orbit * math.cos(angle)
-            py= orbit * math.sin(angle)
+            px = orbit * math.cos(angle)
+            py = orbit * math.sin(angle)
 
             log.debug("Planet %s location: (%s, %s)" % (key, px, py))
 
             # Scale planet coordinates to screeb coordinates
-            sc= self.scale_coordinates(
+            sc = self.scale_coordinates(
                 (px, py), [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y])
 
             # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
@@ -603,7 +603,7 @@ class SpaceMapGenerator():
             pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
 
             # Draw planet name
-            planet_name= self.font_size_m.render(key, True, (255, 80, 0))
+            planet_name = self.font_size_m.render(key, True, (255, 80, 0))
             self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
         pygame.display.update()
@@ -611,53 +611,53 @@ class SpaceMapGenerator():
     def generate_planets(self, system):
         log.debug("Generating planets for system %s" % system)
 
-        planets= random.randrange(3, 12)
+        planets = random.randrange(3, 12)
 
-        orbit_min= 57950000 + random.randrange(-10000000, 10000000)
-        ormit_max= 5913000000 + random.randrange(-10000000, 10000000)
+        orbit_min = 57950000 + random.randrange(-10000000, 10000000)
+        ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
         for p in range(1, planets+1):
-            orbit= int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
-            angle= random.uniform(0, math.pi*2)
-            name= self.markov.gen_name("finnish", 4, 13)
+            orbit = int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
+            angle = random.uniform(0, math.pi*2)
+            name = self.markov.gen_name("finnish", 4, 13)
             log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" %
                       (name, p, planets, orbit, angle))
-            self.systems[system]['planets'][name]= {'orbit': orbit, 'angle': angle}
+            self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
     def draw_space_info(self, x, y):
         # log.debug("Draw space info to (%s,%s)" % (x, y))
-        view_text= "View area: %s,%s %s,%s" % self.space_view
+        view_text = "View area: %s,%s %s,%s" % self.space_view
         # log.debug("View data: %s" % view_text)
-        view_rect= self.font_size_l.render(view_text, True, YELLOW)
+        view_rect = self.font_size_l.render(view_text, True, YELLOW)
         self.screen.blit(view_rect, (x, y))
 
     def reset_view(self):
         log.info("Reset view to space minmax")
-        self.view_x_max= self.space_x_max
-        self.view_x_min= self.space_x_min
-        self.view_y_max= self.space_y_max
-        self.view_y_min= self.space_y_min
+        self.view_x_max = self.space_x_max
+        self.view_x_min = self.space_x_min
+        self.view_y_max = self.space_y_max
+        self.view_y_min = self.space_y_min
 
 
 class HudLog():
 
-    font= None
-    screen= None
+    font = None
+    screen = None
 
     def __init__(self):
-        self.log_visible= ["Row 1", "Row 2",
+        self.log_visible = ["Row 1", "Row 2",
                             "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
 
     def draw(self):
-        x= 0
-        empty_text= " " * 120
-        black_rect= self.font.render(empty_text, True, BLACK)
+        x = 0
+        empty_text = " " * 120
+        black_rect = self.font.render(empty_text, True, BLACK)
         black_rect.fill(DARKGRAY)
 
         for r in range(0, len(self.log_visible)):
 
-            text_rect= self.font.render(self.log_visible[r], True, WHITE)
-            y= SCREEN_SIZE_Y - text_rect.get_height() * (len(self.log_visible) - r)
+            text_rect = self.font.render(self.log_visible[r], True, WHITE)
+            y = SCREEN_SIZE_Y - text_rect.get_height() * (len(self.log_visible) - r)
             self.screen.blit(black_rect, (x, y))
             self.screen.blit(text_rect, (x, y))
         self.screen
@@ -681,38 +681,38 @@ def main():
     pygame.init()
     # print (pygame.font.get_fonts())
 
-    space= SpaceMapGenerator()
+    space = SpaceMapGenerator()
     space.generate_stars()
-    space.generate_planets("Suomi")
+    # space.generate_planets("Suomi")
 
-    ships= Ship()
-    ships.space= space
+    ships = Ship()
+    ships.space = space
 
     ships.add("Ship 1")
 
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
 
-    pygame_font_size_16= pygame.font.SysFont("menlo", 12)
-    pygame_font_size_22= pygame.font.SysFont("menlo", 16)
-    pygame_font_size_32= pygame.font.SysFont("menlo", 22)
-    ships.font= pygame_font_size_22
-    space.font_size_s= pygame_font_size_16
-    space.font_size_m= pygame_font_size_22
-    space.font_size_l= pygame_font_size_32
+    pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
+    pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
+    pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
+    ships.font = pygame_font_size_22
+    space.font_size_s = pygame_font_size_16
+    space.font_size_m = pygame_font_size_22
+    space.font_size_l = pygame_font_size_32
 
-    screen= pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
     # (SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
     # FIXME
     pygame.display.set_caption("Starfield")
     pygame.mouse.set_visible(True)
 
-    ships.screen= screen
-    space.screen= screen
+    ships.screen = screen
+    space.screen = screen
 
-    hudlog= HudLog()
-    hudlog.font= pygame_font_size_32
-    hudlog.screen= screen
+    hudlog = HudLog()
+    hudlog.font = pygame_font_size_32
+    hudlog.screen = screen
 
     space.reset_view()
 
@@ -720,7 +720,7 @@ def main():
 
     # Main loop
 
-    mouse_state= 0
+    mouse_state = 0
     hudlog.draw()
 
     screen.fill(BLACK)
@@ -744,7 +744,7 @@ def main():
         # ships.draw_ship_data("Ship 1")
 
         # Handle input events.
-        event= pygame.event.poll()
+        event = pygame.event.poll()
         # keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
             break
@@ -761,24 +761,24 @@ def main():
 
         elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_LEFT_BUTTON:
             if mouse_state == 0:
-                mouse_pos_1= pygame.mouse.get_pos()
+                mouse_pos_1 = pygame.mouse.get_pos()
                 screen.set_at(mouse_pos_1, YELLOW)
-                mouse_state= 1
+                mouse_state = 1
                 log.info("Selection 1: %s %s" % mouse_pos_1)
             elif mouse_state == 2:
-                mouse_pos_2= pygame.mouse.get_pos()
+                mouse_pos_2 = pygame.mouse.get_pos()
                 log.info("Selection 2: %s %s" % mouse_pos_1)
                 screen.set_at(mouse_pos_2, YELLOW)
-                mouse_state= 3
+                mouse_state = 3
 
-                r= pygame.Rect(
+                r = pygame.Rect(
                     mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
 
                 log.info("Selected area %s" % r)
 
-                sc_1= space.scale_coordinates(
+                sc_1 = space.scale_coordinates(
                     mouse_pos_1, [space.view_x_max, space.view_y_max], [space.view_x_min, space.view_y_min])
-                sc_2= space.scale_coordinates(
+                sc_2 = space.scale_coordinates(
                     mouse_pos_2, [space.view_x_max, space.view_y_max], [space.view_x_min, space.view_y_min])
 
                 log.info("Space coordinates: %s %s" % (sc_1, sc_2))
@@ -787,9 +787,9 @@ def main():
 
         elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
             if mouse_state == 1:
-                mouse_state= 2
+                mouse_state = 2
             elif mouse_state == 3:
-                mouse_state= 0
+                mouse_state = 0
 
         # elif event.type ==  pygame.VIDEORESIZE:
             # SCREEN_SIZE = [event.w, event.h]
