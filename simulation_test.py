@@ -542,7 +542,7 @@ class SpaceMapGenerator():
         # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
         # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
 
-        # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return (tx, ty)
 
     def is_visible_location(self, c):
