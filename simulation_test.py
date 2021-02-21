@@ -874,7 +874,7 @@ def main():
 
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
-        pygame.display.update()
+        pygame.display.flip()
 
     log.info("DONE")
     # for s in space.systems:
