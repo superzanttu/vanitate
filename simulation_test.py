@@ -523,7 +523,7 @@ class SpaceMapGenerator():
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
-    def scale_to_range(self,v, v_min, v_max, range_min, range_max):
+    def scale_to_range(self, v, v_min, v_max, range_min, range_max):
         v_scaled = ((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min
         log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" %
                   (v_min, v, v_max, range_min, v_scaled, v_max))
@@ -534,9 +534,9 @@ class SpaceMapGenerator():
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
-        tx = self.scale_to_range(source, self.view_x_min, self.view_x_max,
+        tx = self.scale_to_range(source[0], self.view_x_min, self.view_x_max,
                                  target_min[0], target_max[0])
-        ty = self.scale_to_range(source, self.view_y_min, self.view_y_max,
+        ty = self.scale_to_range(source[1], self.view_y_min, self.view_y_max,
                                  target_min[1], target_max[1])
         # Scale x coordinate
         # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
