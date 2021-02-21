@@ -598,7 +598,7 @@ class SpaceMapGenerator():
 
             # Scale planet coordinates to screeb coordinates
             sc = self.scale_coordinates(
-                (px, py), [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y])
+                (px, py), 0, 0, SCREEN_SIZE_X, SCREEN_SIZE_Y)
 
             # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
