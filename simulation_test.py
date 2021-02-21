@@ -606,8 +606,21 @@ class SpaceMapGenerator():
 
             # log.debug("Orbit: %s Angle: %s" % (orbit, angle))
 
-            px = orbit * math.cos(angle)
-            py = orbit * math.sin(angle)
+            sd = self.systems[key]
+            # log.debug("sd: %s" % sd)
+
+            sc = sd['location_xy']
+            # log.debug("sc: (%s,%s)" % sc)
+
+            sx = sc[0]
+            # log.debug("sx: %s" % sx)
+
+            sy = sc[1]
+            # log.debug("sy: %s" % sy)
+
+            # Calculate planet location around star
+            px = orbit * math.cos(angle) + sx
+            py = orbit * math.sin(angle) + sy
 
             # Scale planet coordinates to screen coordinates
             sc = self.space_coordinates_to_screen((px, py))
