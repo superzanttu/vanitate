@@ -519,8 +519,7 @@ class SpaceMapGenerator():
                     self.space_y_min = y
                     self.view_y_min = y
 
-                # self.space_view = (self.space_x_min, self.space_y_min,
-                #                   self.space_x_max, self.space_y_max)
+                #self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
 
