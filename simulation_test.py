@@ -853,7 +853,7 @@ def main():
 
     log.info("DONE")
     for s in space.systems:
-        pprint.pprint(s)
+        pprint.pprint(space.systems[s])
 
 
 if __name__ == "__main__":
