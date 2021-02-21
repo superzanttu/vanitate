@@ -706,7 +706,7 @@ class ShipSprite(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK)
         pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
         self.rect = self.image.get_rect()  # What is this?????
-        self.rect.topleft = 200, 200
+        self.rect.center = 200, 200
 
 
 def main():
