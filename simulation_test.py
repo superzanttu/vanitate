@@ -459,7 +459,7 @@ class SpaceMapGenerator():
 
         name = "Suomi"
 
-        sc1r = 1
+        sc1r = 2
         sc2r = 10
 
         log.debug("Generating %s star names" % (sc1r*sc2r))
