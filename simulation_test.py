@@ -753,8 +753,8 @@ def main():
     screen.fill(BLACK)
     space.draw_stars()
 
-    log.info("Visible space: %s, %s %s, %s" %
-             (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
+    log.debug("Visible space: %s, %s %s, %s" %
+              (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
 
     while 1:
 
