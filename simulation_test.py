@@ -640,7 +640,7 @@ class SpaceMapGenerator():
         orbit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
         for p in range(1, planets+1):
-            orbit = int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
+            orbit = int((orbit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
             angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
             log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" %
