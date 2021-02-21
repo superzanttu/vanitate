@@ -710,7 +710,7 @@ class ShipSprite(pygame.sprite.Sprite):
         self.rect.center = 200, 200
 
     def update(self):
-        log.info("UPDATE!")
+        # log.info("UPDATE!")
         pos = pygame.mouse.get_pos()
         self.rect.center = pos
 
