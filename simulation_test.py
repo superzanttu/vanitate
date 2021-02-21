@@ -609,8 +609,6 @@ class SpaceMapGenerator():
             px = orbit * math.cos(angle)
             py = orbit * math.sin(angle)
 
-            log.debug("Planet %s location: (%s, %s)" % (key, px, py))
-
             # Scale planet coordinates to screen coordinates
             sc = self.space_coordinates_to_screen((px, py))
 
@@ -618,6 +616,7 @@ class SpaceMapGenerator():
 
             # Draw planet
             pygame.draw.circle(self.screen, RED, sc, 5, 0)
+            log.debug("Draw planet %s (%s, %s) -> (%s, %s)" % (key, px, py, sc[0], sc[1]))
 
             # Draw planet name
             planet_name = self.font_size_m.render(key, True, RED)
