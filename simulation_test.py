@@ -694,7 +694,7 @@ class HudLog():
 
 class ShipSprite(pygame.sprite.Sprite):
 
-    def ___init___(self):
+    def __init__(self):
 
         # Call the parent class (Sprite) constructor
         # super().__init__()
