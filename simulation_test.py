@@ -772,7 +772,7 @@ def main():
                 mouse_state = 3
 
                 r = pygame.Rect(
-                    mouse_pos_2, (mouse_pos_1[0] - mouse_pos_2[0], mouse_pos_1[1] - mouse_pos_2[1]))
+                    mouse_pos_1, (mouse_pos_2[0] - mouse_pos_1[0], mouse_pos_2[1] - mouse_pos_1[1]))
 
                 log.info("Yellow %s" % r)
 
