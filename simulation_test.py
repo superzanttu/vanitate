@@ -32,7 +32,7 @@ import networkx as nx
 import yaml
 # import csv
 import math
-# import pprint
+import pprint
 # import time
 import sys
 
@@ -852,7 +852,8 @@ def main():
         pygame.display.update()
 
     log.info("DONE")
-    print(space.systems)
+    for s in space.systems:
+        pprint.pprint(s)
 
 
 if __name__ == "__main__":
