@@ -539,7 +539,7 @@ class SpaceMapGenerator():
         tx = self.scale_to_range(source[0], self.view_x_min, self.view_x_max,
                                  target_x_min, target_x_max)
         ty = self.scale_to_range(source[1], self.view_y_min, self.view_y_max,
-                                 target_y_min, target_t_min)
+                                 target_y_min, target_y_max)
         # Scale x coordinate
         # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
         # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
