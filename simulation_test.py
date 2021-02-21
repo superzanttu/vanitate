@@ -717,7 +717,7 @@ class ShipSprite(pygame.sprite.Sprite):
 
 def main():
 
-   for _ in range(1, 20):
+    for _ in range(1, 20):
         log.debug("")
 
     log.info("===========================================")
