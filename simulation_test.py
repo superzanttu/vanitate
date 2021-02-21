@@ -702,7 +702,7 @@ class ShipSprite(pygame.sprite.Sprite):
 
         # Simple ship image
         self.image = pygame.Surface([100, 100])
-        self.image.fill(YELLO)
+        self.image.fill(YELLOW)
         self.image.set_colorkey(BLACK)
         #pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
         self.rect = self.image.get_rect()  # What is this?????
