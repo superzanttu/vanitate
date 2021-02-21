@@ -525,12 +525,11 @@ class SpaceMapGenerator():
 
     def scale_to_range(self, v, v_min, v_max, range_min, range_max):
         v_scaled = int(((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min)
-        log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" %
-                  (v_min, v, v_max, range_min, v_scaled, range_max))
+        # log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" % (v_min, v, v_max, range_min, v_scaled, range_max))
         return(v_scaled)
 
     def scale_coordinates(self, source, target_min, target_max):
-        log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
@@ -542,7 +541,7 @@ class SpaceMapGenerator():
         # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
         # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
 
-        log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return (tx, ty)
 
     def is_visible_location(self, c):
@@ -571,8 +570,8 @@ class SpaceMapGenerator():
                 system_name = self.font_size_m.render(key, True, (255, 255, 255))
                 self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
-                # self.generate_planets(key)
-                # self.draw_planets(key)
+                self.generate_planets(key)
+                self.draw_planets(key)
 
         pygame.display.update()
 
