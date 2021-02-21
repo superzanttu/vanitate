@@ -558,7 +558,7 @@ class SpaceMapGenerator():
 
             if True:
 
-                # log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
+                log.debug("Star location: (%s, %s)" % (c1[0], c1[1]))
 
                 # Scale system coordinates to screeb coordinates
                 c2 = self.scale_coordinates(c1, [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y])
@@ -570,8 +570,8 @@ class SpaceMapGenerator():
                 system_name = self.font_size_m.render(key, True, (255, 255, 255))
                 self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
-                #self.generate_planets(key)
-                #self.draw_planets(key)
+                # self.generate_planets(key)
+                # self.draw_planets(key)
 
         pygame.display.update()
 
