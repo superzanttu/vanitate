@@ -561,7 +561,7 @@ class SpaceMapGenerator():
                 # log.debug("Star location: (%s, %s)" % (c1[0],c1[1]))
 
                 # Scale system coordinates to screeb coordinates
-                c2 = self.scale_coordinates(c1, [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y)
+                c2 = self.scale_coordinates(c1, [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y])
 
                 # Draw star
                 pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
