@@ -604,7 +604,7 @@ class SpaceMapGenerator():
         sy = sc[1]
 
         for key in self.systems[system]['planets']:
-            log.debug("Key: %s" % key)
+            log.debug("Planet %s at %s " % (key, system))
             log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
             angle = self.systems[system]['planets'][key]['angle']
