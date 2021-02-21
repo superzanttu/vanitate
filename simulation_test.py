@@ -527,7 +527,7 @@ class SpaceMapGenerator():
         v_scaled = int(((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min)
         log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" %
                   (v_min, v, v_max, range_min, v_scaled, range_max))
-        return(v)
+        return(v_scaled)
 
     def scale_coordinates(self, source, target_min, target_max):
         log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
