@@ -637,8 +637,8 @@ class SpaceMapGenerator():
             orbit = int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
             angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
-            log.debug("New planet %s (%s/%s) orbiting at %s m angle %s" %
-                      (name, p, planets, orbit, angle))
+            log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" %
+                      (name, p, planets, orbit, angle,system))
             self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
     def draw_space_info(self, x, y):
