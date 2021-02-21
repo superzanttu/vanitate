@@ -443,7 +443,7 @@ class SpaceMapGenerator():
     view_y_min = 0
     view_y_max = 0
 
-    space_view = ()
+    # space_view = ()
 
     # Pygame screen and font
     screen = None
