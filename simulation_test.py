@@ -699,6 +699,7 @@ class ShipSprite(pygame.sprite.Sprite):
         # Call the parent class (Sprite) constructor
         # super().__init__()
         pygame.sprite.Sprite.__init__(self)
+        log.info("__init__")
 
         # Simple ship image
         self.image = pygame.Surface([100, 100])
@@ -709,11 +710,12 @@ class ShipSprite(pygame.sprite.Sprite):
         self.rect.center = 200, 200
 
     def update(self):
+        log.info("UPDATE!")
         pos = pygame.mouse.get_pos()
         self.rect.center = pos
 
 
-def main(): ßßß
+def main():
 
    for _ in range(1, 20):
         log.debug("")
