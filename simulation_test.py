@@ -524,7 +524,7 @@ class SpaceMapGenerator():
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
     def scale_to_range(self, v, v_min, v_max, range_min, range_max):
-        v_scaled = ((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min
+        v_scaled = int(((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min)
         log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" %
                   (v_min, v, v_max, range_min, v_scaled, range_max))
         return(v)
