@@ -564,6 +564,7 @@ class SpaceMapGenerator():
                 c2 = self.scale_coordinates(c1, [0, 0], [SCREEN_SIZE_X, SCREEN_SIZE_Y])
 
                 # Draw star
+                log.debug("Draw star to: (%s, %s)" % (c1[0], c1[1]))
                 pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
                 # Draw system name
