@@ -507,16 +507,20 @@ class SpaceMapGenerator():
 
                 if x > self.space_x_max:
                     self.space_x_max = x
+                    self.view_x_max = x
                 elif x < self.space_x_min:
                     self.space_x_min = x
+                    self.view_x_min = x
 
                 if y > self.space_y_max:
                     self.space_y_max = y
+                    self.view_y_max = y
                 elif y < self.space_y_min:
                     self.space_y_min = y
+                    self.view_y_min = y
 
-                self.space_view = (self.space_x_min, self.space_y_min,
-                                   self.space_x_max, self.space_y_max)
+                # self.space_view = (self.space_x_min, self.space_y_min,
+                #                   self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
 
