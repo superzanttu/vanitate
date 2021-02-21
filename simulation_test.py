@@ -629,7 +629,7 @@ class SpaceMapGenerator():
 
     def draw_space_info(self, x, y):
         # log.debug("Draw space info to (%s,%s)" % (x, y))
-        view_text = "View area: %s,%s %s,%s" % self.space_view
+        view_text = ("System x_max:%s x_min:%s y_max %s y_min:%s" % (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
         # log.debug("View data: %s" % view_text)
         view_rect = self.font_size_l.render(view_text, True, YELLOW)
         self.screen.blit(view_rect, (x, y))
