@@ -310,7 +310,7 @@ class SpaceMap_YAML:
             log.error("Object not found (%s)" % (id))
 
 
-class Ship(pygame.sprite.Sprite):
+class Ship():
     """Ship functions"""
 
     font = None
@@ -322,16 +322,6 @@ class Ship(pygame.sprite.Sprite):
 
     def __init__(self):
         log.debug("__init__")
-
-        # Call the parent class (Sprite) constructor
-        super().__init__()
-
-        # Simple ship image
-        self.image = pygame.Surface([32, 32])
-        self.image.fill(BLACK)
-        self.image.set_colorkey(BLACK)
-        pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
-        self.rect = self.image.get_rect()  # What is this?????
 
     def __str__(self):
         text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
@@ -702,6 +692,21 @@ class HudLog():
         self.log_visible.append(msg)
 
 
+class ShipSprite():
+
+    def ___init___(self):
+
+        # Call the parent class (Sprite) constructor
+        super().__init__()
+
+        # Simple ship image
+        self.image = pygame.Surface([32, 32])
+        self.image.fill(BLACK)
+        self.image.set_colorkey(BLACK)
+        pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
+        self.rect = self.image.get_rect()  # What is this?????
+
+
 def main():
 
     for _ in range(1, 20):
@@ -723,7 +728,7 @@ def main():
     ships = Ship()
     ships.space = space
 
-    ships.add("Ship 1")
+    ships.add("Ship1")
 
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
@@ -764,7 +769,17 @@ def main():
     log.debug("Visible space: %s, %s %s, %s" %
               (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
 
+    # SPRITE TEST
+    # This will be a list that will contain all the sprites we intend to use in our game.
+    all_sprites_list = pygame.sprite.Group()
+    sp = ShipSprite()
+    sp.rect.x = 300
+    sp.rect.y = 400
+    all_sprites_list.add(sp)
+
     while 1:
+
+        all_sprites_list.update()
 
         space.draw_space_info(0, 100)
 
