@@ -519,7 +519,7 @@ class SpaceMapGenerator():
                     self.space_y_min = y
                     self.view_y_min = y
 
-                #self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+                # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
 
@@ -617,10 +617,10 @@ class SpaceMapGenerator():
             # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
             # Draw planet
-            pygame.draw.circle(self.screen, (255, 80, 0), sc, 5, 0)
+            pygame.draw.circle(self.screen, RED, sc, 5, 0)
 
             # Draw planet name
-            planet_name = self.font_size_m.render(key, True, (255, 80, 0))
+            planet_name = self.font_size_m.render(key, True, RED)
             self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
         pygame.display.update()
