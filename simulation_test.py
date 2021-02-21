@@ -586,7 +586,7 @@ class SpaceMapGenerator():
                 pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
                 # Draw system name
-                system_name = self.font_size_m.render(key, True, (255, 255, 255))
+                system_name = self.font_size_m.Font.render(key, True, (255, 255, 255))
                 self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
                 self.generate_planets(key)
