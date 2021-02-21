@@ -523,6 +523,7 @@ class SpaceMapGenerator():
                 # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
+                self.generate_planets(name)
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
@@ -589,7 +590,6 @@ class SpaceMapGenerator():
                 system_name = self.font_size_m.render(key, True, (255, 255, 255))
                 self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
-                self.generate_planets(key)
                 self.draw_planets(key)
 
         pygame.display.update()
@@ -629,8 +629,6 @@ class SpaceMapGenerator():
             # Draw planet name
             planet_name = self.font_size_m.render(key, True, RED)
             self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
-
-        pygame.display.update()
 
     def generate_planets(self, system):
         log.debug("Generating planets for system %s" % system)
