@@ -701,7 +701,7 @@ class ShipSprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
 
         # Simple ship image
-        self.image = pygame.Surface([32, 32])
+        self.image = pygame.Surface([100, 100])
         self.image.fill(YELLO)
         self.image.set_colorkey(BLACK)
         #pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
