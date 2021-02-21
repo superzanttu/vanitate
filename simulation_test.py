@@ -655,7 +655,7 @@ class SpaceMapGenerator():
         self.view_y_max = self.space_y_max
         self.view_y_min = self.space_y_min
         self.screen.fill(BLACK)
-        self.space.draw_stars()
+        self.draw_stars()
 
 
 class HudLog():
