@@ -786,6 +786,7 @@ def main():
     while 1:
 
         all_sprites_list.update()
+        all_sprites_list.draw(screen)
 
         space.draw_space_info(0, 100)
 
