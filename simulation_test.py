@@ -793,10 +793,8 @@ def main():
 
                 log.info("Yellow %s" % r)
 
-                sc_1 = space.scale_coordinates(
-                    mouse_pos_1, space.view_x_min, space.view_y_min, space.view_x_max, space.view_y_max)
-                sc_2 = space.scale_coordinates(
-                    mouse_pos_2, space.view_x_min, space.view_y_min, space.view_x_max, space.view_y_max)
+                sc_1 = space.screen_coordinates_to_space_view(mouse_pos_1)
+                sc_2 = space.screen_coordinates_to_space_view(mouse_pos_2)
 
                 log.info("Space coordinates: %s %s" % (sc_1, sc_2))
 
