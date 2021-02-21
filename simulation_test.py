@@ -804,7 +804,7 @@ def main():
                     x_min = sc2[0]
                     x_max = sc1[0]
 
-                # Select smallest x coordinate
+                # Select smallest y coordinate
                 if sc1[1] < sc2[1]:
                     y_min = sc1[1]
                     y_max = sc2[1]
