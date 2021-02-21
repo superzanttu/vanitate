@@ -531,15 +531,30 @@ class SpaceMapGenerator():
         # log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" % (v_min, v, v_max, range_min, v_scaled, range_max))
         return(v_scaled)
 
-    def scale_coordinates(self, source, target_x_min, target_y_min, target_x_max, target_y_max):
+    def space_coordinates_to_screen(self, source):
         # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
         tx = self.scale_to_range(source[0], self.view_x_min, self.view_x_max,
-                                 target_x_min, target_x_max)
+                                 0, SCREEN_SIZE_X)
         ty = self.scale_to_range(source[1], self.view_y_min, self.view_y_max,
-                                 target_y_min, target_y_max)
+                                 0, SCREEN_SIZE_Y)
+        # Scale x coordinate
+        # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
+        # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
+
+        # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        return (tx, ty)
+
+    def screen_coordinates_to_space_view(self, source):
+        # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+
+        # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
+
+        tx = self.scale_to_range(source[0], 0, SCREEN_SIZE_X, self.view_x_min, self.view_x_max)
+        ty = self.scale_to_range(source[1], 0, SCREEN_SIZE_Y, self.view_y_min, self.view_y_max)
+
         # Scale x coordinate
         # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
         # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
@@ -563,7 +578,7 @@ class SpaceMapGenerator():
                 log.debug("Star location: (%s, %s)" % (c1[0], c1[1]))
 
                 # Scale system coordinates to screeb coordinates
-                c2 = self.scale_coordinates(c1, 0, 0, SCREEN_SIZE_X, SCREEN_SIZE_Y)
+                c2 = self.space_coordinates_to_screen(c1)
 
                 # Draw star
                 log.debug("Draw star to: (%s, %s)" % (c1[0], c1[1]))
@@ -780,9 +795,9 @@ def main():
                 log.info("Yellow %s" % r)
 
                 sc_1 = space.scale_coordinates(
-                    mouse_pos_1, [space.view_x_min, space.view_y_min], [space.view_x_max, space.view_y_max])
+                    mouse_pos_1, space.view_x_min, space.view_y_min, space.view_x_max, space.view_y_max)
                 sc_2 = space.scale_coordinates(
-                    mouse_pos_2, [space.view_x_min, space.view_y_min], [space.view_x_max, space.view_y_max])
+                    mouse_pos_2, space.view_x_min, space.view_y_min, space.view_x_max, space.view_y_max)
 
                 log.info("Space coordinates: %s %s" % (sc_1, sc_2))
 
