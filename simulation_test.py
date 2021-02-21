@@ -735,9 +735,9 @@ def main():
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
 
-    pygame_font_size_16 = pygame.font.SysFont(None, 12)
-    pygame_font_size_22 = pygame.font.SysFont(None, 16)
-    pygame_font_size_32 = pygame.font.SysFont(None, 22)
+    pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
+    pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
+    pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
     ships.font = pygame_font_size_22
     space.font_size_s = pygame_font_size_16
     space.font_size_m = pygame_font_size_22
@@ -775,8 +775,8 @@ def main():
     # This will be a list that will contain all the sprites we intend to use in our game.
     all_sprites_list = pygame.sprite.Group()
     sp = ShipSprite()
-
     all_sprites_list.add(sp)
+    allsprites.update()
 
     while 1:
 
