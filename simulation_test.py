@@ -773,10 +773,9 @@ def main():
 
     # SPRITE TEST
     # This will be a list that will contain all the sprites we intend to use in our game.
-    all_sprites_list = pygame.sprite.Group()
+    all_sprites_list = pygame.sprite.RenderPlain()
     sp = ShipSprite()
     all_sprites_list.add(sp)
-    allsprites.update()
 
     while 1:
 
