@@ -594,8 +594,8 @@ class SpaceMapGenerator():
         pygame.display.update()
 
     def draw_planets(self, system):
-        # log.debug("Drawing planets and names for system %s" % system)
-        # log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
+        log.debug("Drawing planets and names for system %s" % system)
+        log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
         sd = self.systems[system]
 
@@ -604,8 +604,8 @@ class SpaceMapGenerator():
         sy = sc[1]
 
         for key in self.systems[system]['planets']:
-            # log.debug("Key: %s" % key)
-            # log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
+            log.debug("Key: %s" % key)
+            log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
