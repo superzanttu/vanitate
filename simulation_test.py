@@ -697,6 +697,7 @@ class ShipSprite(pygame.sprite.Sprite):
     def ___init___(self):
 
         # Call the parent class (Sprite) constructor
+        # super().__init__()
         pygame.sprite.Sprite.__init__(self)
 
         # Simple ship image
@@ -705,6 +706,7 @@ class ShipSprite(pygame.sprite.Sprite):
         self.image.set_colorkey(BLACK)
         pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
         self.rect = self.image.get_rect()  # What is this?????
+        self.rect.topleft = 200, 200
 
 
 def main():
@@ -773,8 +775,7 @@ def main():
     # This will be a list that will contain all the sprites we intend to use in our game.
     all_sprites_list = pygame.sprite.Group()
     sp = ShipSprite()
-    sp.rect.x = 300
-    sp.rect.y = 400
+
     all_sprites_list.add(sp)
 
     while 1:
