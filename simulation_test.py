@@ -793,12 +793,36 @@ def main():
 
                 log.info("Yellow %s" % r)
 
-                sc_1 = space.screen_coordinates_to_space_view(mouse_pos_1)
-                sc_2 = space.screen_coordinates_to_space_view(mouse_pos_2)
+                sc1 = space.screen_coordinates_to_space_view(mouse_pos_1)
+                sc2 = space.screen_coordinates_to_space_view(mouse_pos_2)
 
-                log.info("Space coordinates: %s %s" % (sc_1, sc_2))
+                # Select smallest x coordinate
+                if sc1[0] < sc2[0]:
+                    x_min = sc1[0]
+                    x_max = sc2[0]
+                else:
+                    x_min = sc2[0]
+                    x_max = sc1[0]
+
+                # Select smallest x coordinate
+                if sc1[1] < sc2[1]:
+                    y_min = sc1[1]
+                    y_max = sc2[1]
+                else:
+                    y_min = sc2[1]
+                    y_max = sc1[1]
+
+                log.info("Space range: %s, %s %s, %s" % (x_min, y_min, x_max, y_max))
 
                 pygame.draw.rect(screen, YELLOW, r, 1)
+
+                space.view_x_min = x_min
+                space.view_y_min = y_min
+                space.view_x_max = x_max
+                space.view_y_max = y_max
+
+                screen.fill(BLACK)
+                space.draw_stars()
 
         elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
             if mouse_state == 1:
