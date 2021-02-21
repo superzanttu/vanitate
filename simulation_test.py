@@ -33,7 +33,7 @@ import networkx as nx
 import yaml
 # import csv
 import math
-import pprint
+# import pprint
 # import time
 import sys
 
@@ -310,17 +310,28 @@ class SpaceMap_YAML:
             log.error("Object not found (%s)" % (id))
 
 
-class Ship:
+class Ship(pygame.sprite.Sprite):
     """Ship functions"""
 
     font = None
     screen = None
     space = None
 
+    ships = []
+    ship_data = {}
+
     def __init__(self):
         log.debug("__init__")
-        self.ships = []
-        self.ship_data = {}
+
+        # Call the parent class (Sprite) constructor
+        super().__init__()
+
+        # Simple ship image
+        self.image = pygame.Surface([32, 32])
+        self.image.fill(BLACK)
+        self.image.set_colorkey(BLACK)
+        pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
+        self.rect = self.image.get_rect()  # What is this?????
 
     def __str__(self):
         text = "SHIP INFO\n\tTotal ships: %s\n\tShips:" % (len(self.ships))
