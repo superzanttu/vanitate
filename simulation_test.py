@@ -703,8 +703,8 @@ class ShipSprite(pygame.sprite.Sprite):
         # Simple ship image
         self.image = pygame.Surface([100, 100])
         self.image.fill(YELLOW)
-        self.image.set_colorkey(BLACK)
-        #pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
+        # self.image.set_colorkey(BLACK)
+        # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
         self.rect = self.image.get_rect()  # What is this?????
         self.rect.center = 200, 200
 
@@ -713,9 +713,9 @@ class ShipSprite(pygame.sprite.Sprite):
         self.rect.center = pos
 
 
-def main():
+def main(): ßßß
 
-    for _ in range(1, 20):
+   for _ in range(1, 20):
         log.debug("")
 
     log.info("===========================================")
