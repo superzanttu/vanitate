@@ -852,7 +852,7 @@ def main():
         pygame.display.update()
 
     log.info("DONE")
-    print(hud_console_log)
+    print(space.systems)
 
 
 if __name__ == "__main__":
