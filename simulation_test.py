@@ -708,6 +708,10 @@ class ShipSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()  # What is this?????
         self.rect.center = 200, 200
 
+    def update(self):
+        pos = pygame.mouse.get_pos()
+        self.rect.center = pos
+
 
 def main():
 
