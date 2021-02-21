@@ -586,7 +586,7 @@ class SpaceMapGenerator():
                 pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
                 # Draw system name
-                system_name = self.font_size_m.ftfont.render(key, True, (255, 255, 255))
+                system_name = self.font_size_m.render(key, True, (255, 255, 255))
                 self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
                 self.generate_planets(key)
@@ -720,9 +720,9 @@ def main():
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
 
-    pygame_font_size_16 = pygame.freetype.SysFont("menlo", 12)
-    pygame_font_size_22 = pygame.freetype.SysFont("menlo", 16)
-    pygame_font_size_32 = pygame.freetype.SysFont("menlo", 22)
+    pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
+    pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
+    pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
     ships.font = pygame_font_size_22
     space.font_size_s = pygame_font_size_16
     space.font_size_m = pygame_font_size_22
