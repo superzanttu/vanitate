@@ -697,14 +697,14 @@ class ShipSprite(pygame.sprite.Sprite):
     def ___init___(self):
 
         # Call the parent class (Sprite) constructor
-        super().__init__()
-        # pygame.sprite.Sprite.__init__(self)
+        # super().__init__()
+        pygame.sprite.Sprite.__init__(self)
 
         # Simple ship image
         self.image = pygame.Surface([32, 32])
-        self.image.fill(BLACK)
+        self.image.fill(YELLO)
         self.image.set_colorkey(BLACK)
-        pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
+        #pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
         self.rect = self.image.get_rect()  # What is this?????
         self.rect.center = 200, 200
 
