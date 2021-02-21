@@ -576,13 +576,13 @@ class SpaceMapGenerator():
 
             if True:
 
-                log.debug("Star location: (%s, %s)" % (c1[0], c1[1]))
+                #log.debug("Star location: (%s, %s)" % (c1[0], c1[1]))
 
                 # Scale system coordinates to screeb coordinates
                 c2 = self.space_coordinates_to_screen(c1)
 
                 # Draw star
-                log.debug("Draw star to: (%s, %s)" % (c1[0], c1[1]))
+                #log.debug("Draw star to: (%s, %s)" % (c1[0], c1[1]))
                 pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
                 # Draw system name
@@ -605,8 +605,8 @@ class SpaceMapGenerator():
         sy = sc[1]
 
         for key in self.systems[system]['planets']:
-            log.debug("Planet %s at %s " % (key, system))
-            log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
+            #log.debug("Planet %s at %s " % (key, system))
+            #log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
             angle = self.systems[system]['planets'][key]['angle']
             orbit = self.systems[system]['planets'][key]['orbit']
@@ -624,7 +624,7 @@ class SpaceMapGenerator():
 
             # Draw planet
             pygame.draw.circle(self.screen, RED, sc, 5, 0)
-            log.debug("Draw planet %s (%s, %s) -> (%s, %s)" % (key, px, py, sc[0], sc[1]))
+            #log.debug("Draw planet %s (%s, %s) -> (%s, %s)" % (key, px, py, sc[0], sc[1]))
 
             # Draw planet name
             planet_name = self.font_size_m.render(key, True, RED)
@@ -644,7 +644,7 @@ class SpaceMapGenerator():
             orbit = int((orbit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
             angle = random.uniform(0, math.pi*2)
             name = self.markov.gen_name("finnish", 4, 13)
-            log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" %
+            #log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" %
                       (name, p, planets, orbit, angle, system))
             self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
