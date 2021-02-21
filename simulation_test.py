@@ -637,7 +637,7 @@ class SpaceMapGenerator():
         planets = random.randrange(1, 2)
 
         orbit_min = 57950000 + random.randrange(-10000000, 10000000)
-        ormit_max = 5913000000 + random.randrange(-10000000, 10000000)
+        orbit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
         for p in range(1, planets+1):
             orbit = int((ormit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
