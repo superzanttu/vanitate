@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:39:59>
+# Time-stamp: <2021-02-22 23:41:22>
 import logging
 import sys
 import math
@@ -787,7 +787,7 @@ def main():
     space.font_size_m = pygame_font_size_22
     space.font_size_l = pygame_font_size_32
 
-    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN)
+    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.HWSURFACE)
     # (SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
     # FIXME
     pygame.display.set_caption("Starfield")
