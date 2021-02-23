@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-22 22:30:52>
+# Time-stamp: <2021-02-22 22:31:02>
 
 while :
 do
@@ -25,7 +25,7 @@ do
     r* )
       echo === Run start.sh
       git add -v .
-      git diff 
+      git diff -v
       git commit -m "Run"
       time ./start.sh
       ;;
