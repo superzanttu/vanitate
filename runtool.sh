@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-22 22:25:12>
+# Time-stamp: <2021-02-22 22:25:39>
 
 while :
 do
@@ -23,10 +23,10 @@ do
   case $action in
 
     r* )
-      echo === Run test.sh
+      echo === Run start.sh
       git add .
       git commit -m "Run"
-      ./runtest.sh
+      time ./start.sh
       ;;
 
     l* )
