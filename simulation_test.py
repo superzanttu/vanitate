@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:28:54>
+# Time-stamp: <2021-02-23 00:32:08>
 import logging
 import sys
 import math
@@ -743,7 +743,7 @@ class StarSprite(pygame.sprite.Sprite):
         # self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.location_xy_space = (0, 0)
-        self.location_xy_view = (0, 0)
+        self.location_xy_view = (random.randrange(0, SCREEN_SIZE_X), random.randrange(0, SCREEN_SIZE_Y))
         self.name = name
 
     def update(self):
@@ -822,8 +822,8 @@ def main():
     while 1:
 
         # screen.fill(BLACK)
-        all_sprites_list.update()
-        all_sprites_list.draw(screen)
+        space.star_sprites.update()
+        space.star_sprites.draw(screen)
 
         space.draw_space_info(0, 100)
 
