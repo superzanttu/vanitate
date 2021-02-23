@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:31:00>
+# Time-stamp: <2021-02-23 00:05:51>
 import logging
 import sys
 import math
@@ -454,7 +454,7 @@ class SpaceMapGenerator():
     font_size_l = None
 
     # Star sprites
-    star_sprites = []
+    star_sprites = pygame.sprite.RenderUpdates()
 
     def __init__(self):
         log.debug("__init__")
@@ -528,6 +528,11 @@ class SpaceMapGenerator():
 
                 self.systems[name]['planets'] = {}
                 # self.generate_planets(name)
+
+        log.debu("Create sprites for stars")
+        for s in self.systems.keys():
+            log.debug("Sprite for star %s" % s)
+            star_sprites.add(s)
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
@@ -708,15 +713,15 @@ class StarSprite(pygame.sprite.Sprite):
         pygame.sprite.Sprite.__init__(self)
         log.info("__init__")
 
-        # Simple ship image
+        # Simple star image
         self.image = star_image_16x16
         # self.image.set_colorkey(BLACK)
-        # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
-        self.rect = self.image.get_rect()  # What is this?????
-        self.location_xy = (0, 0)
+        self.rect = self.image.get_rect()
+        self.location_xy_space = (0, 0)
+        self.location_xy_view = (0, 0)
 
     def update(self):
-        self.rect.center = self.location_xy
+        self.rect.center = self.location_xy_view
 
 
 class ShipSprite(pygame.sprite.Sprite):
@@ -806,10 +811,10 @@ def main():
 
     # SPRITE TEST
     # This will be a list that will contain all the sprites we intend to use in our game.
-    all_sprites_list = pygame.sprite.RenderPlain()
-    sp = ShipSprite()
-    all_sprites_list.add(sp)
-    clock = pygame.time.Clock()
+    #all_sprites_list = pygame.sprite.RenderUpdates()
+    #sp = ShipSprite()
+    # all_sprites_list.add(sp)
+    pygame_clock = pygame.time.Clock()
 
     while 1:
 
@@ -910,7 +915,7 @@ def main():
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
         pygame.display.flip()
-        clock.tick(30)
+        pygame_clock.tick(30)
 
     log.info("DONE")
     # for s in space.systems:

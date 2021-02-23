@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-22 22:34:13>
+# Time-stamp: <2021-02-22 23:37:12>
 
 while :
 do
@@ -14,11 +14,11 @@ do
   echo "  s - Status"
   echo "  0 - Quit"
   echo -------------------------------
-  echo "Status at $ct (updated every 10 minutes)"
+  echo "Status at $ct"
   git status -sb
   echo -------------------------------
   echo -n "Select action:"
-  read -n 1 -t 600 action
+  read -n 1 action
   printf "\n\n"
   case $action in
 
