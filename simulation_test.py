@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:43:08>
+# Time-stamp: <2021-02-22 23:02:01>
 import logging
 import sys
 import math
@@ -785,7 +785,8 @@ def main():
 
     while 1:
 
-        # all_sprites_list.update()
+        screen.fill(BLACK)
+        all_sprites_list.update()
         all_sprites_list.draw(screen)
 
         space.draw_space_info(0, 100)
@@ -861,7 +862,6 @@ def main():
                 space.view_x_max = x_max
                 space.view_y_max = y_max
 
-                screen.fill(BLACK)
                 space.draw_stars()
 
         elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
