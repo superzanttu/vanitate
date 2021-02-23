@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:32:08>
+# Time-stamp: <2021-02-23 00:33:02>
 import logging
 import sys
 import math
@@ -818,11 +818,12 @@ def main():
     #sp = ShipSprite()
     # all_sprites_list.add(sp)
     pygame_clock = pygame.time.Clock()
+    space.star_sprites.update()
 
     while 1:
 
         # screen.fill(BLACK)
-        space.star_sprites.update()
+
         space.star_sprites.draw(screen)
 
         space.draw_space_info(0, 100)
