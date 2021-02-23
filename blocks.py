@@ -90,7 +90,7 @@ block_list = pygame.sprite.Group()
 # This is a list of every sprite. All blocks and the player block as well.
 all_sprites_list = pygame.sprite.Group()
 
-for i in range(150000):
+for i in range(10000):
     # This represents a block
     block = Block(BLACK, 20, 15)
 
