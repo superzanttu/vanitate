@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:25:32>
+# Time-stamp: <2021-02-22 23:31:00>
 import logging
 import sys
 import math
@@ -453,6 +453,9 @@ class SpaceMapGenerator():
     font_size_m = None
     font_size_l = None
 
+    # Star sprites
+    star_sprites = []
+
     def __init__(self):
         log.debug("__init__")
         log.debug("Initial systems: %s" % self.systems)
@@ -524,7 +527,7 @@ class SpaceMapGenerator():
                 # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
                 self.systems[name]['planets'] = {}
-                self.generate_planets(name)
+                # self.generate_planets(name)
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
@@ -706,17 +709,14 @@ class StarSprite(pygame.sprite.Sprite):
         log.info("__init__")
 
         # Simple ship image
-        self.image = pygame.Surface([16, 16])
-        self.image.fill(YELLOW)
+        self.image = star_image_16x16
         # self.image.set_colorkey(BLACK)
         # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
         self.rect = self.image.get_rect()  # What is this?????
-        self.rect.center = 200, 200
+        self.location_xy = (0, 0)
 
     def update(self):
-        # log.info("UPDATE!")
-        pos = pygame.mouse.get_pos()
-        self.rect.center = pos
+        self.rect.center = self.location_xy
 
 
 class ShipSprite(pygame.sprite.Sprite):
