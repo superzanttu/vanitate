@@ -1,0 +1,72 @@
+#!/bin/bash
+# Time-stamp: <2021-02-22 22:25:12>
+
+while :
+do
+  ct=$(date +"%T")
+
+  echo ===============================
+  echo "  r - Run start.sh"
+  echo "  l - Quick local commit"
+  echo "  q - Quick local commit and push"
+  echo "  p - Local commit with message and push"
+  echo "  u - Push"
+  echo "  s - Status"
+  echo "  0 - Quit"
+  echo -------------------------------
+  echo "Status at $ct (updated every 10 minutes)"
+  git status -sb
+  echo -------------------------------
+  echo -n "Select action:"
+  read -n 1 -t 600 action
+  printf "\n\n"
+  case $action in
+
+    r* )
+      echo === Run test.sh
+      git add .
+      git commit -m "Run"
+      ./runtest.sh
+      ;;
+
+    l* )
+      echo === Quick local commit
+      git add .
+      git commit -m "Quick and dirty!"
+      ;;
+
+    q* )
+      echo === Quick local commit and push
+      git add .
+      git commit -m "Quick and dirty!"
+      git push
+      ;;
+
+    p* )
+      echo === Local commit with message and push
+      read -p "Message:" message
+      git add .
+      git commit -m "$message"
+      git push
+      ;;
+
+    u* )
+      echo === Push
+      git push
+      ;;
+
+    s* )
+      echo === Status
+      git status -sb
+      ;;
+
+    0* )
+      exit 0
+      ;;
+
+    * )
+      git status -sb
+      ;;
+  esac
+  printf "\n"
+done
