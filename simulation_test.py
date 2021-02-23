@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:37:40>
+# Time-stamp: <2021-02-22 23:38:45>
 import logging
 import sys
 import math
@@ -505,7 +505,7 @@ class SpaceMapGenerator():
     font_size_l = None
 
     # Star sprites
-    star_sprites = pygame.sprite.Group()
+    star_sprites = pygame.sprite.RenderUpdates()
 
     def __init__(self):
         log.debug("__init__")
