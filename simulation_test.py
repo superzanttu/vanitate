@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:18:55>
+# Time-stamp: <2021-02-22 23:25:32>
 import logging
 import sys
 import math
@@ -695,7 +695,8 @@ class HudLog():
 class StarSprite(pygame.sprite.Sprite):
 
     log.info("Loading star image")
-    star_image = pygame.image.load("./resources/star.png")
+    star_image_256x256 = pygame.image.load("./resources/star.png")
+    star_image_16x16 = pygame.transform.scale(star_image_256x256, (17, 17))
 
     def __init__(self):
 
@@ -705,7 +706,7 @@ class StarSprite(pygame.sprite.Sprite):
         log.info("__init__")
 
         # Simple ship image
-        self.image = pygame.Surface([100, 100])
+        self.image = pygame.Surface([16, 16])
         self.image.fill(YELLOW)
         # self.image.set_colorkey(BLACK)
         # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
