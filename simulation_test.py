@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:42:55>
+# Time-stamp: <2021-02-23 00:44:34>
 import logging
 import sys
 import math
@@ -516,7 +516,7 @@ class SpaceMapGenerator():
         name = "Suomi"
 
         sc1r = 10
-        sc2r = 10
+        sc2r = 1000
 
         log.debug("Generating %s star names" % (sc1r*sc2r))
 
