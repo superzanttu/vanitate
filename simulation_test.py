@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:19:34>
+# Time-stamp: <2021-02-23 00:19:49>
 import logging
 import sys
 import math
@@ -735,7 +735,7 @@ class StarSprite(pygame.sprite.Sprite):
         # Call the parent class (Sprite) constructor
         # super().__init__()
         # pygame.sprite.Sprite.__init__(self)
-        super().__init__()
+        # super().__init__()
         log.info("__init__")
 
         # Simple star image
