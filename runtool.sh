@@ -1,7 +1,7 @@
 #!/bin/bash
-# Time-stamp: <2021-02-22 22:26:46>
+# Time-stamp: <2021-02-22 22:28:12>
 
-while :
+while : 
 do
   ct=$(date +"%T")
 
@@ -23,7 +23,7 @@ do
   case $action in
 
     r* )
-      echo === Run start.sh 
+      echo === Run start.sh
       git add .
       git commit -m "Run"
       time ./start.sh
