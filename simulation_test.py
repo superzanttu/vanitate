@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:14:54>
+# Time-stamp: <2021-02-23 00:15:31>
 import logging
 import sys
 import math
@@ -705,7 +705,7 @@ class StarSprite(pygame.sprite.Sprite):
 
     log.info("Loading star image")
     star_image_256x256 = pygame.image.load("./resources/star.png")
-    star_image_16x16 = pygame.transform.scale(star_image_256x256, (17, 17))
+    star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
 
     def __init__(self, id):
 
@@ -715,7 +715,7 @@ class StarSprite(pygame.sprite.Sprite):
         log.info("__init__")
 
         # Simple star image
-        self.image = star_image_16x16
+        self.image = self.star_image_17x17
         # self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
         self.location_xy_space = (0, 0)
