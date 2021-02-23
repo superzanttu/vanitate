@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:06:25>
+# Time-stamp: <2021-02-23 00:09:21>
 import logging
 import sys
 import math
@@ -530,7 +530,7 @@ class SpaceMapGenerator():
                 # self.generate_planets(name)
 
         log.debug("Create sprites for stars")
-        for s in self.systems.keys():
+        for s in self.systems:
             log.debug("Sprite for star %s" % s)
             self.star_sprites.add(s)
 
