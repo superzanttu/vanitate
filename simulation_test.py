@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:15:31>
+# Time-stamp: <2021-02-22 23:16:48>
 import logging
 import sys
 import math
@@ -419,6 +419,57 @@ class Ship():
         pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
 
 
+class HudLog():
+
+    font = None
+    screen = None
+
+    def __init__(self):
+        self.log_visible = ["Row 1", "Row 2",
+                            "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
+
+    def draw(self):
+        x = 0
+        empty_text = " " * 120
+        black_rect = self.font.render(empty_text, True, BLACK)
+        black_rect.fill(DARKGRAY)
+
+        for r in range(0, len(self.log_visible)):
+
+            text_rect = self.font.render(self.log_visible[r], True, WHITE)
+            y = SCREEN_SIZE_Y - text_rect.get_height() * (len(self.log_visible) - r)
+            self.screen.blit(black_rect, (x, y))
+            self.screen.blit(text_rect, (x, y))
+        self.screen
+
+    def add(self, msg):
+        self.log_visible.pop(0)
+        self.log_visible.append(msg)
+
+
+class ShipSprite(pygame.sprite.Sprite):
+
+    def __init__(self):
+
+        # Call the parent class (Sprite) constructor
+        # super().__init__()
+        pygame.sprite.Sprite.__init__(self)
+        log.info("__init__")
+
+        # Simple ship image
+        self.image = pygame.Surface([100, 100])
+        self.image.fill(YELLOW)
+        # self.image.set_colorkey(BLACK)
+        # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
+        self.rect = self.image.get_rect()  # What is this?????
+        self.rect.center = 200, 200
+
+    def update(self):
+        # log.info("UPDATE!")
+        pos = pygame.mouse.get_pos()
+        self.rect.center = pos
+
+
 class SpaceMapGenerator():
 
     markov = MarkovChainNamer()
@@ -673,34 +724,6 @@ class SpaceMapGenerator():
         self.draw_stars()
 
 
-class HudLog():
-
-    font = None
-    screen = None
-
-    def __init__(self):
-        self.log_visible = ["Row 1", "Row 2",
-                            "Row 3", "Row 4", "Row 5", "Row 6", "Row 7"]
-
-    def draw(self):
-        x = 0
-        empty_text = " " * 120
-        black_rect = self.font.render(empty_text, True, BLACK)
-        black_rect.fill(DARKGRAY)
-
-        for r in range(0, len(self.log_visible)):
-
-            text_rect = self.font.render(self.log_visible[r], True, WHITE)
-            y = SCREEN_SIZE_Y - text_rect.get_height() * (len(self.log_visible) - r)
-            self.screen.blit(black_rect, (x, y))
-            self.screen.blit(text_rect, (x, y))
-        self.screen
-
-    def add(self, msg):
-        self.log_visible.pop(0)
-        self.log_visible.append(msg)
-
-
 class StarSprite(pygame.sprite.Sprite):
 
     log.info("Loading star image")
@@ -723,29 +746,6 @@ class StarSprite(pygame.sprite.Sprite):
 
     def update(self):
         self.rect.center = self.location_xy_view
-
-
-class ShipSprite(pygame.sprite.Sprite):
-
-    def __init__(self):
-
-        # Call the parent class (Sprite) constructor
-        # super().__init__()
-        pygame.sprite.Sprite.__init__(self)
-        log.info("__init__")
-
-        # Simple ship image
-        self.image = pygame.Surface([100, 100])
-        self.image.fill(YELLOW)
-        # self.image.set_colorkey(BLACK)
-        # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
-        self.rect = self.image.get_rect()  # What is this?????
-        self.rect.center = 200, 200
-
-    def update(self):
-        # log.info("UPDATE!")
-        pos = pygame.mouse.get_pos()
-        self.rect.center = pos
 
 
 def main():
