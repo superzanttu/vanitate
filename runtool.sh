@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-22 22:33:29>
+# Time-stamp: <2021-02-22 22:34:13>
 
 while :
 do
@@ -58,7 +58,7 @@ do
 
     s* )
       echo === Status
-      git status -sbv
+      git status -sb
       ;;
 
     0* )
