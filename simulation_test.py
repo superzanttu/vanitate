@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 00:13:25>
+# Time-stamp: <2021-02-22 23:14:16>
 import logging
 import sys
 import math
@@ -701,7 +701,7 @@ class HudLog():
         self.log_visible.append(msg)
 
 
-class StarSprite(pygame.sprite.Sprite):
+class StarSprite(pygame.sprite.Sprite, id):
 
     log.info("Loading star image")
     star_image_256x256 = pygame.image.load("./resources/star.png")
