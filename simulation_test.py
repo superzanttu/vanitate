@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-22 23:04:23>
+# Time-stamp: <2021-02-22 23:06:13>
 import logging
 import sys
 import math
@@ -882,6 +882,7 @@ def main():
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
         pygame.display.flip()
+        clock.tick(60)
 
     log.info("DONE")
     # for s in space.systems:
