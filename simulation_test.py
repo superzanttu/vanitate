@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-21 00:45:55>
+# Time-stamp: <2021-02-22 23:43:08>
 import logging
 import sys
 import math
@@ -785,7 +785,7 @@ def main():
 
     while 1:
 
-        all_sprites_list.update()
+        # all_sprites_list.update()
         all_sprites_list.draw(screen)
 
         space.draw_space_info(0, 100)
