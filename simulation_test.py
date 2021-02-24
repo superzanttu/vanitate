@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:14:28>
+# Time-stamp: <2021-02-23 22:17:42>
 import logging
 import sys
 import math
@@ -562,7 +562,7 @@ class Universe:
                     self.all_systems[new_name]['planets'] = {}
                     # self.generate_planets(name)
 
-            log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
+            log.debug("Universe size %s,%s - %s,%s" %
                       (self.universe_x_max, self.universe_x_min, self.universe_y_max, self.universe_y_min))
 
         class System:
@@ -895,12 +895,12 @@ def main():
 
     # ships.add("Ship1 ")
 
-    log.debug("pygame dislay modes: %s", pygame.display.list_modes())
-    log.debug("Initializing pygame fonts")
+    #log.debug("pygame dislay modes: %s", pygame.display.list_modes())
+    #log.debug("Initializing pygame fonts")
 
-    pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
-    pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
-    pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
+    #pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
+    #pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
+    #pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
 
     #ships.font = pygame_font_size_22
     #space.font_size_s = pygame_font_size_16
@@ -932,9 +932,6 @@ def main():
 
     # screen.fill(BLACK)
     # space.draw_stars()
-
-    log.debug("Visible space: %s, %s %s, %s" %
-              (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
 
     # SPRITE TEST
     # This will be a list that will contain all the sprites we intend to use in our game.
@@ -1042,8 +1039,8 @@ def main():
 
         # elif keys[pygame.K_UP]:
         #    ships.setAcceleration
-        pygame.display.flip()
-        pygame_clock.tick(120)
+        # pygame.display.flip()
+        # pygame_clock.tick(120)
 
     log.info("DONE")
     # for s in space.systems:
