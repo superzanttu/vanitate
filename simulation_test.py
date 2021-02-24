@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:12:14>
+# Time-stamp: <2021-02-23 22:12:30>
 import logging
 import sys
 import math
@@ -492,9 +492,9 @@ class Universe:
         def __init__(self):
 
             # Add base system
-            all_systems['Suomi'] = {}
-            all_systems['Suomi']['location_xy'] = (0, 0)
-            all_systems['Suomi']['planets'] = {}
+            self.all_systems['Suomi'] = {}
+            self.all_systems['Suomi']['location_xy'] = (0, 0)
+            self.all_systems['Suomi']['planets'] = {}
 
             sc1r = 10
             sc2r = 100
