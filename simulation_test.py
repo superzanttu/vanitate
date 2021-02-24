@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:26:32>
+# Time-stamp: <2021-02-23 22:28:25>
 import logging
 import sys
 import math
@@ -476,10 +476,10 @@ class ShipSprite(pygame.sprite.Sprite):
 
 
 class Universe:
-    log.info("UNIVERSE")
+    log.info("Class created")
 
     class AllSystems:
-        log.info("ALLSYSTEMS")
+        log.info("Class created")
 
         markov = MarkovChainNamer()
 
@@ -569,12 +569,16 @@ class Universe:
                       (self.universe_x_min, self.universe_y_min, self.universe_x_max, self.universe_y_max))
 
         class System:
+            log.info("Class created")
+
             def __init__(self):
-                pass
+                log.info("INIT")
 
             class Star:
+                log.info("Class created")
+
                 def __init__(self):
-                    pass
+                    log.info("INIT")
 
                 class StarSprite(pygame.sprite.Sprite):
                     log.info("Loading star image")
