@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:20:12>
+# Time-stamp: <2021-02-23 22:21:55>
 import logging
 import sys
 import math
@@ -563,7 +563,7 @@ class Universe:
                     # self.generate_planets(name)
 
             log.debug("Universe size %s,%s - %s,%s" %
-                      (self.universe_x_max, self.universe_x_min, self.universe_y_max, self.universe_y_min))
+                      (self.universe_x_min, self.universe_y_min, self.universe_x_max, self.universe_y_max))
 
         class System:
             def __init__(self):
@@ -937,7 +937,7 @@ def main():
     # all_sprites_list.add(sp)
     #pygame_clock = pygame.time.Clock()
 
-    while 1:
+    while 0:
 
         # screen.fill(BLACK)
 
