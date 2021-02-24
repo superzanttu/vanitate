@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 20:55:55>
+# Time-stamp: <2021-02-23 20:57:14>
 import logging
 import sys
 import math
@@ -809,6 +809,9 @@ def main():
 
     mouse_state = 0
     hudlog.draw()
+
+    # Create star all_sprites
+    space.create_star_sprites(space)
 
     screen.fill(BLACK)
     space.draw_stars()
