@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 21:03:55>
+# Time-stamp: <2021-02-23 22:06:09>
 import logging
 import sys
 import math
@@ -93,6 +93,11 @@ RIGHT = 1
 MOUSE_LEFT_BUTTON = 1
 MOUSE_MIDDLE_BUTTON = 2
 MOUSE_RIGHT_BUTTON = 3
+
+# Size of the space
+UNIVERSE_X_MAX = 5 * 10**17
+UNIVERSE_Y_MAX = 5 * 10**17
+UNIVERSE_STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
 
 class MarkovChainNamer():
@@ -470,14 +475,14 @@ class ShipSprite(pygame.sprite.Sprite):
         self.rect.center = pos
 
 
-class SpaceMapGenerator():
+class Universe():
 
-    markov = MarkovChainNamer()
+    # markov = MarkovChainNamer()
 
     # Size of the space
-    SPACE_X_MAX = 5 * 10**17
-    SPACE_Y_MAX = 5 * 10**17
-    STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
+    # SPACE_X_MAX = 5 * 10**17
+    # SPACE_Y_MAX = 5 * 10**17
+    # STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
     # Initialize systems and and center system
     systems = {}
@@ -486,10 +491,10 @@ class SpaceMapGenerator():
     systems['Suomi']['planets'] = {}
 
     # Store maximum and minimum coordinates for space
-    space_x_min = 0
-    space_x_max = 0
-    space_y_min = 0
-    space_y_max = 0
+    # space_x_min = 0
+    # space_x_max = 0
+    # space_y_min = 0
+    # space_y_max = 0
 
     view_x_min = 0
     view_x_max = 0
@@ -505,13 +510,11 @@ class SpaceMapGenerator():
     font_size_l = None
 
     # Star sprites
-    star_sprites = pygame.sprite.RenderUpdates()
+    # star_sprites = pygame.sprite.RenderUpdates()
 
-    def __init__(self):
-        log.debug("__init__")
-        log.debug("Initial systems: %s" % self.systems)
+    all_systems = AllSystems()
 
-    def generate_stars(self):
+    def old_generate_stars(self):
 
         name = "Suomi"
 
@@ -583,12 +586,12 @@ class SpaceMapGenerator():
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
-    def scale_to_range(self, v, v_min, v_max, range_min, range_max):
+    def old_scale_to_range(self, v, v_min, v_max, range_min, range_max):
         v_scaled = int(((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min)
         # log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" % (v_min, v, v_max, range_min, v_scaled, range_max))
         return(v_scaled)
 
-    def space_coordinates_to_screen(self, source):
+    def old_space_coordinates_to_screen(self, source):
         # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
@@ -604,7 +607,7 @@ class SpaceMapGenerator():
         # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return (tx, ty)
 
-    def screen_coordinates_to_space_view(self, source):
+    def old_screen_coordinates_to_space_view(self, source):
         # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
         # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
@@ -619,12 +622,12 @@ class SpaceMapGenerator():
         # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
         return (tx, ty)
 
-    def is_visible_location(self, c):
+    def old_is_visible_location(self, c):
         print(c, self.space_view)
         log.debug("Location: %s View: %s" % (c, self.space_view))
         return True
 
-    def draw_stars(self):
+    def old_draw_stars(self):
         log.debug("Drawing stars and names")
 
         for key in self.systems:
@@ -649,7 +652,7 @@ class SpaceMapGenerator():
 
         pygame.display.update()
 
-    def draw_planets(self, system):
+    def old_draw_planets(self, system):
         log.debug("Drawing planets and names for system %s" % system)
         log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
@@ -685,7 +688,7 @@ class SpaceMapGenerator():
             planet_name = self.font_size_m.render(key, True, RED)
             self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
-    def generate_planets(self, system):
+    def old_generate_planets(self, system):
         log.debug("Generating planets for system %s" % system)
 
         planets = random.randrange(1, 12)
@@ -700,7 +703,7 @@ class SpaceMapGenerator():
             # log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" % (name, p, planets, orbit, angle, system))
             self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
-    def draw_space_info(self, x, y):
+    def old_draw_space_info(self, x, y):
         # log.debug("Draw space info to (%s,%s)" % (x, y))
         view_text = ("Space: %s, %s - %s, %s View: %s, %s - %s, %s" % (self.space_x_min, self.space_y_min, self.space_x_max,
                                                                        self.space_y_max, self.view_x_min, self.view_y_min, self.view_x_max, self.view_y_max))
@@ -708,7 +711,7 @@ class SpaceMapGenerator():
         view_rect = self.font_size_l.render(view_text, True, YELLOW)
         self.screen.blit(view_rect, (x, y))
 
-    def reset_view(self):
+    def old_reset_view(self):
         log.info("Reset view to space minmax")
         self.view_x_max = self.space_x_max
         self.view_x_min = self.space_x_min
@@ -717,7 +720,7 @@ class SpaceMapGenerator():
         self.screen.fill(BLACK)
         self.draw_stars()
 
-    def create_star_sprites(self, space):
+    def old_create_star_sprites(self, space):
         log.debug("Create sprites for stars")
         for key in self.systems:
             log.debug("Sprite for star %s at %s" % (key, self.systems[key]['location_xy']))
@@ -725,34 +728,144 @@ class SpaceMapGenerator():
             star.space = space
             self.star_sprites.add(star)
 
+    def __init__(self):
+        log.debug("__init__")
+        log.info("Initializing Universe")
 
-class StarSprite(pygame.sprite.Sprite):
+    class Screen:
 
-    log.info("Loading star image")
-    star_image_256x256 = pygame.image.load("./resources/star.png")
-    star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
+        screen = None
 
-    def __init__(self, space,  name, location_xy_space):
+        def __init__(self):
 
-        # Call the parent class (Sprite) constructor
-        # super().__init__()
-        pygame.sprite.Sprite.__init__(self)
-        # super().__init__()
-        log.info("__init__")
+            self.screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
 
-        self.space = None
+    class AllSystems:
 
-        # Simple star image
-        self.image = self.star_image_17x17
-        # self.image.set_colorkey(BLACK)
-        self.rect = self.image.get_rect()
-        self.name = name
-        self.location_xy_space = location_xy_space
-        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
-        self.rect.center = self.location_xy_view
+        markov = MarkovChainNamer()
 
-    # def update(self):
-    #    pass
+        all_systems = None
+
+        # Store maximum and minimum coordinates of Universe
+        universe_x_min = 0
+        universe_x_max = 0
+        universe_y_min = 0
+        universe_y_max = 0
+
+        def __init__(self):
+
+            name = "Suomi"
+
+            sc1r = 10
+            sc2r = 100
+
+            log.debug("Generating %s systems" % (sc1r*sc2r))
+
+            for sc1 in range(sc1r):
+
+                log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
+
+                for sc2 in range(sc2r):
+
+                    while name in self.all_systems:
+                        name = self.markov.gen_name("finnish", 4, 13)
+
+                    distance_ok = False
+
+                    while not distance_ok:
+                        x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
+                        y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
+
+                        distance_ok = True
+                        # log.debug("Systems: %s" % self.systems)
+                        for s in self.all_systems:
+                            # log.debug("Checking distance to s: %s" % s)
+
+                            sd = self.all_systems[s]
+                            # log.debug("sd: %s" % sd)
+
+                            sc = sd['location_xy']
+                            # log.debug("sc: (%s,%s)" % sc)
+
+                            sx = sc[0]
+                            # log.debug("sx: %s" % sx)
+
+                            sy = sc[1]
+                            # log.debug("sy: %s" % sy)
+
+                            if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
+                                distance_ok = False
+                                break
+
+                    self.all_systems[name] = {}
+                    self.all_systems[name]['location_xy'] = (x, y)
+
+                    # log.debug("New system: %s %s" % (name, self.systems[name]))
+
+                    if x > self.universe_x_max:
+                        self.universe_x_max = x
+                        self.view_x_max = x
+                    elif x < self.universe_x_min:
+                        self.universe_x_min = x
+                        self.view_x_min = x
+
+                    if y > self.universe_y_max:
+                        self.universe_y_max = y
+                        self.view_y_max = y
+                    elif y < self.universe_y_min:
+                        self.universe_y_min = y
+                        self.view_y_min = y
+
+                    # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+
+                    self.all_systems[name]['planets'] = {}
+                    # self.generate_planets(name)
+
+            log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
+                      (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
+
+        class System:
+            def __init__(self):
+                pass
+
+            class Star:
+                def __init__(self):
+                    pass
+
+                class StarSprite(pygame.sprite.Sprite):
+                    log.info("Loading star image")
+                    star_image_256x256 = pygame.image.load("./resources/star.png")
+                    star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
+
+                    def __init__(self, space,  name, location_xy_space):
+
+                        # Call the parent class (Sprite) constructor
+                        # super().__init__()
+                        pygame.sprite.Sprite.__init__(self)
+                        # super().__init__()
+                        log.info("__init__")
+
+                        self.space = None
+
+                        # Simple star image
+                        self.image = self.star_image_17x17
+                        # self.image.set_colorkey(BLACK)
+                        self.rect = self.image.get_rect()
+                        self.name = name
+                        self.location_xy_space = location_xy_space
+                        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
+                        self.rect.center = self.location_xy_view
+
+                    # def update(self):
+                    #    pass
+
+            class Planet:
+                def __init__(self):
+                    pass
+
+                class PlanetSprite(pygame.sprite.Sprite):
+                    def __init__(self):
+                        pass
 
 
 def main():
@@ -769,14 +882,14 @@ def main():
     pygame.init()
     # print (pygame.font.get_fonts())
 
-    space = SpaceMapGenerator()
-    space.generate_stars()
-    space.generate_planets("Suomi")
+    universe = Universe()
+    # space.generate_stars()
+    # space.generate_planets("Suomi")
 
-    ships = Ship()
-    ships.space = space
+    # ships = Ship()
+    # ships.space = space
 
-    ships.add("Ship1")
+    # ships.add("Ship1 ")
 
     log.debug("pygame dislay modes: %s", pygame.display.list_modes())
     log.debug("Initializing pygame fonts")
@@ -784,33 +897,34 @@ def main():
     pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
     pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
     pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
-    ships.font = pygame_font_size_22
-    space.font_size_s = pygame_font_size_16
-    space.font_size_m = pygame_font_size_22
-    space.font_size_l = pygame_font_size_32
 
-    screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
+    #ships.font = pygame_font_size_22
+    #space.font_size_s = pygame_font_size_16
+    #space.font_size_m = pygame_font_size_22
+    #space.font_size_l = pygame_font_size_32
+
+    # screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
     # (SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
     # FIXME
-    pygame.display.set_caption("Starfield")
-    pygame.mouse.set_visible(True)
+    # pygame.display.set_caption("Starfield")
+    # pygame.mouse.set_visible(True)
 
-    ships.screen = screen
-    space.screen = screen
+    #ships.screen = screen
+    #space.screen = screen
 
-    hudlog = HudLog()
-    hudlog.font = pygame_font_size_32
-    hudlog.screen = screen
+    #hudlog = HudLog()
+    #hudlog.font = pygame_font_size_32
+    #hudlog.screen = screen
 
-    space.reset_view()
+    # space.reset_view()
 
     # Create star all sprites
-    space.create_star_sprites(space)
+    # space.create_star_sprites(space)
 
     log.info("Simulation runnning. Press ESC to stop.")
 
-    mouse_state = 0
-    hudlog.draw()
+    #mouse_state = 0
+    # hudlog.draw()
 
     # screen.fill(BLACK)
     # space.draw_stars()
@@ -820,24 +934,24 @@ def main():
 
     # SPRITE TEST
     # This will be a list that will contain all the sprites we intend to use in our game.
-    #all_sprites_list = pygame.sprite.RenderUpdates()
-    #sp = ShipSprite()
+    # all_sprites_list = pygame.sprite.RenderUpdates()
+    # sp = ShipSprite()
     # all_sprites_list.add(sp)
-    pygame_clock = pygame.time.Clock()
+    #pygame_clock = pygame.time.Clock()
 
     while 1:
 
-        screen.fill(BLACK)
+        # screen.fill(BLACK)
 
-        space.star_sprites.draw(screen)
-        space.star_sprites.update()
+        # space.star_sprites.draw(screen)
+        # space.star_sprites.update()
 
-        space.draw_space_info(0, 100)
+        #space.draw_space_info(0, 100)
 
         # Draw hud logging
-        if len(hud_console_log) > 0:
-            hudlog.add(hud_console_log.pop(0))
-            hudlog.draw()
+        # if len(hud_console_log) > 0:
+        #    hudlog.add(hud_console_log.pop(0))
+        #    hudlog.draw()
 
         # for _ in range(10000):
         #    ships.update("Ship 1")
