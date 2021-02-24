@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:10:11>
+# Time-stamp: <2021-02-23 22:12:14>
 import logging
 import sys
 import math
@@ -487,11 +487,14 @@ class Universe:
         universe_y_min = 0
         universe_y_max = 0
 
-        all_systems = None
+        all_systems = {}
 
         def __init__(self):
 
-            name = "Suomi"
+            # Add base system
+            all_systems['Suomi'] = {}
+            all_systems['Suomi']['location_xy'] = (0, 0)
+            all_systems['Suomi']['planets'] = {}
 
             sc1r = 10
             sc2r = 100
@@ -612,10 +615,10 @@ class Universe:
     # STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
     # Initialize systems and and center system
-    systems = {}
-    systems['Suomi'] = {}
-    systems['Suomi']['location_xy'] = (0, 0)
-    systems['Suomi']['planets'] = {}
+    #systems = {}
+    #systems['Suomi'] = {}
+    #systems['Suomi']['location_xy'] = (0, 0)
+    #systems['Suomi']['planets'] = {}
 
     # Store maximum and minimum coordinates for space
     # space_x_min = 0
