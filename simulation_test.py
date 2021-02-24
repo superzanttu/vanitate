@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:06:09>
+# Time-stamp: <2021-02-23 22:07:28>
 import logging
 import sys
 import math
@@ -743,8 +743,6 @@ class Universe():
     class AllSystems:
 
         markov = MarkovChainNamer()
-
-        all_systems = None
 
         # Store maximum and minimum coordinates of Universe
         universe_x_min = 0
