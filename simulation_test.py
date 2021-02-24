@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 20:53:10>
+# Time-stamp: <2021-02-23 20:53:42>
 import logging
 import sys
 import math
@@ -746,7 +746,7 @@ class StarSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.name = name
         self.location_xy_space = location_xy_space
-        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
+        self.location_xy_view = space.space_coordinates_to_screen(location_xy_space)
         self.rect.center = self.location_xy_view
 
     # def update(self):
