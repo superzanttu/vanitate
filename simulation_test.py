@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:28:25>
+# Time-stamp: <2021-02-23 22:31:45>
 import logging
 import sys
 import math
@@ -492,7 +492,7 @@ class Universe:
         all_systems = {}
 
         def __init__(self):
-            log.info("INIT")
+            log.info("AllSystems")
 
             # Add base system
             self.all_systems['Suomi'] = {}
@@ -572,21 +572,21 @@ class Universe:
             log.info("Class created")
 
             def __init__(self):
-                log.info("INIT")
+                log.info("System")
 
             class Star:
                 log.info("Class created")
 
                 def __init__(self):
-                    log.info("INIT")
+                    log.info("Star")
 
                 class StarSprite(pygame.sprite.Sprite):
-                    log.info("Loading star image")
+                    log.info("Class created")
                     star_image_256x256 = pygame.image.load("./resources/star.png")
                     star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
 
                     def __init__(self, space,  name, location_xy_space):
-                        log.info("INIT")
+                        log.info("StarSprite")
                         # Call the parent class (Sprite) constructor
                         # super().__init__()
                         pygame.sprite.Sprite.__init__(self)
@@ -605,12 +605,16 @@ class Universe:
                     #    pass
 
             class Planet:
+                log.info("Class created")
+
                 def __init__(self):
-                    pass
+                    log.info("Planet")
 
                 class PlanetSprite(pygame.sprite.Sprite):
+                    log.info("Class created")
+
                     def __init__(self):
-                        pass
+                        log.info("PlanetSprite")
 
     # markov = MarkovChainNamer()
 
@@ -864,14 +868,15 @@ class Universe:
             self.star_sprites.add(star)
 
     def __init__(self):
-        log.debug("__init__")
-        log.info("Initializing Universe")
+        log.info("Universe")
 
     class Screen:
+        log.info("Class created")
 
         screen = None
 
         def __init__(self):
+            log.info("Screen")
 
             self.screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
 
