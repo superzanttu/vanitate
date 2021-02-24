@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:07:54>
+# Time-stamp: <2021-02-23 22:09:33>
 import logging
 import sys
 import math
@@ -100,7 +100,7 @@ UNIVERSE_Y_MAX = 5 * 10**17
 UNIVERSE_STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
 
-class MarkovChainNamer():
+class MarkovChainNamer:
     def __init__(self):
         self.chains = defaultdict(list)
         self.splat = defaultdict(str)
@@ -315,7 +315,7 @@ class SpaceMap_YAML:
             log.error("Object not found (%s)" % (id))
 
 
-class Ship():
+class Ship:
     """Ship functions"""
 
     font = None
@@ -424,7 +424,7 @@ class Ship():
         pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
 
 
-class HudLog():
+class HudLog:
 
     font = None
     screen = None
@@ -475,7 +475,132 @@ class ShipSprite(pygame.sprite.Sprite):
         self.rect.center = pos
 
 
-class Universe():
+class Universe:
+
+    class AllSystems:
+
+        markov = MarkovChainNamer()
+
+        # Store maximum and minimum coordinates of Universe
+        universe_x_min = 0
+        universe_x_max = 0
+        universe_y_min = 0
+        universe_y_max = 0
+
+        def __init__(self):
+
+            name = "Suomi"
+
+            sc1r = 10
+            sc2r = 100
+
+            log.debug("Generating %s systems" % (sc1r*sc2r))
+
+            for sc1 in range(sc1r):
+
+                log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
+
+                for sc2 in range(sc2r):
+
+                    while name in self.all_systems:
+                        name = self.markov.gen_name("finnish", 4, 13)
+
+                    distance_ok = False
+
+                    while not distance_ok:
+                        x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
+                        y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
+
+                        distance_ok = True
+                        # log.debug("Systems: %s" % self.systems)
+                        for s in self.all_systems:
+                            # log.debug("Checking distance to s: %s" % s)
+
+                            sd = self.all_systems[s]
+                            # log.debug("sd: %s" % sd)
+
+                            sc = sd['location_xy']
+                            # log.debug("sc: (%s,%s)" % sc)
+
+                            sx = sc[0]
+                            # log.debug("sx: %s" % sx)
+
+                            sy = sc[1]
+                            # log.debug("sy: %s" % sy)
+
+                            if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
+                                distance_ok = False
+                                break
+
+                    self.all_systems[name] = {}
+                    self.all_systems[name]['location_xy'] = (x, y)
+
+                    # log.debug("New system: %s %s" % (name, self.systems[name]))
+
+                    if x > self.universe_x_max:
+                        self.universe_x_max = x
+                        self.view_x_max = x
+                    elif x < self.universe_x_min:
+                        self.universe_x_min = x
+                        self.view_x_min = x
+
+                    if y > self.universe_y_max:
+                        self.universe_y_max = y
+                        self.view_y_max = y
+                    elif y < self.universe_y_min:
+                        self.universe_y_min = y
+                        self.view_y_min = y
+
+                    # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+
+                    self.all_systems[name]['planets'] = {}
+                    # self.generate_planets(name)
+
+            log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
+                      (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
+
+        class System:
+            def __init__(self):
+                pass
+
+            class Star:
+                def __init__(self):
+                    pass
+
+                class StarSprite(pygame.sprite.Sprite):
+                    log.info("Loading star image")
+                    star_image_256x256 = pygame.image.load("./resources/star.png")
+                    star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
+
+                    def __init__(self, space,  name, location_xy_space):
+
+                        # Call the parent class (Sprite) constructor
+                        # super().__init__()
+                        pygame.sprite.Sprite.__init__(self)
+                        # super().__init__()
+                        log.info("__init__")
+
+                        self.space = None
+
+                        # Simple star image
+                        self.image = self.star_image_17x17
+                        # self.image.set_colorkey(BLACK)
+                        self.rect = self.image.get_rect()
+                        self.name = name
+                        self.location_xy_space = location_xy_space
+                        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
+                        self.rect.center = self.location_xy_view
+
+                    # def update(self):
+                    #    pass
+
+            class Planet:
+                def __init__(self):
+                    pass
+
+                class PlanetSprite(pygame.sprite.Sprite):
+                    def __init__(self):
+                        pass
 
     # markov = MarkovChainNamer()
 
@@ -512,7 +637,7 @@ class Universe():
     # Star sprites
     # star_sprites = pygame.sprite.RenderUpdates()
 
-    all_systems = self.AllSystems()
+    all_systems = AllSystems()
 
     def old_generate_stars(self):
 
@@ -739,131 +864,6 @@ class Universe():
         def __init__(self):
 
             self.screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
-
-    class AllSystems:
-
-        markov = MarkovChainNamer()
-
-        # Store maximum and minimum coordinates of Universe
-        universe_x_min = 0
-        universe_x_max = 0
-        universe_y_min = 0
-        universe_y_max = 0
-
-        def __init__(self):
-
-            name = "Suomi"
-
-            sc1r = 10
-            sc2r = 100
-
-            log.debug("Generating %s systems" % (sc1r*sc2r))
-
-            for sc1 in range(sc1r):
-
-                log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
-
-                for sc2 in range(sc2r):
-
-                    while name in self.all_systems:
-                        name = self.markov.gen_name("finnish", 4, 13)
-
-                    distance_ok = False
-
-                    while not distance_ok:
-                        x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
-                        y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
-
-                        distance_ok = True
-                        # log.debug("Systems: %s" % self.systems)
-                        for s in self.all_systems:
-                            # log.debug("Checking distance to s: %s" % s)
-
-                            sd = self.all_systems[s]
-                            # log.debug("sd: %s" % sd)
-
-                            sc = sd['location_xy']
-                            # log.debug("sc: (%s,%s)" % sc)
-
-                            sx = sc[0]
-                            # log.debug("sx: %s" % sx)
-
-                            sy = sc[1]
-                            # log.debug("sy: %s" % sy)
-
-                            if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
-                                distance_ok = False
-                                break
-
-                    self.all_systems[name] = {}
-                    self.all_systems[name]['location_xy'] = (x, y)
-
-                    # log.debug("New system: %s %s" % (name, self.systems[name]))
-
-                    if x > self.universe_x_max:
-                        self.universe_x_max = x
-                        self.view_x_max = x
-                    elif x < self.universe_x_min:
-                        self.universe_x_min = x
-                        self.view_x_min = x
-
-                    if y > self.universe_y_max:
-                        self.universe_y_max = y
-                        self.view_y_max = y
-                    elif y < self.universe_y_min:
-                        self.universe_y_min = y
-                        self.view_y_min = y
-
-                    # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
-
-                    self.all_systems[name]['planets'] = {}
-                    # self.generate_planets(name)
-
-            log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
-                      (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
-
-        class System:
-            def __init__(self):
-                pass
-
-            class Star:
-                def __init__(self):
-                    pass
-
-                class StarSprite(pygame.sprite.Sprite):
-                    log.info("Loading star image")
-                    star_image_256x256 = pygame.image.load("./resources/star.png")
-                    star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
-
-                    def __init__(self, space,  name, location_xy_space):
-
-                        # Call the parent class (Sprite) constructor
-                        # super().__init__()
-                        pygame.sprite.Sprite.__init__(self)
-                        # super().__init__()
-                        log.info("__init__")
-
-                        self.space = None
-
-                        # Simple star image
-                        self.image = self.star_image_17x17
-                        # self.image.set_colorkey(BLACK)
-                        self.rect = self.image.get_rect()
-                        self.name = name
-                        self.location_xy_space = location_xy_space
-                        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
-                        self.rect.center = self.location_xy_view
-
-                    # def update(self):
-                    #    pass
-
-            class Planet:
-                def __init__(self):
-                    pass
-
-                class PlanetSprite(pygame.sprite.Sprite):
-                    def __init__(self):
-                        pass
 
 
 def main():
