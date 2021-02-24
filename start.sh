@@ -1,19 +1,19 @@
 #!/bin/bash
-# Time-stamp: <2021-02-23 20:36:37>
+# Time-stamp: <2021-02-23 20:37:56>
 
 #
 # Colors for Apple Terminal
 #
 function list_colors {
-    cat ${HOME}/.colors.csv
+    cat ./resources/colors.csv
 }
 
 function grep_apple_color {
-    grep "$*" ${HOME}/.colors.csv
+    grep "$*" ./resources/colors.csv
 }
 
 function get_apple_color {
-    egrep "(^|,)$*(,|\t)" ${HOME}/.colors.csv | cut -f 6
+    egrep "(^|,)$*(,|\t)" ./resources/colors.csv | cut -f 6
 }
 
 function set_foreground_color {
