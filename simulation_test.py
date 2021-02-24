@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 21:00:11>
+# Time-stamp: <2021-02-23 21:02:13>
 import logging
 import sys
 import math
@@ -803,18 +803,16 @@ def main():
 
     space.reset_view()
 
-    log.info("Simulation runnning. Press ESC to stop.")
+    # Create star all sprites
+    space.create_star_sprites(space)
 
-    # Main loop
+    log.info("Simulation runnning. Press ESC to stop.")
 
     mouse_state = 0
     hudlog.draw()
 
-    # Create star all_sprites
-    space.create_star_sprites(space)
-
-    screen.fill(BLACK)
-    space.draw_stars()
+    # screen.fill(BLACK)
+    # space.draw_stars()
 
     log.debug("Visible space: %s, %s %s, %s" %
               (space.space_x_min, space.space_y_min, space.space_x_max, space.space_y_max))
