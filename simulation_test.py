@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 20:53:42>
+# Time-stamp: <2021-02-23 20:55:55>
 import logging
 import sys
 import math
@@ -580,13 +580,6 @@ class SpaceMapGenerator():
                 self.systems[name]['planets'] = {}
                 # self.generate_planets(name)
 
-        log.debug("Create sprites for stars")
-        for key in self.systems:
-            log.debug("Sprite for star %s" % s)
-            star = StarSprite(id, self.systems[name]['location_xy'])
-            star.space = self
-            self.star_sprites.add(star)
-
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
@@ -724,6 +717,14 @@ class SpaceMapGenerator():
         self.screen.fill(BLACK)
         self.draw_stars()
 
+    def create_star_sprites(self, space):
+        log.debug("Create sprites for stars")
+        for key in self.systems:
+            log.debug("Sprite for star %s" % s)
+            star = StarSprite(id, self.systems[name]['location_xy'])
+            star.space = space
+            self.star_sprites.add(star)
+
 
 class StarSprite(pygame.sprite.Sprite):
 
@@ -746,7 +747,7 @@ class StarSprite(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.name = name
         self.location_xy_space = location_xy_space
-        self.location_xy_view = space.space_coordinates_to_screen(location_xy_space)
+        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
         self.rect.center = self.location_xy_view
 
     # def update(self):
