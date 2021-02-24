@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 20:41:21>
+# Time-stamp: <2021-02-23 20:50:04>
 import logging
 import sys
 import math
@@ -584,8 +584,8 @@ class SpaceMapGenerator():
         for key in self.systems:
             log.debug("Sprite for star %s" % s)
             star = StarSprite(id)
-            self.star_sprites.add(star)
-        pprint.pprint(self.star_sprites.keys)
+            star.space = self.space
+            self.star_sprites.add(star, self.systems[name]['location_xy'])
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
                   (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
@@ -730,8 +730,9 @@ class StarSprite(pygame.sprite.Sprite):
     log.info("Loading star image")
     star_image_256x256 = pygame.image.load("./resources/star.png")
     star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
+    space = None
 
-    def __init__(self, name):
+    def __init__(self, name, location_xy_space):
 
         # Call the parent class (Sprite) constructor
         # super().__init__()
@@ -743,15 +744,12 @@ class StarSprite(pygame.sprite.Sprite):
         self.image = self.star_image_17x17
         # self.image.set_colorkey(BLACK)
         self.rect = self.image.get_rect()
-        self.location_xy_space = (0, 0)
-        self.location_xy_view = (random.randrange(0, SCREEN_SIZE_X), random.randrange(0, SCREEN_SIZE_Y))
         self.name = name
+        self.location_xy_space = location_xy_space
+        self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
+        self.rect.center = self.location_xy_view
 
     def update(self):
-        x = self.location_xy_view[0] + 1
-        y = self.location_xy_view[1]
-        self.location_xy_view = (x, y)
-        self.rect.center = self.location_xy_view
 
 
 def main():
