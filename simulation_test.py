@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:13:49>
+# Time-stamp: <2021-02-23 22:14:28>
 import logging
 import sys
 import math
@@ -563,7 +563,7 @@ class Universe:
                     # self.generate_planets(name)
 
             log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
-                      (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
+                      (self.universe_x_max, self.universe_x_min, self.universe_y_max, self.universe_y_min))
 
         class System:
             def __init__(self):
