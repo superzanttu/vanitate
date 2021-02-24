@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 20:51:14>
+# Time-stamp: <2021-02-23 20:53:10>
 import logging
 import sys
 import math
@@ -584,7 +584,7 @@ class SpaceMapGenerator():
         for key in self.systems:
             log.debug("Sprite for star %s" % s)
             star = StarSprite(id, self.systems[name]['location_xy'])
-            star.space = self.space
+            star.space = self
             self.star_sprites.add(star)
 
         log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
