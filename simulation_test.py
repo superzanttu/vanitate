@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 21:02:13>
+# Time-stamp: <2021-02-23 21:03:55>
 import logging
 import sys
 import math
@@ -721,7 +721,7 @@ class SpaceMapGenerator():
         log.debug("Create sprites for stars")
         for key in self.systems:
             log.debug("Sprite for star %s at %s" % (key, self.systems[key]['location_xy']))
-            star = StarSprite(key, self.systems[key]['location_xy'])
+            star = StarSprite(space, key, self.systems[key]['location_xy'])
             star.space = space
             self.star_sprites.add(star)
 
@@ -731,15 +731,16 @@ class StarSprite(pygame.sprite.Sprite):
     log.info("Loading star image")
     star_image_256x256 = pygame.image.load("./resources/star.png")
     star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
-    space = None
 
-    def __init__(self, name, location_xy_space):
+    def __init__(self, space,  name, location_xy_space):
 
         # Call the parent class (Sprite) constructor
         # super().__init__()
         pygame.sprite.Sprite.__init__(self)
         # super().__init__()
         log.info("__init__")
+
+        self.space = None
 
         # Simple star image
         self.image = self.star_image_17x17
