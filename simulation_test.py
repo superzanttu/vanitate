@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:21:55>
+# Time-stamp: <2021-02-23 22:25:20>
 import logging
 import sys
 import math
@@ -476,6 +476,7 @@ class ShipSprite(pygame.sprite.Sprite):
 
 
 class Universe:
+    log.info("UNIVERSE")
 
     class AllSystems:
 
@@ -579,14 +580,11 @@ class Universe:
                     star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
 
                     def __init__(self, space,  name, location_xy_space):
-
+                        log.info("INIT")
                         # Call the parent class (Sprite) constructor
                         # super().__init__()
                         pygame.sprite.Sprite.__init__(self)
                         # super().__init__()
-                        log.info("__init__")
-
-                        self.space = None
 
                         # Simple star image
                         self.image = self.star_image_17x17
