@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:12:30>
+# Time-stamp: <2021-02-23 22:13:49>
 import logging
 import sys
 import math
@@ -501,14 +501,15 @@ class Universe:
 
             log.debug("Generating %s systems" % (sc1r*sc2r))
 
+            new_name = "Suomi"
             for sc1 in range(sc1r):
 
                 log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
 
                 for sc2 in range(sc2r):
 
-                    while name in self.all_systems:
-                        name = self.markov.gen_name("finnish", 4, 13)
+                    while new_name in self.all_systems:
+                        new_name = self.markov.gen_name("finnish", 4, 13)
 
                     distance_ok = False
 
@@ -537,8 +538,8 @@ class Universe:
                                 distance_ok = False
                                 break
 
-                    self.all_systems[name] = {}
-                    self.all_systems[name]['location_xy'] = (x, y)
+                    self.all_systems[new_name] = {}
+                    self.all_systems[new_name]['location_xy'] = (x, y)
 
                     # log.debug("New system: %s %s" % (name, self.systems[name]))
 
@@ -558,7 +559,7 @@ class Universe:
 
                     # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
-                    self.all_systems[name]['planets'] = {}
+                    self.all_systems[new_name]['planets'] = {}
                     # self.generate_planets(name)
 
             log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
