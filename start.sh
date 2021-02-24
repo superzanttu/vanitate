@@ -1,5 +1,5 @@
 #!/bin/bash
-# Time-stamp: <2021-02-23 20:37:56>
+# Time-stamp: <2021-02-23 20:38:13>
 
 #
 # Colors for Apple Terminal
@@ -45,6 +45,6 @@ function set_font {
 
 set_foreground_color Yellow
 echo Running...
-set_foreground_color render
+set_foreground_color Red
 python3 simulation_test.py
 set_foreground_color Black
