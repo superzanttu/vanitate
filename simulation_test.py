@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:09:33>
+# Time-stamp: <2021-02-23 22:10:11>
 import logging
 import sys
 import math
@@ -486,6 +486,8 @@ class Universe:
         universe_x_max = 0
         universe_y_min = 0
         universe_y_max = 0
+
+        all_systems = None
 
         def __init__(self):
 
