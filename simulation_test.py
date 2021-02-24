@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-23 22:07:28>
+# Time-stamp: <2021-02-23 22:07:54>
 import logging
 import sys
 import math
@@ -512,7 +512,7 @@ class Universe():
     # Star sprites
     # star_sprites = pygame.sprite.RenderUpdates()
 
-    all_systems = AllSystems()
+    all_systems = self.AllSystems()
 
     def old_generate_stars(self):
 
