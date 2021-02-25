@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:57:02>
+# Time-stamp: <2021-02-24 21:58:20>
 import logging
 import sys
 import math
@@ -746,6 +746,8 @@ def main():
     random.seed()
 
     u = Universe()
+
+    print(u.space.stars)
 
     log.info("Simulation runnning. Press ESC to stop.")
 
