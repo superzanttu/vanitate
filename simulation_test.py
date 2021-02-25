@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:55:08>
+# Time-stamp: <2021-02-24 21:55:38>
 import logging
 import sys
 import math
@@ -428,7 +428,7 @@ class Universe:
             self.stars['Suomi']['location_xy'] = (0, 0)
             self.stars['Suomi']['planets'] = []
 
-            new_name = "Suomi"
+            new_star_name = "Suomi"
 
             for system_index in range(10):
 
