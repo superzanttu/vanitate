@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:53:57>
+# Time-stamp: <2021-02-24 21:54:23>
 import logging
 import sys
 import math
@@ -401,10 +401,9 @@ Universe
 class Universe:
     log.info("Class created")
 
-    space = self.Space()
-
     def __init__(self):
         log.info("Universe")
+        self.space = self.Space()
 
     class Space:
         log.info("Class created")
