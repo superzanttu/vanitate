@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 15:13:38>
+# Time-stamp: <2021-02-24 15:14:34>
 import logging
 import sys
 import math
@@ -871,7 +871,7 @@ def main():
     pygame.init()
     # print (pygame.font.get_fonts())
 
-    universe = Universe()
+    game = View()
     # space.generate_stars()
     # space.generate_planets("Suomi")
 
