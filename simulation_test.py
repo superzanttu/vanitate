@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:16:36>
+# Time-stamp: <2021-02-24 20:18:18>
 import logging
 import sys
 import math
@@ -74,26 +74,26 @@ NAME_DATA_FOLDER = "namedata"
 
 # Pygame
 # Constants
-SCREEN_SIZE_X = 3360
-SCREEN_SIZE_Y = 2100
+# SCREEN_SIZE_X = 3360
+# SCREEN_SIZE_Y = 2100
 # SCREEN_SIZE_X = 2880
 # SCREEN_SIZE_Y = 1800
-SCREEN_SIZE = [SCREEN_SIZE_X, SCREEN_SIZE_Y]
-WHITE = 255, 255, 255
-BLACK = 0, 0, 0
-LIGHTGRAY = 180, 180, 180
-DARKGRAY = 120, 120, 120
-RED = 255, 0, 0
-GREEN = 0, 255, 0
-BLUE = 0, 0, 255
-YELLOW = 255, 255, 0
-CYAN = 0, 255, 255
-MAGENTA = 255, 0, 255
-LEFT = 0
-RIGHT = 1
-MOUSE_LEFT_BUTTON = 1
-MOUSE_MIDDLE_BUTTON = 2
-MOUSE_RIGHT_BUTTON = 3
+# SCREEN_SIZE = [SCREEN_SIZE_X, SCREEN_SIZE_Y]
+# WHITE = 255, 255, 255
+# BLACK = 0, 0, 0
+# LIGHTGRAY = 180, 180, 180
+# DARKGRAY = 120, 120, 120
+# RED = 255, 0, 0
+# GREEN = 0, 255, 0
+# BLUE = 0, 0, 255
+# YELLOW = 255, 255, 0
+# CYAN = 0, 255, 255
+# MAGENTA = 255, 0, 255
+# LEFT = 0
+# RIGHT = 1
+# MOUSE_LEFT_BUTTON = 1
+# MOUSE_MIDDLE_BUTTON = 2
+# MOUSE_RIGHT_BUTTON = 3
 
 # Size of the space
 UNIVERSE_X_MAX = 5 * 10**17
@@ -556,26 +556,26 @@ class View:
                     def __init__(self):
                         log.info("Star")
 
-                    class StarSprite(pygame.sprite.Sprite):
+                    class StarSprite:
                         log.info("Class created")
-                        star_image_256x256 = pygame.image.load("./resources/star.png")
-                        star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
+                        # star_image_256x256 = pygame.image.load("./resources/star.png")
+                        # star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
 
                         def __init__(self, space,  name, location_xy_space):
                             log.info("StarSprite")
                             # Call the parent class (Sprite) constructor
                             # super().__init__()
-                            pygame.sprite.Sprite.__init__(self)
+                            # pygame.sprite.Sprite.__init__(self)
                             # super().__init__()
 
                             # Simple star image
-                            self.image = self.star_image_17x17
+                            # self.image = self.star_image_17x17
                             # self.image.set_colorkey(BLACK)
-                            self.rect = self.image.get_rect()
-                            self.name = name
-                            self.location_xy_space = location_xy_space
-                            self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
-                            self.rect.center = self.location_xy_view
+                            # self.rect = self.image.get_rect()
+                            # self.name = name
+                            # self.location_xy_space = location_xy_space
+                            # self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
+                            # self.rect.center = self.location_xy_view
 
                         # def update(self):
                         #    pass
@@ -586,7 +586,7 @@ class View:
                     def __init__(self):
                         log.info("Planet")
 
-                    class PlanetSprite(pygame.sprite.Sprite):
+                    class PlanetSprite:
                         log.info("Class created")
 
                         def __init__(self):
