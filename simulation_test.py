@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:47:59>
+# Time-stamp: <2021-02-24 20:48:36>
 import logging
 import sys
 import math
@@ -76,6 +76,38 @@ NAME_DATA_FOLDER = "namedata"
 UNIVERSE_X_MAX = 5 * 10**17
 UNIVERSE_Y_MAX = 5 * 10**17
 UNIVERSE_STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
+
+
+class MetaInstanceRegistry(type):
+    """Metaclass providing an instance registry"""
+
+    def __init__(cls, name, bases, attrs):
+        # Create class
+        super(MetaInstanceRegistry, cls).__init__(name, bases, attrs)
+
+        # Initialize fresh instance storage
+        cls._instances = weakref.WeakSet()
+
+    def __call__(cls, *args, **kwargs):
+        # Create instance (calls __init__ and __new__ methods)
+        inst = super(MetaInstanceRegistry, cls).__call__(*args, **kwargs)
+
+        # Store weak reference to instance. WeakSet will automatically remove
+        # references to objects that have been garbage collected
+        cls._instances.add(inst)
+
+        return inst
+
+    def _get_instances(cls, recursive=False):
+        """Get all instances of this class in the registry. If recursive=True
+        search subclasses recursively"""
+        instances = list(cls._instances)
+        if recursive:
+            for Child in cls.__subclasses__():
+                instances += Child._get_instances(recursive=recursive)
+
+        # Remove duplicates from multiple inheritance.
+        return list(set(instances))
 
 
 class MarkovChainNamer:
