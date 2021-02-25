@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 15:14:34>
+# Time-stamp: <2021-02-24 15:14:51>
 import logging
 import sys
 import math
@@ -448,6 +448,7 @@ class ShipSprite(pygame.sprite.Sprite):
 
 
 class View:
+    log.info("Class created")
 
     class Universe:
         log.info("Class created")
