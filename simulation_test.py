@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:51:42>
+# Time-stamp: <2021-02-24 21:52:48>
 import logging
 import sys
 import math
@@ -401,6 +401,11 @@ Universe
 class Universe:
     log.info("Class created")
 
+    space = Space()
+
+    def __init__(self):
+        log.info("Universe")
+
     class Space:
         log.info("Class created")
 
@@ -515,7 +520,7 @@ class Universe:
 
     # space_view = ()
     def list_stars(self):
-        print(Space.stars)
+        print(self.space.stars)
 
     def old_generate_stars(self):
 
@@ -730,9 +735,6 @@ class Universe:
             star = StarSprite(space, key, self.systems[key]['location_xy'])
             star.space = space
             self.star_sprites.add(star)
-
-    def __init__(self):
-        log.info("Universe")
 
 
 def main():
