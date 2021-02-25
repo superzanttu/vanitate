@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:58:06>
+# Time-stamp: <2021-02-24 22:59:29>
 import logging
 import sys
 import math
@@ -456,14 +456,15 @@ class Universe:
                 log.info("System")
                 super().__init__()
 
-                print(super.system_locations_xy)
+                print("Names", super().system_names)
+                print("XY", super().system_locations_xy)
 
                 # Find uniquie name for system
                 new_system_name = "Suomi"
-                while new_system_name in self.system_names:
+                while new_system_name in super().system_names:
                     new_system_name = self.markov.gen_name("finnish", 4, 13)
 
-                self.system_names.append(new_system_name)
+                super().system_names.append(new_system_name)
 
                 distance_ok = False
 
