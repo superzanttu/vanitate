@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:25:48>
+# Time-stamp: <2021-02-24 20:29:32>
 import logging
 import sys
 import math
@@ -71,29 +71,6 @@ log = logging.getLogger()
 
 HOME_FOLDER = os.path.dirname(os.path.abspath(__file__))
 NAME_DATA_FOLDER = "namedata"
-
-# Pygame
-# Constants
-# SCREEN_SIZE_X = 3360
-# SCREEN_SIZE_Y = 2100
-# SCREEN_SIZE_X = 2880
-# SCREEN_SIZE_Y = 1800
-# SCREEN_SIZE = [SCREEN_SIZE_X, SCREEN_SIZE_Y]
-# WHITE = 255, 255, 255
-# BLACK = 0, 0, 0
-# LIGHTGRAY = 180, 180, 180
-# DARKGRAY = 120, 120, 120
-# RED = 255, 0, 0
-# GREEN = 0, 255, 0
-# BLUE = 0, 0, 255
-# YELLOW = 255, 255, 0
-# CYAN = 0, 255, 255
-# MAGENTA = 255, 0, 255
-# LEFT = 0
-# RIGHT = 1
-# MOUSE_LEFT_BUTTON = 1
-# MOUSE_MIDDLE_BUTTON = 2
-# MOUSE_RIGHT_BUTTON = 3
 
 # Size of the space
 UNIVERSE_X_MAX = 5 * 10**17
@@ -383,27 +360,8 @@ class Ship:
 
     def draw_ship_data(self, id):
 
-        s = self.ship_data[id]
-        t_id = "ID:%s   " % id
-        t_location = "Location:%s   " % s['location_xy']
-        t_angle = "Angle:%s   " % s['angle']
-        t_velosity = "Velosity: %s m/sˆ2   " % s['velosity_xy_ms']
-        t_acceleration = "Acceleration: %s m/s2   " % s['acceleration_ms2']
-        t_acceleration_xy = "Acceleration XY: %s m/s2   " % s['acceleration_xy_ms2']
-
-        text = (t_id, t_location, t_angle, t_velosity, t_acceleration, t_acceleration_xy)
-
-        text_y = 0
-        text_y_step = 32
-
-        log.error("Ship drawing not implemented")
+        log.error("NOT IMPLEMENTED")
         exit(1)
-
-        for t in text:
-
-            img = self.font.render(t, True, (0, 0, 255))
-            self.screen.blit(img, (0, text_y))
-            text_y += text_y_step
 
     def update(self, id):
         sd = self.ship_data[id]
@@ -423,7 +381,9 @@ class Ship:
 
         sc = self.space.scale_coordinates(
             lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
-        pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
+        # pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
+        log.error("NOT PROPERLY IMPLEMENTED")
+        exit(1)
 
 
 class View:
@@ -847,168 +807,14 @@ def main():
 
     random.seed()
 
-    # Initialize the pygame library.
-    pygame.init()
-    # print (pygame.font.get_fonts())
-
     game = View()
-    # space.generate_stars()
-    # space.generate_planets("Suomi")
-
-    # ships = Ship()
-    # ships.space = space
-
-    # ships.add("Ship1 ")
-
-    #log.debug("pygame dislay modes: %s", pygame.display.list_modes())
-    #log.debug("Initializing pygame fonts")
-
-    #pygame_font_size_16 = pygame.font.SysFont("menlo", 12)
-    #pygame_font_size_22 = pygame.font.SysFont("menlo", 16)
-    #pygame_font_size_32 = pygame.font.SysFont("menlo", 22)
-
-    #ships.font = pygame_font_size_22
-    #space.font_size_s = pygame_font_size_16
-    #space.font_size_m = pygame_font_size_22
-    #space.font_size_l = pygame_font_size_32
-
-    # screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
-    # (SCREEN_SIZE_X, SCREEN_SIZE_Y)=pygame.display.get_surface().get_size()
-    # FIXME
-    # pygame.display.set_caption("Starfield")
-    # pygame.mouse.set_visible(True)
-
-    #ships.screen = screen
-    #space.screen = screen
-
-    #hudlog = HudLog()
-    #hudlog.font = pygame_font_size_32
-    #hudlog.screen = screen
-
-    # space.reset_view()
-
-    # Create star all sprites
-    # space.create_star_sprites(space)
 
     log.info("Simulation runnning. Press ESC to stop.")
 
-    #mouse_state = 0
-    # hudlog.draw()
-
-    # screen.fill(BLACK)
-    # space.draw_stars()
-
-    # SPRITE TEST
-    # This will be a list that will contain all the sprites we intend to use in our game.
-    # all_sprites_list = pygame.sprite.RenderUpdates()
-    # sp = ShipSprite()
-    # all_sprites_list.add(sp)
-    #pygame_clock = pygame.time.Clock()
-
     while 0:
-
-        # screen.fill(BLACK)
-
-        # space.star_sprites.draw(screen)
-        # space.star_sprites.update()
-
-        #space.draw_space_info(0, 100)
-
-        # Draw hud logging
-        # if len(hud_console_log) > 0:
-        #    hudlog.add(hud_console_log.pop(0))
-        #    hudlog.draw()
-
-        # for _ in range(10000):
-        #    ships.update("Ship 1")
-
-        # ships.draw_ship_data("Ship 1")
-
-        # Handle input events.
-        event = pygame.event.poll()
-        # keys = pygame.key.get_pressed()
-        if event.type == pygame.QUIT:
-            break
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                break
-        #    elif event.key == pygame.K_UP:
-        #        ships.set_acceleration("Ship 1", 100)
-        #    elif event.key == pygame.K_DOWN:
-        #        ships.set_acceleration("Ship 1", 0)
-
-        # elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_RIGHT_BUTTON:
-        #    space.reset_view()
-
-        # elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_LEFT_BUTTON:
-        #    if mouse_state == 0:
-        #        mouse_pos_1 = pygame.mouse.get_pos()
-        #        screen.set_at(mouse_pos_1, YELLOW)
-        #        mouse_state = 1
-        #        log.info("Selection 1: %s %s" % mouse_pos_1)
-        #    elif mouse_state == 2:
-        #        mouse_pos_2 = pygame.mouse.get_pos()
-        #        log.info("Selection 2: %s %s" % mouse_pos_2)
-        #        screen.set_at(mouse_pos_2, YELLOW)
-        #        mouse_state = 3
-
-        #        r = pygame.Rect(
-        #            mouse_pos_1, (mouse_pos_2[0] - mouse_pos_1[0], mouse_pos_2[1] - mouse_pos_1[1]))
-
-        #        # log.info("Yellow %s" % r)
-
-        #        sc1 = space.screen_coordinates_to_space_view(mouse_pos_1)
-        #        sc2 = space.screen_coordinates_to_space_view(mouse_pos_2)
-
-        #        # Select smallest x coordinate
-        #        if sc1[0] < sc2[0]:
-        #            x_min = sc1[0]
-        #            x_max = sc2[0]
-        #        else:
-        #            x_min = sc2[0]
-        #            x_max = sc1[0]
-
-        #        # Select smallest y coordinate
-        #        if sc1[1] < sc2[1]:
-        #            y_min = sc1[1]
-        # else:
-        #            y_min = sc2[1]
-        #            y_max = sc1[1]
-
-        #        log.info("Space range: %s, %s %s, %s" % (x_min, y_min, x_max, y_max))
-
-        #        pygame.draw.rect(screen, YELLOW, r, 1)
-
-        #        space.view_x_min = x_min
-        #        space.view_y_min = y_min
-        #        space.view_x_max = x_max
-        #        space.view_y_max = y_max
-
-        #        space.draw_stars()
-
-        # elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
-        #    if mouse_state == 1:
-        #        mouse_state = 2
-        #    elif mouse_state == 3:
-        #        mouse_state = 0
-
-        # elif event.type ==  pygame.VIDEORESIZE:
-            # SCREEN_SIZE = [event.w, event.h]
-
-        # elif event.type == pygame.MOUSEBUTTONUP:
-        #    if mouse_state == True:
-        #        mouse_pos_2 = pygame.mouse.get_pos()
-        #        #pygame.draw.rect(screen, (0, 255, 0), pygame.Rect(mouse_pos_1[0], mouse_pos_1[1], mouse_pos_2[0], mouse_pos_2[1]))
-        #        mouse_state = False
-
-        # elif keys[pygame.K_UP]:
-        #    ships.setAcceleration
-        # pygame.display.flip()
-        # pygame_clock.tick(120)
+        pass
 
     log.info("DONE")
-    # for s in space.systems:
-    #    pprint.pprint(space.systems[s])
 
 
 if __name__ == "__main__":
