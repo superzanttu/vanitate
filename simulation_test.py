@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 15:11:54>
+# Time-stamp: <2021-02-24 15:12:22>
 import logging
 import sys
 import math
@@ -449,11 +449,6 @@ class ShipSprite(pygame.sprite.Sprite):
 
 class View:
 
-    universe = self.Universe()
-
-    def __init__(self):
-        log.info("View")
-
     class Universe:
         log.info("Class created")
 
@@ -858,6 +853,11 @@ class View:
                 log.info("Screen")
 
                 self.screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
+
+    universe = self.Universe()
+
+    def __init__(self):
+        log.info("View")
 
 
 def main():
