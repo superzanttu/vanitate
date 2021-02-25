@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:55:38>
+# Time-stamp: <2021-02-24 21:56:03>
 import logging
 import sys
 import math
@@ -463,7 +463,7 @@ class Universe:
                             break
 
                 self.stars[new_star_name] = {}
-                self.stars[new_star_name]['location_xy'] = (x, y)
+                self.stars[new_star_name]['location_xy'] = (new_star_x, new_star_y)
                 self.stars[new_star_name]['planets'] = {}
 
                 # log.debug("New system: %s %s" % (name, self.systems[name]))
