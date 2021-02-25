@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:34:43>
+# Time-stamp: <2021-02-24 22:35:32>
 import logging
 import sys
 import math
@@ -421,19 +421,20 @@ class Universe:
             new_star_name = "Suomi"
 
             for system_index in range(10):
+                pass
 
-                if new_star_x > self.space_x_max:
-                    self.space_x_max = new_star_x
-                elif new_star_x < self.space_x_min:
-                    self.space_x_min = new_star_x
+                # if new_star_x > self.space_x_max:
+                #    self.space_x_max = new_star_x
+                # elif new_star_x < self.space_x_min:
+                #    self.space_x_min = new_star_x
 
-                if new_star_y > self.space_y_max:
-                    self.space_y_max = new_star_y
-                elif new_star_y < self.space_y_min:
-                    self.space_y_min = new_star_y
+                # if new_star_y > self.space_y_max:
+                #    self.space_y_max = new_star_y
+                # elif new_star_y < self.space_y_min:
+                #    self.space_y_min = new_star_y
 
-            log.debug("Universe size %s,%s - %s,%s" %
-                      (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max))
+                # log.debug("Universe size %s,%s - %s,%s" %
+                #          (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max))
 
         class System:
             log.info("Class created")
