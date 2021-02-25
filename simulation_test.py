@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:53:03>
+# Time-stamp: <2021-02-24 20:58:32>
 import logging
 import sys
 import math
@@ -386,410 +386,380 @@ class Ship:
         exit(1)
 
 
-class View:
+"""
+Class structure
+
+Universe
+    AllSystems
+        System
+            Star
+            AllPlanets
+                Planet
+"""
+
+
+class Universe:
     log.info("Class created")
 
-    class Universe:
+    # Store maximum and minimum coordinates of Universe
+    universe_x_min = 0
+    universe_x_max = 0
+    universe_y_min = 0
+    universe_y_max = 0
+
+    class AllSystems:
         log.info("Class created")
 
-        # Store maximum and minimum coordinates of Universe
-        universe_x_min = 0
-        universe_x_max = 0
-        universe_y_min = 0
-        universe_y_max = 0
+        markov = MarkovChainNamer()
 
-        class AllSystems:
+        all_systems = {}
+
+        universe_x_max = 0
+        universe_x_min = 0
+        universe_y_max = 0
+        universe_y_min = 0
+
+        def __init__(self):
+            log.info("AllSystems")
+
+            # Add base system
+            self.all_systems['Suomi'] = {}
+            self.all_systems['Suomi']['location_xy'] = (0, 0)
+            self.all_systems['Suomi']['planets'] = {}
+
+            new_name = "Suomi"
+
+            for system_index in range(10):
+
+                while new_name in self.all_systems:
+                    new_name = self.markov.gen_name("finnish", 4, 13)
+
+                distance_ok = False
+
+                while not distance_ok:
+                    x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
+                    y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
+
+                    distance_ok = True
+                    # log.debug("Systems: %s" % self.systems)
+                    for s in self.all_systems:
+                        # log.debug("Checking distance to s: %s" % s)
+
+                        sd = self.all_systems[s]
+                        # log.debug("sd: %s" % sd)
+
+                        sc = sd['location_xy']
+                        # log.debug("sc: (%s,%s)" % sc)
+
+                        sx = sc[0]
+                        # log.debug("sx: %s" % sx)
+
+                        sy = sc[1]
+                        # log.debug("sy: %s" % sy)
+
+                        if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
+                            distance_ok = False
+                            break
+
+                self.all_systems[new_name] = {}
+                self.all_systems[new_name]['location_xy'] = (x, y)
+
+                # log.debug("New system: %s %s" % (name, self.systems[name]))
+
+                if x > self.universe_x_max:
+                    self.universe_x_max = x
+                elif x < self.universe_x_min:
+                    self.universe_x_min = x
+
+                if y > self.universe_y_max:
+                    self.universe_y_max = y
+
+                elif y < self.universe_y_min:
+                    self.universe_y_min = y
+
+                # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+
+                self.all_systems[new_name]['planets'] = {}
+                # self.generate_planets(name)
+
+            log.debug("Universe size %s,%s - %s,%s" %
+                      (self.universe_x_min, self.universe_y_min, self.universe_x_max, self.universe_y_max))
+
+        class System:
             log.info("Class created")
 
-            markov = MarkovChainNamer()
-
-            all_systems = {}
-
-            universe_x_max = 0
-            universe_x_min = 0
-            universe_y_max = 0
-            universe_y_min = 0
-
             def __init__(self):
-                log.info("AllSystems")
+                log.info("System")
 
-                # Add base system
-                self.all_systems['Suomi'] = {}
-                self.all_systems['Suomi']['location_xy'] = (0, 0)
-                self.all_systems['Suomi']['planets'] = {}
-
-                new_name = "Suomi"
-
-                for system_index in range(10):
-
-                    while new_name in self.all_systems:
-                        new_name = self.markov.gen_name("finnish", 4, 13)
-
-                    distance_ok = False
-
-                    while not distance_ok:
-                        x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
-                        y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
-
-                        distance_ok = True
-                        # log.debug("Systems: %s" % self.systems)
-                        for s in self.all_systems:
-                            # log.debug("Checking distance to s: %s" % s)
-
-                            sd = self.all_systems[s]
-                            # log.debug("sd: %s" % sd)
-
-                            sc = sd['location_xy']
-                            # log.debug("sc: (%s,%s)" % sc)
-
-                            sx = sc[0]
-                            # log.debug("sx: %s" % sx)
-
-                            sy = sc[1]
-                            # log.debug("sy: %s" % sy)
-
-                            if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
-                                distance_ok = False
-                                break
-
-                    self.all_systems[new_name] = {}
-                    self.all_systems[new_name]['location_xy'] = (x, y)
-
-                    # log.debug("New system: %s %s" % (name, self.systems[name]))
-
-                    if x > self.universe_x_max:
-                        self.universe_x_max = x
-                    elif x < self.universe_x_min:
-                        self.universe_x_min = x
-
-                    if y > self.universe_y_max:
-                        self.universe_y_max = y
-
-                    elif y < self.universe_y_min:
-                        self.universe_y_min = y
-
-                    # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
-
-                    self.all_systems[new_name]['planets'] = {}
-                    # self.generate_planets(name)
-
-                log.debug("Universe size %s,%s - %s,%s" %
-                          (self.universe_x_min, self.universe_y_min, self.universe_x_max, self.universe_y_max))
-
-            class System:
+            class Star:
                 log.info("Class created")
 
                 def __init__(self):
-                    log.info("System")
+                    log.info("Star")
 
-                class Star:
-                    log.info("Class created")
-
-                    def __init__(self):
-                        log.info("Star")
-
-                    class StarSprite:
-                        log.info("Class created")
-                        # star_image_256x256 = pygame.image.load("./resources/star.png")
-                        # star_image_17x17 = pygame.transform.scale(star_image_256x256, (17, 17))
-
-                        def __init__(self, space,  name, location_xy_space):
-                            log.info("StarSprite")
-                            # Call the parent class (Sprite) constructor
-                            # super().__init__()
-                            # pygame.sprite.Sprite.__init__(self)
-                            # super().__init__()
-
-                            # Simple star image
-                            # self.image = self.star_image_17x17
-                            # self.image.set_colorkey(BLACK)
-                            # self.rect = self.image.get_rect()
-                            # self.name = name
-                            # self.location_xy_space = location_xy_space
-                            # self.location_xy_view = self.space.space_coordinates_to_screen(location_xy_space)
-                            # self.rect.center = self.location_xy_view
-
-                        # def update(self):
-                        #    pass
-
+            class AllPlanets:
                 class Planet:
                     log.info("Class created")
 
                     def __init__(self):
                         log.info("Planet")
 
-                    class PlanetSprite:
-                        log.info("Class created")
+    # markov = MarkovChainNamer()
 
-                        def __init__(self):
-                            log.info("PlanetSprite")
+    # Size of the space
+    # SPACE_X_MAX = 5 * 10**17
+    # SPACE_Y_MAX = 5 * 10**17
+    # STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
-        # markov = MarkovChainNamer()
+    # Initialize systems and and center system
+    #systems = {}
+    #systems['Suomi'] = {}
+    #systems['Suomi']['location_xy'] = (0, 0)
+    #systems['Suomi']['planets'] = {}
 
-        # Size of the space
-        # SPACE_X_MAX = 5 * 10**17
-        # SPACE_Y_MAX = 5 * 10**17
-        # STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
+    # Store maximum and minimum coordinates for space
+    # space_x_min = 0
+    # space_x_max = 0
+    # space_y_min = 0
+    # space_y_max = 0
 
-        # Initialize systems and and center system
-        #systems = {}
-        #systems['Suomi'] = {}
-        #systems['Suomi']['location_xy'] = (0, 0)
-        #systems['Suomi']['planets'] = {}
+    view_x_min = 0
+    view_x_max = 0
+    view_y_min = 0
+    view_y_max = 0
 
-        # Store maximum and minimum coordinates for space
-        # space_x_min = 0
-        # space_x_max = 0
-        # space_y_min = 0
-        # space_y_max = 0
+    # space_view = ()
 
-        view_x_min = 0
-        view_x_max = 0
-        view_y_min = 0
-        view_y_max = 0
+    # Pygame screen and font
+    screen = None
+    font_size_s = None
+    font_size_m = None
+    font_size_l = None
 
-        # space_view = ()
+    # Star sprites
+    # star_sprites = pygame.sprite.RenderUpdates()
 
-        # Pygame screen and font
-        screen = None
-        font_size_s = None
-        font_size_m = None
-        font_size_l = None
+    all_systems = AllSystems()
 
-        # Star sprites
-        # star_sprites = pygame.sprite.RenderUpdates()
+    def old_generate_stars(self):
 
-        all_systems = AllSystems()
+        name = "Suomi"
 
-        def old_generate_stars(self):
+        sc1r = 10
+        sc2r = 100
 
-            name = "Suomi"
+        log.debug("Generating %s star names" % (sc1r*sc2r))
 
-            sc1r = 10
-            sc2r = 100
+        for sc1 in range(sc1r):
 
-            log.debug("Generating %s star names" % (sc1r*sc2r))
+            log.debug("Generated %s of %s star names" % (sc1*sc2r, sc1r*sc2r))
 
-            for sc1 in range(sc1r):
+            for sc2 in range(sc2r):
 
-                log.debug("Generated %s of %s star names" % (sc1*sc2r, sc1r*sc2r))
+                while name in self.systems:
+                    name = self.markov.gen_name("finnish", 4, 13)
 
-                for sc2 in range(sc2r):
+                distance_ok = False
 
-                    while name in self.systems:
-                        name = self.markov.gen_name("finnish", 4, 13)
+                while not distance_ok:
+                    x = random.randrange(-self.SPACE_X_MAX, self.SPACE_X_MAX)
+                    y = random.randrange(-self.SPACE_Y_MAX, self.SPACE_Y_MAX)
 
-                    distance_ok = False
+                    distance_ok = True
+                    # log.debug("Systems: %s" % self.systems)
+                    for s in self.systems:
+                        # log.debug("Checking distance to s: %s" % s)
 
-                    while not distance_ok:
-                        x = random.randrange(-self.SPACE_X_MAX, self.SPACE_X_MAX)
-                        y = random.randrange(-self.SPACE_Y_MAX, self.SPACE_Y_MAX)
+                        sd = self.systems[s]
+                        # log.debug("sd: %s" % sd)
 
-                        distance_ok = True
-                        # log.debug("Systems: %s" % self.systems)
-                        for s in self.systems:
-                            # log.debug("Checking distance to s: %s" % s)
+                        sc = sd['location_xy']
+                        # log.debug("sc: (%s,%s)" % sc)
 
-                            sd = self.systems[s]
-                            # log.debug("sd: %s" % sd)
+                        sx = sc[0]
+                        # log.debug("sx: %s" % sx)
 
-                            sc = sd['location_xy']
-                            # log.debug("sc: (%s,%s)" % sc)
+                        sy = sc[1]
+                        # log.debug("sy: %s" % sy)
 
-                            sx = sc[0]
-                            # log.debug("sx: %s" % sx)
+                        if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
+                            distance_ok = False
+                            break
 
-                            sy = sc[1]
-                            # log.debug("sy: %s" % sy)
+                self.systems[name] = {}
+                self.systems[name]['location_xy'] = (x, y)
 
-                            if math.sqrt((x-sx)**2 + (y-sy)**2) < self.STAR_MINIMUM_DISTANCE:
-                                distance_ok = False
-                                break
+                # log.debug("New system: %s %s" % (name, self.systems[name]))
 
-                    self.systems[name] = {}
-                    self.systems[name]['location_xy'] = (x, y)
+                if x > self.space_x_max:
+                    self.space_x_max = x
+                    self.view_x_max = x
+                elif x < self.space_x_min:
+                    self.space_x_min = x
+                    self.view_x_min = x
 
-                    # log.debug("New system: %s %s" % (name, self.systems[name]))
+                if y > self.space_y_max:
+                    self.space_y_max = y
+                    self.view_y_max = y
+                elif y < self.space_y_min:
+                    self.space_y_min = y
+                    self.view_y_min = y
 
-                    if x > self.space_x_max:
-                        self.space_x_max = x
-                        self.view_x_max = x
-                    elif x < self.space_x_min:
-                        self.space_x_min = x
-                        self.view_x_min = x
+                # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
-                    if y > self.space_y_max:
-                        self.space_y_max = y
-                        self.view_y_max = y
-                    elif y < self.space_y_min:
-                        self.space_y_min = y
-                        self.view_y_min = y
+                self.systems[name]['planets'] = {}
+                # self.generate_planets(name)
 
-                    # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+        log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
+                  (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
 
-                    self.systems[name]['planets'] = {}
-                    # self.generate_planets(name)
+    def old_scale_to_range(self, v, v_min, v_max, range_min, range_max):
+        v_scaled = int(((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min)
+        # log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" % (v_min, v, v_max, range_min, v_scaled, range_max))
+        return(v_scaled)
 
-            log.debug("System x_max:%s x_min:%s y_max %s y_min:%s" %
-                      (self.space_x_max, self.space_x_min, self.space_y_max, self.space_y_min))
+    def old_space_coordinates_to_screen(self, source):
+        # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
-        def old_scale_to_range(self, v, v_min, v_max, range_min, range_max):
-            v_scaled = int(((range_max - range_min)*(v - v_min))/(v_max - v_min)+range_min)
-            # log.debug("Scale %s <= %s <= %s --> %s <= %s <= %s" % (v_min, v, v_max, range_min, v_scaled, range_max))
-            return(v_scaled)
+        # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
-        def old_space_coordinates_to_screen(self, source):
-            # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        tx = self.scale_to_range(source[0], self.view_x_min, self.view_x_max,
+                                 0, SCREEN_SIZE_X)
+        ty = self.scale_to_range(source[1], self.view_y_min, self.view_y_max,
+                                 0, SCREEN_SIZE_Y)
+        # Scale x coordinate
+        # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
+        # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
 
-            # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
+        # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        return (tx, ty)
 
-            tx = self.scale_to_range(source[0], self.view_x_min, self.view_x_max,
-                                     0, SCREEN_SIZE_X)
-            ty = self.scale_to_range(source[1], self.view_y_min, self.view_y_max,
-                                     0, SCREEN_SIZE_Y)
-            # Scale x coordinate
-            # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
-            # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
+    def old_screen_coordinates_to_space_view(self, source):
+        # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
 
-            # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
-            return (tx, ty)
+        # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
 
-        def old_screen_coordinates_to_space_view(self, source):
-            # log.info("source: %s, target_min: %s target: max: %s" % (source, target_min, target_max))
+        tx = self.scale_to_range(source[0], 0, SCREEN_SIZE_X, self.view_x_min, self.view_x_max)
+        ty = self.scale_to_range(source[1], 0, SCREEN_SIZE_Y, self.view_y_min, self.view_y_max)
 
-            # t = ((tmax - tmin)*(s - smin))/( smax - smin)+tmin
+        # Scale x coordinate
+        # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
+        # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
 
-            tx = self.scale_to_range(source[0], 0, SCREEN_SIZE_X, self.view_x_min, self.view_x_max)
-            ty = self.scale_to_range(source[1], 0, SCREEN_SIZE_Y, self.view_y_min, self.view_y_max)
+        # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
+        return (tx, ty)
 
-            # Scale x coordinate
-            # tx = int(((target_max[0] - target_min[0])*(source[0] - self.space_x_min))/(self.space_x_max - self.space_x_min)+target_min[0])
-            # ty = int(((target_max[1] - target_min[1])*(source[1] - self.space_y_min))/(self.space_y_max - self.space_y_min)+target_min[1])
+    def old_is_visible_location(self, c):
+        print(c, self.space_view)
+        log.debug("Location: %s View: %s" % (c, self.space_view))
+        return True
 
-            # log.debug("Scaled coordinates: %s, %s" % (tx, ty))
-            return (tx, ty)
+    def old_draw_stars(self):
+        log.debug("Drawing stars and names")
 
-        def old_is_visible_location(self, c):
-            print(c, self.space_view)
-            log.debug("Location: %s View: %s" % (c, self.space_view))
-            return True
+        for key in self.systems:
+            c1 = self.systems[key]['location_xy']
 
-        def old_draw_stars(self):
-            log.debug("Drawing stars and names")
+            if True:
 
-            for key in self.systems:
-                c1 = self.systems[key]['location_xy']
+                # log.debug("Star location: (%s, %s)" % (c1[0], c1[1]))
 
-                if True:
+                # Scale system coordinates to screeb coordinates
+                c2 = self.space_coordinates_to_screen(c1)
 
-                    # log.debug("Star location: (%s, %s)" % (c1[0], c1[1]))
+                # Draw star
+                # log.debug("Draw star to: (%s, %s)" % (c1[0], c1[1]))
+                pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
 
-                    # Scale system coordinates to screeb coordinates
-                    c2 = self.space_coordinates_to_screen(c1)
+                # Draw system name
+                system_name = self.font_size_m.render(key, True, (255, 255, 255))
+                self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
 
-                    # Draw star
-                    # log.debug("Draw star to: (%s, %s)" % (c1[0], c1[1]))
-                    pygame.draw.circle(self.screen, WHITE, c2, 5, 0)
+                self.draw_planets(key)
 
-                    # Draw system name
-                    system_name = self.font_size_m.render(key, True, (255, 255, 255))
-                    self.screen.blit(system_name, [c2[0]+7, c2[1]-6])
+        pygame.display.update()
 
-                    self.draw_planets(key)
+    def old_draw_planets(self, system):
+        log.debug("Drawing planets and names for system %s" % system)
+        log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
 
-            pygame.display.update()
+        sd = self.systems[system]
 
-        def old_draw_planets(self, system):
-            log.debug("Drawing planets and names for system %s" % system)
-            log.debug("Planets at %s: %s" % (system, self.systems[system]['planets']))
+        sc = sd['location_xy']
+        sx = sc[0]
+        sy = sc[1]
 
-            sd = self.systems[system]
+        for key in self.systems[system]['planets']:
+            # log.debug("Planet %s at %s " % (key, system))
+            # log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
 
-            sc = sd['location_xy']
-            sx = sc[0]
-            sy = sc[1]
+            angle = self.systems[system]['planets'][key]['angle']
+            orbit = self.systems[system]['planets'][key]['orbit']
 
-            for key in self.systems[system]['planets']:
-                # log.debug("Planet %s at %s " % (key, system))
-                # log.debug("Planet %s: %s" % (key, self.systems[system]['planets'][key]))
+            # log.debug("Orbit: %s Angle: %s" % (orbit, angle))
 
-                angle = self.systems[system]['planets'][key]['angle']
-                orbit = self.systems[system]['planets'][key]['orbit']
+            # Calculate planet location around star
+            px = orbit * math.cos(angle) + sx
+            py = orbit * math.sin(angle) + sy
 
-                # log.debug("Orbit: %s Angle: %s" % (orbit, angle))
+            # Scale planet coordinates to screen coordinates
+            sc = self.space_coordinates_to_screen((px, py))
 
-                # Calculate planet location around star
-                px = orbit * math.cos(angle) + sx
-                py = orbit * math.sin(angle) + sy
+            # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
 
-                # Scale planet coordinates to screen coordinates
-                sc = self.space_coordinates_to_screen((px, py))
+            # Draw planet
+            pygame.draw.circle(self.screen, RED, sc, 5, 0)
+            # log.debug("Draw planet %s (%s, %s) -> (%s, %s)" % (key, px, py, sc[0], sc[1]))
 
-                # log.debug("Scaled coordinates: (%s, %s)" % (sc[0], sc[1]))
+            # Draw planet name
+            planet_name = self.font_size_m.render(key, True, RED)
+            self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
 
-                # Draw planet
-                pygame.draw.circle(self.screen, RED, sc, 5, 0)
-                # log.debug("Draw planet %s (%s, %s) -> (%s, %s)" % (key, px, py, sc[0], sc[1]))
+    def old_generate_planets(self, system):
+        log.debug("Generating planets for system %s" % system)
 
-                # Draw planet name
-                planet_name = self.font_size_m.render(key, True, RED)
-                self.screen.blit(planet_name, [sc[0]+7, sc[1]-6])
+        planets = random.randrange(1, 12)
 
-        def old_generate_planets(self, system):
-            log.debug("Generating planets for system %s" % system)
+        orbit_min = 57950000 + random.randrange(-10000000, 10000000)
+        orbit_max = 5913000000 + random.randrange(-10000000, 10000000)
 
-            planets = random.randrange(1, 12)
+        for p in range(1, planets+1):
+            orbit = int((orbit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
+            angle = random.uniform(0, math.pi*2)
+            name = self.markov.gen_name("finnish", 4, 13)
+            # log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" % (name, p, planets, orbit, angle, system))
+            self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
 
-            orbit_min = 57950000 + random.randrange(-10000000, 10000000)
-            orbit_max = 5913000000 + random.randrange(-10000000, 10000000)
+    def old_draw_space_info(self, x, y):
+        # log.debug("Draw space info to (%s,%s)" % (x, y))
+        view_text = ("Space: %s, %s - %s, %s View: %s, %s - %s, %s" % (self.space_x_min, self.space_y_min, self.space_x_max,
+                                                                       self.space_y_max, self.view_x_min, self.view_y_min, self.view_x_max, self.view_y_max))
+        # log.debug("View data: %s" % view_text)
+        view_rect = self.font_size_l.render(view_text, True, YELLOW)
+        self.screen.blit(view_rect, (x, y))
 
-            for p in range(1, planets+1):
-                orbit = int((orbit_max-orbit_min)/planets*p + random.randrange(-10000000, 10000000))
-                angle = random.uniform(0, math.pi*2)
-                name = self.markov.gen_name("finnish", 4, 13)
-                # log.debug("New planet %s (%s/%s) orbiting at %s m angle %s at system %s" % (name, p, planets, orbit, angle, system))
-                self.systems[system]['planets'][name] = {'orbit': orbit, 'angle': angle}
+    def old_reset_view(self):
+        log.info("Reset view to space minmax")
+        self.view_x_max = self.space_x_max
+        self.view_x_min = self.space_x_min
+        self.view_y_max = self.space_y_max
+        self.view_y_min = self.space_y_min
+        self.screen.fill(BLACK)
+        self.draw_stars()
 
-        def old_draw_space_info(self, x, y):
-            # log.debug("Draw space info to (%s,%s)" % (x, y))
-            view_text = ("Space: %s, %s - %s, %s View: %s, %s - %s, %s" % (self.space_x_min, self.space_y_min, self.space_x_max,
-                                                                           self.space_y_max, self.view_x_min, self.view_y_min, self.view_x_max, self.view_y_max))
-            # log.debug("View data: %s" % view_text)
-            view_rect = self.font_size_l.render(view_text, True, YELLOW)
-            self.screen.blit(view_rect, (x, y))
-
-        def old_reset_view(self):
-            log.info("Reset view to space minmax")
-            self.view_x_max = self.space_x_max
-            self.view_x_min = self.space_x_min
-            self.view_y_max = self.space_y_max
-            self.view_y_min = self.space_y_min
-            self.screen.fill(BLACK)
-            self.draw_stars()
-
-        def old_create_star_sprites(self, space):
-            log.debug("Create sprites for stars")
-            for key in self.systems:
-                log.debug("Sprite for star %s at %s" % (key, self.systems[key]['location_xy']))
-                star = StarSprite(space, key, self.systems[key]['location_xy'])
-                star.space = space
-                self.star_sprites.add(star)
-
-        def __init__(self):
-            log.info("Universe")
-
-        class Screen:
-            log.info("Class created")
-
-            screen = None
-
-            def __init__(self):
-                log.info("Screen")
-
-                self.screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
+    def old_create_star_sprites(self, space):
+        log.debug("Create sprites for stars")
+        for key in self.systems:
+            log.debug("Sprite for star %s at %s" % (key, self.systems[key]['location_xy']))
+            star = StarSprite(space, key, self.systems[key]['location_xy'])
+            star.space = space
+            self.star_sprites.add(star)
 
     def __init__(self):
-        log.info("View")
+        log.info("Universe")
+
+    def __init__(self):  # Universe
+    log.info("View")
 
 
 def main():
