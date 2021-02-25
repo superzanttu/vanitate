@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:47:29>
+# Time-stamp: <2021-02-24 20:47:59>
 import logging
 import sys
 import math
@@ -787,8 +787,6 @@ class View:
                 log.info("Screen")
 
                 self.screen = pygame.display.set_mode(SCREEN_SIZE, pygame.FULLSCREEN | pygame.HWSURFACE | pygame.DOUBLEBUF)
-
-    universe = self.Universe()
 
     def __init__(self):
         log.info("View")
