@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 15:12:22>
+# Time-stamp: <2021-02-24 15:13:38>
 import logging
 import sys
 import math
@@ -952,66 +952,65 @@ def main():
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 break
-            elif event.key == pygame.K_UP:
-                ships.set_acceleration("Ship 1", 100)
-            elif event.key == pygame.K_DOWN:
-                ships.set_acceleration("Ship 1", 0)
+        #    elif event.key == pygame.K_UP:
+        #        ships.set_acceleration("Ship 1", 100)
+        #    elif event.key == pygame.K_DOWN:
+        #        ships.set_acceleration("Ship 1", 0)
 
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_RIGHT_BUTTON:
-            space.reset_view()
+        # elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_RIGHT_BUTTON:
+        #    space.reset_view()
 
-        elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_LEFT_BUTTON:
-            if mouse_state == 0:
-                mouse_pos_1 = pygame.mouse.get_pos()
-                screen.set_at(mouse_pos_1, YELLOW)
-                mouse_state = 1
-                log.info("Selection 1: %s %s" % mouse_pos_1)
-            elif mouse_state == 2:
-                mouse_pos_2 = pygame.mouse.get_pos()
-                log.info("Selection 2: %s %s" % mouse_pos_2)
-                screen.set_at(mouse_pos_2, YELLOW)
-                mouse_state = 3
+        # elif event.type == pygame.MOUSEBUTTONDOWN and event.button == MOUSE_LEFT_BUTTON:
+        #    if mouse_state == 0:
+        #        mouse_pos_1 = pygame.mouse.get_pos()
+        #        screen.set_at(mouse_pos_1, YELLOW)
+        #        mouse_state = 1
+        #        log.info("Selection 1: %s %s" % mouse_pos_1)
+        #    elif mouse_state == 2:
+        #        mouse_pos_2 = pygame.mouse.get_pos()
+        #        log.info("Selection 2: %s %s" % mouse_pos_2)
+        #        screen.set_at(mouse_pos_2, YELLOW)
+        #        mouse_state = 3
 
-                r = pygame.Rect(
-                    mouse_pos_1, (mouse_pos_2[0] - mouse_pos_1[0], mouse_pos_2[1] - mouse_pos_1[1]))
+        #        r = pygame.Rect(
+        #            mouse_pos_1, (mouse_pos_2[0] - mouse_pos_1[0], mouse_pos_2[1] - mouse_pos_1[1]))
 
-                # log.info("Yellow %s" % r)
+        #        # log.info("Yellow %s" % r)
 
-                sc1 = space.screen_coordinates_to_space_view(mouse_pos_1)
-                sc2 = space.screen_coordinates_to_space_view(mouse_pos_2)
+        #        sc1 = space.screen_coordinates_to_space_view(mouse_pos_1)
+        #        sc2 = space.screen_coordinates_to_space_view(mouse_pos_2)
 
-                # Select smallest x coordinate
-                if sc1[0] < sc2[0]:
-                    x_min = sc1[0]
-                    x_max = sc2[0]
-                else:
-                    x_min = sc2[0]
-                    x_max = sc1[0]
+        #        # Select smallest x coordinate
+        #        if sc1[0] < sc2[0]:
+        #            x_min = sc1[0]
+        #            x_max = sc2[0]
+        #        else:
+        #            x_min = sc2[0]
+        #            x_max = sc1[0]
 
-                # Select smallest y coordinate
-                if sc1[1] < sc2[1]:
-                    y_min = sc1[1]
-                    y_max = sc2[1]
-                else:
-                    y_min = sc2[1]
-                    y_max = sc1[1]
+        #        # Select smallest y coordinate
+        #        if sc1[1] < sc2[1]:
+        #            y_min = sc1[1]
+        # else:
+        #            y_min = sc2[1]
+        #            y_max = sc1[1]
 
-                log.info("Space range: %s, %s %s, %s" % (x_min, y_min, x_max, y_max))
+        #        log.info("Space range: %s, %s %s, %s" % (x_min, y_min, x_max, y_max))
 
-                pygame.draw.rect(screen, YELLOW, r, 1)
+        #        pygame.draw.rect(screen, YELLOW, r, 1)
 
-                space.view_x_min = x_min
-                space.view_y_min = y_min
-                space.view_x_max = x_max
-                space.view_y_max = y_max
+        #        space.view_x_min = x_min
+        #        space.view_y_min = y_min
+        #        space.view_x_max = x_max
+        #        space.view_y_max = y_max
 
-                space.draw_stars()
+        #        space.draw_stars()
 
-        elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
-            if mouse_state == 1:
-                mouse_state = 2
-            elif mouse_state == 3:
-                mouse_state = 0
+        # elif event.type == pygame.MOUSEBUTTONUP and event.button == MOUSE_LEFT_BUTTON:
+        #    if mouse_state == 1:
+        #        mouse_state = 2
+        #    elif mouse_state == 3:
+        #        mouse_state = 0
 
         # elif event.type ==  pygame.VIDEORESIZE:
             # SCREEN_SIZE = [event.w, event.h]
