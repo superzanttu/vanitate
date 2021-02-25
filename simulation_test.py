@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:37:31>
+# Time-stamp: <2021-02-24 21:48:03>
 import logging
 import sys
 import math
@@ -390,7 +390,7 @@ class Ship:
 Class structure
 
 Universe
-    AllSystems
+    Space
         System
             Star
             AllPlanets
@@ -401,83 +401,79 @@ Universe
 class Universe:
     log.info("Class created")
 
-    class AllSystems:
+    class Space:
         log.info("Class created")
 
         markov = MarkovChainNamer()
 
-        all_systems = {}
+        stars = {}
+        planets = {}
 
-        universe_x_max = 0
-        universe_x_min = 0
-        universe_y_max = 0
-        universe_y_min = 0
+        space_x_max = 0
+        space_x_min = 0
+        space_y_max = 0
+        space_y_min = 0
 
         def __init__(self):
-            log.info("AllSystems")
+            log.info("Space")
 
             # Add base system
-            self.all_systems['Suomi'] = {}
-            self.all_systems['Suomi']['location_xy'] = (0, 0)
-            self.all_systems['Suomi']['planets'] = {}
+            self.stars['Suomi'] = {}
+            self.stars['Suomi']['location_xy'] = (0, 0)
+            self.stars['Suomi']['planets'] = []
 
             new_name = "Suomi"
 
             for system_index in range(10):
 
-                while new_name in self.all_systems:
-                    new_name = self.markov.gen_name("finnish", 4, 13)
+                while new_star_name in self.stars:
+                    new_star_name = self.markov.gen_name("finnish", 4, 13)
 
                 distance_ok = False
 
                 while not distance_ok:
-                    x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
-                    y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
+                    new_star_x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
+                    new_star_y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
 
                     distance_ok = True
                     # log.debug("Systems: %s" % self.systems)
-                    for s in self.all_systems:
+                    for star in self.stars:
                         # log.debug("Checking distance to s: %s" % s)
 
-                        sd = self.all_systems[s]
+                        star_data = self.stars[star]
                         # log.debug("sd: %s" % sd)
 
-                        sc = sd['location_xy']
+                        star_location_xy = star_data['location_xy']
                         # log.debug("sc: (%s,%s)" % sc)
 
-                        sx = sc[0]
+                        star_location_x = star_location_xy[0]
                         # log.debug("sx: %s" % sx)
 
-                        sy = sc[1]
+                        star_location_y = star_location_xy[1]
                         # log.debug("sy: %s" % sy)
 
-                        if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
+                        if math.sqrt((new_star_x-star_location_x)**2 + (new_star_y-star_location_y)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
                             distance_ok = False
                             break
 
-                self.all_systems[new_name] = {}
-                self.all_systems[new_name]['location_xy'] = (x, y)
+                self.stars[new_star_name] = {}
+                self.stars[new_star_name]['location_xy'] = (x, y)
+                self.stars[new_star_name]['planets'] = {}
 
                 # log.debug("New system: %s %s" % (name, self.systems[name]))
 
-                if x > self.universe_x_max:
-                    self.universe_x_max = x
-                elif x < self.universe_x_min:
-                    self.universe_x_min = x
+                if new_star_x > self.space_x_max:
+                    self.space_x_max = new_star_x
+                elif new_star_x < self.space_x_min:
+                    self.space_x_min = new_star_x
 
-                if y > self.universe_y_max:
-                    self.universe_y_max = y
-
-                elif y < self.universe_y_min:
-                    self.universe_y_min = y
-
-                # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
-
-                self.all_systems[new_name]['planets'] = {}
-                # self.generate_planets(name)
+                if new_star_y > self.space_y_max:
+                    self.space_y_max = new_star_y
+                elif new_star_y < self.space_y_min:
+                    self.space_y_min = new_star_y
 
             log.debug("Universe size %s,%s - %s,%s" %
-                      (self.universe_x_min, self.universe_y_min, self.universe_x_max, self.universe_y_max))
+                      (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max))
 
         class System:
             log.info("Class created")
