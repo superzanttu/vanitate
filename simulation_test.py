@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:39:03>
+# Time-stamp: <2021-02-24 22:55:58>
 import logging
 import sys
 import math
@@ -436,7 +436,15 @@ class Universe:
                 # log.debug("Universe size %s,%s - %s,%s" %
                 #          (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max))
 
-        class System:
+        class SystemsSharedData(object):
+            log.info("Class created")
+            system_locations_xy = []
+            system_names = []
+
+            def __init__(self):
+                log.info("SystemsSharedData")
+
+        class System(SystemsSharedData):
             log.info("Class created")
 
             markov = MarkovChainNamer()
@@ -444,12 +452,14 @@ class Universe:
             system_names = []
             system_locations_xy = {}
 
-            def __init__(self):
+           def __init__(self):
                 log.info("System")
+                super().__init__()
 
+                print(self.__dict__)
+
+                # Find uniquie name for system
                 new_system_name = "Suomi"
-                # Select name for system
-
                 while new_system_name in self.system_names:
                     new_system_name = self.markov.gen_name("finnish", 4, 13)
 
