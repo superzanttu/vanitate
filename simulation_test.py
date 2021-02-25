@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:29:32>
+# Time-stamp: <2021-02-24 20:46:29>
 import logging
 import sys
 import math
@@ -405,6 +405,11 @@ class View:
 
             all_systems = {}
 
+            universe_x_max = 0
+            universe_x_min = 0
+            universe_y_max = 0
+            universe_y_min = 0
+
             def __init__(self):
                 log.info("AllSystems")
 
@@ -413,19 +418,15 @@ class View:
                 self.all_systems['Suomi']['location_xy'] = (0, 0)
                 self.all_systems['Suomi']['planets'] = {}
 
-                sc1r = 10
-                sc2r = 100
-
                 log.debug("Generating %s systems" % (sc1r*sc2r))
 
                 new_name = "Suomi"
-                for sc1 in range(sc1r):
 
-                    log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
+                 log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
 
-                    for sc2 in range(sc2r):
+                  for system_index in range(10):
 
-                        while new_name in self.all_systems:
+                       while new_name in self.all_systems:
                             new_name = self.markov.gen_name("finnish", 4, 13)
 
                         distance_ok = False
@@ -462,17 +463,14 @@ class View:
 
                         if x > self.universe_x_max:
                             self.universe_x_max = x
-                            self.view_x_max = x
                         elif x < self.universe_x_min:
                             self.universe_x_min = x
-                            self.view_x_min = x
 
                         if y > self.universe_y_max:
                             self.universe_y_max = y
-                            self.view_y_max = y
+
                         elif y < self.universe_y_min:
                             self.universe_y_min = y
-                            self.view_y_min = y
 
                         # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
