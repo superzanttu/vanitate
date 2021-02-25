@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 15:10:14>
+# Time-stamp: <2021-02-24 15:11:00>
 import logging
 import sys
 import math
@@ -422,9 +422,6 @@ class Ship:
         sc = self.space.scale_coordinates(
             lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
         pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
-
-
-class HudLog:
 
 
 class ShipSprite(pygame.sprite.Sprite):
