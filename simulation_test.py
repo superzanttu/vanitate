@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:56:26>
+# Time-stamp: <2021-02-24 22:57:30>
 import logging
 import sys
 import math
@@ -456,7 +456,7 @@ class Universe:
                 log.info("System")
                 super().__init__()
 
-                print(self.__dict__)
+                print(super().system_locations_xy)
 
                 # Find uniquie name for system
                 new_system_name = "Suomi"
