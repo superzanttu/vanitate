@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:37:15>
+# Time-stamp: <2021-02-24 21:37:31>
 import logging
 import sys
 import math
@@ -768,7 +768,7 @@ def main():
 
     random.seed()
 
-    game = View()
+    u = Universe()
 
     log.info("Simulation runnning. Press ESC to stop.")
 
