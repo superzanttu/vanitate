@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:38:34>
+# Time-stamp: <2021-02-24 22:39:03>
 import logging
 import sys
 import math
@@ -478,7 +478,7 @@ class Universe:
                 self.star = {}
                 self.planets = {}
 
-                print(self.__dict__)
+                print(new_system_name, self.__dict__)
 
                 log.debug("New system: %s" % (new_system_name))
 
