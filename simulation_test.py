@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:38:06>
+# Time-stamp: <2021-02-24 22:38:21>
 import logging
 import sys
 import math
@@ -450,7 +450,7 @@ class Universe:
                 new_system_name = "Suomi"
                 # Select name for system
 
-                print(self.__dict__)
+                print(__dict__)
 
                 while new_system_name in self.system_names:
                     new_system_name = self.markov.gen_name("finnish", 4, 13)
