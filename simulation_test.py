@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:18:18>
+# Time-stamp: <2021-02-24 20:25:48>
 import logging
 import sys
 import math
@@ -396,7 +396,8 @@ class Ship:
         text_y = 0
         text_y_step = 32
 
-        pygame.draw.rect(self.screen, (0, 200, 0), (0, 0, 1000, len(text)*text_y_step))
+        log.error("Ship drawing not implemented")
+        exit(1)
 
         for t in text:
 
@@ -423,29 +424,6 @@ class Ship:
         sc = self.space.scale_coordinates(
             lo, [SCREEN_SIZE[0]*0.02, SCREEN_SIZE[1]*0.02], [SCREEN_SIZE[0]*0.98, SCREEN_SIZE[1]*0.98])
         pygame.draw.circle(self.screen, (0, 0, 255), sc, 10, 0)
-
-
-class ShipSprite(pygame.sprite.Sprite):
-
-    def __init__(self):
-
-        # Call the parent class (Sprite) constructor
-        # super().__init__()
-        pygame.sprite.Sprite.__init__(self)
-        log.info("__init__")
-
-        # Simple ship image
-        self.image = pygame.Surface([100, 100])
-        self.image.fill(YELLOW)
-        # self.image.set_colorkey(BLACK)
-        # pygame.draw.circle(self.image, YELLOW, (16, 16), 14, 0)
-        self.rect = self.image.get_rect()  # What is this?????
-        self.rect.center = 200, 200
-
-    def update(self):
-        # log.info("UPDATE!")
-        pos = pygame.mouse.get_pos()
-        self.rect.center = pos
 
 
 class View:
