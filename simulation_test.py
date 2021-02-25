@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 20:46:29>
+# Time-stamp: <2021-02-24 20:47:03>
 import logging
 import sys
 import math
@@ -422,60 +422,60 @@ class View:
 
                 new_name = "Suomi"
 
-                 log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
+                log.debug("Generated %s of %s system names" % (sc1*sc2r, sc1r*sc2r))
 
-                  for system_index in range(10):
+                for system_index in range(10):
 
-                       while new_name in self.all_systems:
-                            new_name = self.markov.gen_name("finnish", 4, 13)
+                    while new_name in self.all_systems:
+                        new_name = self.markov.gen_name("finnish", 4, 13)
 
-                        distance_ok = False
+                    distance_ok = False
 
-                        while not distance_ok:
-                            x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
-                            y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
+                    while not distance_ok:
+                        x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
+                        y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
 
-                            distance_ok = True
-                            # log.debug("Systems: %s" % self.systems)
-                            for s in self.all_systems:
-                                # log.debug("Checking distance to s: %s" % s)
+                        distance_ok = True
+                        # log.debug("Systems: %s" % self.systems)
+                        for s in self.all_systems:
+                            # log.debug("Checking distance to s: %s" % s)
 
-                                sd = self.all_systems[s]
-                                # log.debug("sd: %s" % sd)
+                            sd = self.all_systems[s]
+                            # log.debug("sd: %s" % sd)
 
-                                sc = sd['location_xy']
-                                # log.debug("sc: (%s,%s)" % sc)
+                            sc = sd['location_xy']
+                            # log.debug("sc: (%s,%s)" % sc)
 
-                                sx = sc[0]
-                                # log.debug("sx: %s" % sx)
+                            sx = sc[0]
+                            # log.debug("sx: %s" % sx)
 
-                                sy = sc[1]
-                                # log.debug("sy: %s" % sy)
+                            sy = sc[1]
+                            # log.debug("sy: %s" % sy)
 
-                                if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
-                                    distance_ok = False
-                                    break
+                            if math.sqrt((x-sx)**2 + (y-sy)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
+                                distance_ok = False
+                                break
 
-                        self.all_systems[new_name] = {}
-                        self.all_systems[new_name]['location_xy'] = (x, y)
+                    self.all_systems[new_name] = {}
+                    self.all_systems[new_name]['location_xy'] = (x, y)
 
-                        # log.debug("New system: %s %s" % (name, self.systems[name]))
+                    # log.debug("New system: %s %s" % (name, self.systems[name]))
 
-                        if x > self.universe_x_max:
-                            self.universe_x_max = x
-                        elif x < self.universe_x_min:
-                            self.universe_x_min = x
+                    if x > self.universe_x_max:
+                        self.universe_x_max = x
+                    elif x < self.universe_x_min:
+                        self.universe_x_min = x
 
-                        if y > self.universe_y_max:
-                            self.universe_y_max = y
+                    if y > self.universe_y_max:
+                        self.universe_y_max = y
 
-                        elif y < self.universe_y_min:
-                            self.universe_y_min = y
+                    elif y < self.universe_y_min:
+                        self.universe_y_min = y
 
-                        # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
+                    # self.space_view = (self.space_x_min, self.space_y_min, self.space_x_max, self.space_y_max)
 
-                        self.all_systems[new_name]['planets'] = {}
-                        # self.generate_planets(name)
+                    self.all_systems[new_name]['planets'] = {}
+                    # self.generate_planets(name)
 
                 log.debug("Universe size %s,%s - %s,%s" %
                           (self.universe_x_min, self.universe_y_min, self.universe_x_max, self.universe_y_max))
