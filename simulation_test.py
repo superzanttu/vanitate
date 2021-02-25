@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:58:20>
+# Time-stamp: <2021-02-24 22:10:57>
 import logging
 import sys
 import math
@@ -75,7 +75,7 @@ NAME_DATA_FOLDER = "namedata"
 # Size of the space
 UNIVERSE_X_MAX = 5 * 10**17
 UNIVERSE_Y_MAX = 5 * 10**17
-UNIVERSE_STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
+UNIVERSE_SYSTEMS_MINIMUM_DISTANCE = 4.7302642 * 10**13
 
 
 class MarkovChainNamer:
@@ -410,11 +410,6 @@ class Universe:
     class Space:
         log.info("Class created")
 
-        markov = MarkovChainNamer()
-
-        stars = {}
-        planets = {}
-
         space_x_max = 0
         space_x_min = 0
         space_y_max = 0
@@ -423,50 +418,9 @@ class Universe:
         def __init__(self):
             log.info("Space")
 
-            # Add base system
-            self.stars['Suomi'] = {}
-            self.stars['Suomi']['location_xy'] = (0, 0)
-            self.stars['Suomi']['planets'] = []
-
             new_star_name = "Suomi"
 
             for system_index in range(10):
-
-                while new_star_name in self.stars:
-                    new_star_name = self.markov.gen_name("finnish", 4, 13)
-
-                distance_ok = False
-
-                while not distance_ok:
-                    new_star_x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
-                    new_star_y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
-
-                    distance_ok = True
-                    # log.debug("Systems: %s" % self.systems)
-                    for star in self.stars:
-                        # log.debug("Checking distance to s: %s" % s)
-
-                        star_data = self.stars[star]
-                        # log.debug("sd: %s" % sd)
-
-                        star_location_xy = star_data['location_xy']
-                        # log.debug("sc: (%s,%s)" % sc)
-
-                        star_location_x = star_location_xy[0]
-                        # log.debug("sx: %s" % sx)
-
-                        star_location_y = star_location_xy[1]
-                        # log.debug("sy: %s" % sy)
-
-                        if math.sqrt((new_star_x-star_location_x)**2 + (new_star_y-star_location_y)**2) < UNIVERSE_STAR_MINIMUM_DISTANCE:
-                            distance_ok = False
-                            break
-
-                self.stars[new_star_name] = {}
-                self.stars[new_star_name]['location_xy'] = (new_star_x, new_star_y)
-                self.stars[new_star_name]['planets'] = {}
-
-                log.debug("New system: %s" % (new_star_name))
 
                 if new_star_x > self.space_x_max:
                     self.space_x_max = new_star_x
@@ -484,8 +438,42 @@ class Universe:
         class System:
             log.info("Class created")
 
+            # Add base system
+            systems['Suomi'] = {}
+            systems['Suomi']['location_xy'] = (0, 0)
+            systems['Suomi']['planets'] = []
+
+            markov = MarkovChainNamer()
+
             def __init__(self):
                 log.info("System")
+
+                # Select name for system
+                while new_system_name in self.systems:
+                    new_system_name = self.markov.gen_name("finnish", 4, 13)
+
+                distance_ok = False
+
+                while not distance_ok:
+                    new_system_x = random.randrange(-UNIVERSE_X_MAX, UNIVERSE_X_MAX)
+                    new_system_y = random.randrange(-UNIVERSE_Y_MAX, UNIVERSE_Y_MAX)
+
+                    distance_ok = True
+
+                    for system in self.systems:
+                        system_data = self.systems[system]
+                        system_location_xy = system_data['location_xy']
+                        system_location_x = system_location_xy[0]
+                        system_location_y = system_location_xy[1]
+
+                        if math.sqrt((new_system_x-system_location_x)**2 + (new_system_y-system_location_y)**2) < UNIVERSE_SYSTEMS_MINIMUM_DISTANCE:
+                            distance_ok = False
+                            break
+
+                self.stars[new_system_name] = {}
+                self.stars[new_system_name]['location_xy'] = (new_system_x, new_system_y)
+
+                log.debug("New system: %s" % (new_star_name))
 
             class Star:
                 log.info("Class created")
@@ -493,35 +481,11 @@ class Universe:
                 def __init__(self):
                     log.info("Star")
 
-            class AllPlanets:
-                class Planet:
-                    log.info("Class created")
+            class Planet:
+                log.info("Class created")
 
-                    def __init__(self):
-                        log.info("Planet")
-
-    # markov = MarkovChainNamer()
-
-    # Size of the space
-    # SPACE_X_MAX = 5 * 10**17
-    # SPACE_Y_MAX = 5 * 10**17
-    # STAR_MINIMUM_DISTANCE = 4.7302642 * 10**13
-
-    # Initialize systems and and center system
-    # systems = {}
-    # systems['Suomi'] = {}
-    # systems['Suomi']['location_xy'] = (0, 0)
-    # systems['Suomi']['planets'] = {}
-
-    # Store maximum and minimum coordinates for space
-    # space_x_min = 0
-    # space_x_max = 0
-    # space_y_min = 0
-    # space_y_max = 0
-
-    # space_view = ()
-    def list_stars(self):
-        print(self.space.stars)
+                def __init__(self):
+                    log.info("Planet")
 
     def old_generate_stars(self):
 
