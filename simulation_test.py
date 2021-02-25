@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:35:43>
+# Time-stamp: <2021-02-24 22:36:08>
 import logging
 import sys
 import math
@@ -421,7 +421,7 @@ class Universe:
             new_star_name = "Suomi"
 
             for system_index in range(10):
-                pass
+                s = System()
 
                 # if new_star_x > self.space_x_max:
                 #    self.space_x_max = new_star_x
