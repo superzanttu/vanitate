@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:55:58>
+# Time-stamp: <2021-02-24 22:56:26>
 import logging
 import sys
 import math
@@ -452,7 +452,7 @@ class Universe:
             system_names = []
             system_locations_xy = {}
 
-           def __init__(self):
+            def __init__(self):
                 log.info("System")
                 super().__init__()
 
