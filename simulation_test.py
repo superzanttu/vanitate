@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 22:10:57>
+# Time-stamp: <2021-02-24 22:34:17>
 import logging
 import sys
 import math
@@ -438,19 +438,19 @@ class Universe:
         class System:
             log.info("Class created")
 
-            # Add base system
-            systems['Suomi'] = {}
-            systems['Suomi']['location_xy'] = (0, 0)
-            systems['Suomi']['planets'] = []
-
             markov = MarkovChainNamer()
+
+            system_names = []
+            system_locations_xy = {}
 
             def __init__(self):
                 log.info("System")
 
                 # Select name for system
-                while new_system_name in self.systems:
+                while new_system_name in self.system_names:
                     new_system_name = self.markov.gen_name("finnish", 4, 13)
+
+                system_names.append(new_system_name)
 
                 distance_ok = False
 
@@ -460,9 +460,8 @@ class Universe:
 
                     distance_ok = True
 
-                    for system in self.systems:
-                        system_data = self.systems[system]
-                        system_location_xy = system_data['location_xy']
+                    for system in self.system_locations_xy:
+                        system_location_xy = self.system_locations_xy[system]
                         system_location_x = system_location_xy[0]
                         system_location_y = system_location_xy[1]
 
@@ -470,8 +469,11 @@ class Universe:
                             distance_ok = False
                             break
 
-                self.stars[new_system_name] = {}
-                self.stars[new_system_name]['location_xy'] = (new_system_x, new_system_y)
+                # Store instance variables
+                self.name = new_system_name
+                self.location_xy = (new_system_x, new_system_y)
+                self.star = {}
+                self.planets = {}
 
                 log.debug("New system: %s" % (new_star_name))
 
