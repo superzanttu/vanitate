@@ -18,7 +18,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-# Time-stamp: <2021-02-24 21:36:20>
+# Time-stamp: <2021-02-24 21:37:15>
 import logging
 import sys
 import math
@@ -401,14 +401,6 @@ Universe
 class Universe:
     log.info("Class created")
 
-    # Store maximum and minimum coordinates of Universe
-    universe_x_min = 0
-    universe_x_max = 0
-    universe_y_min = 0
-    universe_y_max = 0
-
-    systems = AllSystems()
-
     class AllSystems:
         log.info("Class created")
 
@@ -505,6 +497,14 @@ class Universe:
 
                     def __init__(self):
                         log.info("Planet")
+
+    # Store maximum and minimum coordinates of Universe
+    universe_x_min = 0
+    universe_x_max = 0
+    universe_y_min = 0
+    universe_y_max = 0
+
+    systems = AllSystems()
 
     # markov = MarkovChainNamer()
 
